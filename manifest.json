@@ -1,0 +1,42 @@
+{
+        "name": "Multicolor series",
+        "version": "1.0.0",
+        "title": "Multicolor",
+        "author": {
+                "name": "Black Label",
+                "url": "http://www.blacklabel.pl/"
+        },
+        "licenses": [
+                {
+                        "type": "Creative Commons Attribution (CC)",
+                        "url": "https://github.com/blacklabel/multicolor_series/blob/master/license.txt"
+                }
+        ],
+        "dependencies": {
+                "highcharts": "4.0.0"
+        },
+        "demo": [
+                "http://jsfiddle.net/BlackLabel/rgs4pb2p/",
+                "http://jsfiddle.net/BlackLabel/n3o01ppb/"
+        ],
+        "description": "Plugin that allows define different color for each part of path between points.",
+        "keywords": [
+                "series",
+                "multicolor"
+        ],
+        "maintainers": [
+    {
+      "name": "Sebastian Bochan",
+      "email": "sebastian@blacklabel.pl",
+      "url": "http://www.blacklabel.pl"
+    },{
+      "name": "Paweł Fus",
+      "email": "pawel@blacklabel.pl",
+      "url": "http://www.blacklabel.pl"
+    }
+  ],
+        "homepage": "http://blacklabel.github.io/multicolor_series/",        
+        "docs": "https://github.com/blacklabel/multicolor_series/",        
+        "bugs": "https://github.com/blacklabel/multicolor_series/issues",
+        "download": "https://github.com/blacklabel/multicolor_series/archive/master.zip"
+}
