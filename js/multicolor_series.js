@@ -27,7 +27,6 @@
 				console.log(msg);                
 			}
 		}
-		seriesTypes['coloredline'] = Highcharts.extendClass(seriesTypes.line);
 		
 		/***
 		If replacing L and M in trakcer will be necessary use that getPath():
@@ -56,6 +55,14 @@
 			});
 			return ret;
 		}
+		
+		/***
+		*
+		*   ColoredLine series type
+		*
+		***/
+		
+		seriesTypes.coloredline = Highcharts.extendClass(seriesTypes.line);
 		H.seriesTypes.coloredline.prototype.processData = function(force) {
 			
 			var series = this,
@@ -288,6 +295,12 @@
 			}
 		};
 		
+		/***
+		*
+		*  The main change to get multi color isFinite changes segments array. 
+		*  From array of points to object with color and array of points.
+		*
+		***/
 		H.seriesTypes.coloredline.prototype.getSegments = function(f){
 			var series = this,
 			lastColor = 0,
@@ -435,7 +448,7 @@
 									el.destroy();
 								}
 							}
-						}
+						};
 					}
 					graphSegmentsLength = series.graph.length;
 					
@@ -473,4 +486,82 @@
 			}
 			
 		};
+		
+		
+		/***
+		*
+		*   ColoredArea series type
+		*
+		***/
+		seriesTypes.coloredarea = Highcharts.extendClass(seriesTypes.coloredline);
+		
+		H.seriesTypes.coloredarea.prototype.init = function(chart, options) {
+			options.threshold = options.threshold || null;
+			H.Series.prototype.init.call(this, chart, options);
+		};
+		
+		H.seriesTypes.coloredarea.prototype.closeSegment = H.seriesTypes.area.prototype.closeSegment;
+		
+		H.seriesTypes.coloredarea.prototype.drawGraph = function(f) {
+			H.seriesTypes.coloredline.prototype.drawGraph.call(this, f);
+			var series = this,
+					options = this.options,
+					props = [['graph', options.lineColor || series.color]];
+			
+			each(props, function(prop, i) {
+					var graphKey = prop[0],
+					graph = series[graphKey];
+					
+					if (graph) {// cancel running animations, #459
+						// do we have animation
+						each(series.graphPath, function(segment, j) {
+								// update color and path
+								
+								if(series[graphKey][j]){
+									series[graphKey][j].attr({ fill: segment[1]  });
+								} 
+						});
+						
+					}
+			});
+		};
+		
+		H.seriesTypes.coloredarea.prototype.getSegmentPath = function(segment){
+			var path;
+			
+			seriesTypes.area.prototype.getSegmentPath.call(this, segment);
+			
+			path = [].concat(this.areaPath);
+			this.areaPath = [];
+			
+			return path;
+		};
+		
+		H.seriesTypes.coloredarea.prototype.getGraphPath = function() {
+			var series = this,
+					graphPath = [],
+					segmentPath,
+					singlePoints = []; // used in drawTracker
+			// Divide into segments and build graph and area paths
+			
+			this.areaPath = [];
+			each(series.segments, function (segment) {
+					segmentPath = series.getSegmentPath(segment.points);
+					// add the segment to the graph, or a single point for tracking
+					if (segment.points.length > 1) {
+						graphPath.push([segmentPath, segment.color]);
+					} else {
+						singlePoints.push(segment.points);
+					}
+			});
+			
+			// Record it for use in drawGraph and drawTracker, and return graphPath
+			series.singlePoints = singlePoints;
+			series.graphPath = graphPath;
+			return graphPath;
+		
+		};
+		
+		H.seriesTypes.coloredarea.prototype.drawLegendSymbol = H.LegendSymbolMixin.drawRectangle;
+		
 })(Highcharts);

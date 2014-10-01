@@ -26,7 +26,7 @@ $(function () {
 
     var chart = new Highcharts.Chart({
         chart: {
-            renderTo: 'container',
+            renderTo: 'container-line',
             type: 'coloredline',
             zoomType: 'xy',
             borderWidth: 5,
@@ -41,7 +41,30 @@ $(function () {
             useHTML: true,
             x: -27,
             y: 8,
-            text: '<span class="chart-title">Multicolor series<span class="chart-href"> <a href="http://www.blacklabel.pl/highcharts" target="_blank"> Black Label </a> </span> <span class="chart-subtitle">plugin by </span></span>'
+            text: '<span class="chart-title">Multicolor (line) series<span class="chart-href"> <a href="http://www.blacklabel.pl/highcharts" target="_blank"> Black Label </a> </span> <span class="chart-subtitle">plugin by </span></span>'
+        },
+        series: [{
+            data: genData(256)
+        }]
+    });
+    var chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'container-area',
+            type: 'coloredarea',
+            zoomType: 'xy',
+            borderWidth: 5,
+            borderColor: '#e8eaeb',
+            borderRadius: 0,
+            backgroundColor: '#f7f7f7'
+        },
+        title: {
+            style: {
+                'fontSize': '1em'
+            },
+            useHTML: true,
+            x: -27,
+            y: 8,
+            text: '<span class="chart-title">Multicolor (area) series<span class="chart-href"> <a href="http://www.blacklabel.pl/highcharts" target="_blank"> Black Label </a> </span> <span class="chart-subtitle">plugin by </span></span>'
         },
         series: [{
             data: genData(256)

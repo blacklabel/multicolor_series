@@ -55,7 +55,7 @@ The latest code is available on github: [https://github.com/blacklabel/multicolo
 		</tr>
     <tr>
     	<td align="left">series.type</td>
-			<td align="left">Set it to "coloredline" to use multicolor series.</td>
+			<td align="left">Set it to "coloredline" or "coloreadarea" to use multicolor series.</td>
 		</tr>
   </tbody>
 </table>
