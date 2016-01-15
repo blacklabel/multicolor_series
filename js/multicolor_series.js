@@ -450,7 +450,8 @@
 							}
 						};
 					}
-					graphSegmentsLength = series.graph.length;
+					// Checks if series.graph exists. #3
+					graphSegmentsLength = (series.graph && series.graph.length) || -1;
 					
 					for(var j = graphSegmentsLength; j >= graphPathLength; j --){
 						if(series[graphKey][j]) {
