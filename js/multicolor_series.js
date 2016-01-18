@@ -313,11 +313,14 @@
 				
 				// if connect nulls, just remove null points
 				if (series.options.connectNulls) {
-					each(points, function (point, i) {
-							if (points[i].y === null) {
-								points.splice(i, 1);
-							} 
-					});
+				    // iterate backwars for secure point removal
+					for (var i = pointsLength - 1; i >= 0; --i) {
+						if (points[i].y === null) {
+							points.splice(i, 1);
+						}
+					}
+					pointsLength = points.length;
+					
 					each(points, function (point, i) {
 							if (i > 0 && points[i].segmentColor != points[i-1].segmentColor){
 								segments.push({
@@ -327,6 +330,13 @@
 								lastColor = i;
 							} 
 					});
+					// add the last segment (only single-point last segement is added)
+					if(lastColor !== pointsLength - 1) {
+						segments.push({
+							points: points.slice(lastColor, pointsLength), 
+							color: points[pointsLength - 1].segmentColor
+						});
+					}
 					
 					if (points.length && segments.length === 0) {
 						segments = [points];
@@ -336,8 +346,8 @@
 				} else {
 					var previousColor = null;
 					each(points, function (point, i) {
-							var colorChanged = i > 0 && point.segmentColor != points[i-1].segmentColor && points[i].segmentColor != previousColor,
-							colorExists = points[i-1] && points[i-1].segmentColor ? true : false;
+							var colorChanged = i > 0 && (point.y === null || points[i-1].y === null || (point.segmentColor != points[i-1].segmentColor && points[i].segmentColor != previousColor)),
+							colorExists = points[i-1] && points[i-1].segmentColor && points[i-1].y !== null ? true : false;
 							
 							// handle first point
 							if(!previousColor && point.segmetColor){
@@ -347,6 +357,14 @@
 							if(colorChanged){
 								var p = points.slice(lastColor, i + 1);
 								if(p.length > 0) {
+									// do not create segments with null ponits
+									each(p, function(point, j){
+										if(point.y === null) {
+											// remove null points (might be on edges)
+											p.splice(j,1);
+										}
+									});
+									
 									segments.push({
 											points: p,
 											color:  colorExists ? points[i-1].segmentColor : previousColor
@@ -360,6 +378,13 @@
 								}
 								var p = points.slice(lastColor, next);
 								if(p.length > 0) {
+									// do not create segments with null ponits
+									each(p, function(point, j){
+										if(point.y === null) {
+											// remove null points (might be on edges)
+											p.splice(j,1);
+										}
+									});
 									segments.push({
 											points: p,
 											color:  colorExists ? points[i-1].segmentColor : previousColor
