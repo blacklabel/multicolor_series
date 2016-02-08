@@ -64,3 +64,9 @@ The latest code is available on github: [https://github.com/blacklabel/multicolo
 ### Demo
 
 Demos are available at project's github page: [http://blacklabel.github.io/multicolor_series/](http://blacklabel.github.io/multicolor_series/)
+
+### Releases
+
+- Versions 2.x.y: compatible with Highcharts >= 4.2.2
+
+- Versions 1.x.y: compatible with Highcharts < 4.2.2 

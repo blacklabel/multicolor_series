@@ -29,7 +29,7 @@
 		}
 		
 		/***
-		If replacing L and M in trakcer will be necessary use that getPath():
+		If replacing L and M in tracker will be necessary use that getPath():
 		
 		function getPath(arr){
 		var ret = [];
@@ -51,11 +51,70 @@
 		function getPath(arr){
 			var ret = [];
 			each(arr, function(el) {
-					ret = ret.concat(el[0]);
+				ret = ret.concat(el[0]);
 			});
 			return ret;
 		}
-		
+
+		/**
+		 * Return the graph path of a segment - compatibility with 4.2.3+
+		 */
+		H.Series.prototype.getSegmentPath = function (segment) {
+			var series = this,
+				segmentPath = [],
+				step = series.options.step;
+
+			// build the segment line
+			each(segment, function (point, i) {
+				var plotX = point.plotX,
+					plotY = point.plotY,
+					lastPoint;
+
+				if (series.getPointSpline) {
+					// generate the spline as defined in the SplineSeries object
+					segmentPath.push.apply(segmentPath, series.getPointSpline(segment, point, i));
+				} else {
+					// moveTo or lineTo
+					segmentPath.push(i ? L : M);
+
+					// step line?
+					if (step && i) {
+						lastPoint = segment[i - 1];
+						if (step === 'right') {
+							segmentPath.push(
+								lastPoint.plotX,
+								plotY,
+								L
+							);
+						} else if (step === 'center') {
+							segmentPath.push(
+								(lastPoint.plotX + plotX) / 2,
+								lastPoint.plotY,
+								L,
+								(lastPoint.plotX + plotX) / 2,
+								plotY,
+								L
+							);
+						} else {
+							segmentPath.push(
+								plotX,
+								lastPoint.plotY,
+								L
+							);
+						}
+					}
+
+					// normal line to next point
+					segmentPath.push(
+						point.plotX,
+						point.plotY
+					);
+				}
+			});
+
+			return segmentPath;
+		};
+
 		/***
 		*
 		*   ColoredLine series type
@@ -63,6 +122,7 @@
 		***/
 		
 		seriesTypes.coloredline = Highcharts.extendClass(seriesTypes.line);
+		
 		H.seriesTypes.coloredline.prototype.processData = function(force) {
 			
 			var series = this,
@@ -109,77 +169,6 @@
 				series.pointRange = closestPointRange || 1;
 			}
 			series.closestPointRange = closestPointRange;
-		};
-		
-		H.seriesTypes.coloredline.prototype.setTooltipPoints = function (renew) {
-			var series = this,
-			points = [],
-			pointsLength,
-			low,
-			high,
-			xAxis = series.xAxis,
-			xExtremes = xAxis && xAxis.getExtremes(),
-			axisLength = xAxis ? (xAxis.tooltipLen || xAxis.len) : series.chart.plotSizeX, // tooltipLen and tooltipPosName used in polar
-			point,
-			pointX,
-			nextPoint,
-			i,
-			tooltipPoints = []; // a lookup array for each pixel in the x dimension
-			
-			// don't waste resources if tracker is disabled
-			if (series.options.enableMouseTracking === false) {
-				return;
-			}
-			
-			// renew
-			if (renew) {
-				series.tooltipPoints = null;
-			}
-			// concat segments to overcome null values
-			each(series.points, function (segment) {
-					if(segment.y !== null){
-						points = points.concat(segment);
-					}
-			});
-			each(series.segments, function (segment) {
-					each(segment.points, function(point) {
-							if(point.y !== null){
-								points = points.concat(point);
-							}
-					});
-			});
-			// Reverse the points in case the X axis is reversed
-			if (xAxis && xAxis.reversed) {
-				points = points.reverse();
-			}
-			
-			// Polar needs additional shaping
-			if (series.orderTooltipPoints) {
-				series.orderTooltipPoints(points);
-			}
-			
-			// Assign each pixel position to the nearest point
-			pointsLength = points.length;
-			for (i = 0; i < pointsLength; i++) {
-				point = points[i];
-				pointX = point.x;
-				if (pointX >= xExtremes.min && pointX <= xExtremes.max) { // #1149
-					nextPoint = points[i + 1];
-					
-					// Set this range's low to the last range's high plus one
-					low = high === UNDEFINED ? 0 : high + 1;
-					// Now find the new high
-					high = points[i + 1] ?
-					mathMin(mathMax(0, mathFloor( // #2070
-						(point.clientX + (nextPoint ? (nextPoint.wrappedClientX || nextPoint.clientX) : axisLength)) / 2 )), axisLength) :
-					axisLength;
-					
-					while (low >= 0 && low <= high) {
-						tooltipPoints[low++] = point;
-					}
-				}
-			}
-			series.tooltipPoints = tooltipPoints;
 		};
 		
 		H.seriesTypes.coloredline.prototype.drawTracker = function () {
@@ -301,7 +290,7 @@
 		*  From array of points to object with color and array of points.
 		*
 		***/
-		H.seriesTypes.coloredline.prototype.getSegments = function(f){
+		H.seriesTypes.coloredline.prototype.getSegments = function(f) {
 			var series = this,
 			lastColor = 0,
 			segments = [],
@@ -486,6 +475,14 @@
 			}
 			
 		};
+
+		H.wrap(seriesTypes.coloredline.prototype, 'translate', function (proceed) {
+			proceed.apply(this, [].slice.call(arguments, 1));
+			if(this.getSegments) {
+				this.getSegments();
+			}
+		});
+		
 		
 		
 		/***
@@ -500,14 +497,23 @@
 			H.Series.prototype.init.call(this, chart, options);
 		};
 		
-		H.seriesTypes.coloredarea.prototype.closeSegment = H.seriesTypes.area.prototype.closeSegment;
+		H.seriesTypes.coloredarea.prototype.closeSegment = function (path, segment, translatedThreshold) {
+			path.push(
+				L,
+				segment[segment.length - 1].plotX,
+				translatedThreshold,
+				L,
+				segment[0].plotX,
+				translatedThreshold
+			);
+		}
 		
 		H.seriesTypes.coloredarea.prototype.drawGraph = function(f) {
 			H.seriesTypes.coloredline.prototype.drawGraph.call(this, f);
 			var series = this,
 					options = this.options,
 					props = [['graph', options.lineColor || series.color]];
-			
+
 			each(props, function(prop, i) {
 					var graphKey = prop[0],
 					graph = series[graphKey];
@@ -525,16 +531,38 @@
 					}
 			});
 		};
-		
-		H.seriesTypes.coloredarea.prototype.getSegmentPath = function(segment){
-			var path;
-			
-			seriesTypes.area.prototype.getSegmentPath.call(this, segment);
-			
-			path = [].concat(this.areaPath);
-			this.areaPath = [];
-			
-			return path;
+
+		/**
+		* Extend the base Series getSegmentPath method by adding the path for the area.
+		* This path is pushed to the series.areaPath property.
+		*/
+		H.seriesTypes.coloredarea.prototype.getSegmentPath = function(segment) {
+			var segmentPath = H.Series.prototype.getSegmentPath.call(this, segment), // call base method
+				areaSegmentPath = [].concat(segmentPath), // work on a copy for the area path
+				i,
+				options = this.options,
+				segLength = segmentPath.length,
+				translatedThreshold = this.yAxis.getThreshold(options.threshold), // #2181
+				yBottom;
+
+			if (segLength === 3) { // for animation from 1 to two points
+				areaSegmentPath.push(L, segmentPath[1], segmentPath[2]);
+			}
+			if (options.stacking && !this.closedStacks) {
+				for (i = segment.length - 1; i >= 0; i--) {
+
+					yBottom = pick(segment[i].yBottom, translatedThreshold);
+
+					// step line?
+					if (i < segment.length - 1 && options.step) {
+						areaSegmentPath.push(segment[i + 1].plotX, yBottom);
+					}
+					areaSegmentPath.push(segment[i].plotX, yBottom);
+				}
+			} else { // follow zero line back
+				this.closeSegment(areaSegmentPath, segment, translatedThreshold);
+			}
+			return areaSegmentPath;
 		};
 		
 		H.seriesTypes.coloredarea.prototype.getGraphPath = function() {
