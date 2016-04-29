@@ -1,4 +1,10 @@
-(function(H){
+(function (factory) {
+    if (typeof module === 'object' && module.exports) {
+        module.exports = factory;
+    } else {
+        factory(Highcharts);
+    }
+}(function(H){
 		var each = H.each,
 		seriesTypes = H.seriesTypes,
 		mathFloor = Math.floor,
@@ -618,4 +624,4 @@
 		
 		H.seriesTypes.coloredarea.prototype.drawLegendSymbol = H.LegendSymbolMixin.drawRectangle;
 		
-})(Highcharts);
+}));
