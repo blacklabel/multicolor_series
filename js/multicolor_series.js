@@ -127,7 +127,7 @@
 		*
 		***/
 		
-		seriesTypes.coloredline = Highcharts.extendClass(seriesTypes.line);
+		seriesTypes.coloredline = H.extendClass(seriesTypes.line);
 		
 		H.seriesTypes.coloredline.prototype.processData = function(force) {
 			
@@ -522,7 +522,7 @@
 		*   ColoredArea series type
 		*
 		***/
-		seriesTypes.coloredarea = Highcharts.extendClass(seriesTypes.coloredline);
+		seriesTypes.coloredarea = H.extendClass(seriesTypes.coloredline);
 		
 		H.seriesTypes.coloredarea.prototype.init = function(chart, options) {
 			options.threshold = options.threshold || null;
