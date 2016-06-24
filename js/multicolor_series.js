@@ -6,6 +6,10 @@
 * License: Creative Commons Attribution (CC)
 */
 /* global Highcharts window document module:true */
+/**
+ * @fileoverview
+ * @suppress {checkTypes}
+ */
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;

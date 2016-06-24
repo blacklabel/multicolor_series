@@ -133,8 +133,6 @@ gulp.task('push-master', function (done) {
 gulp.task('bump-files', function () {
 	// Props to: http://stackoverflow.com/questions/36339694/how-to-increment-version-number-via-gulp-task
 
-
-	console.log(args);
 	var type = args.type;
 	var v = args.ver;
 	var options = {};
