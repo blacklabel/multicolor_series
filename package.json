@@ -16,9 +16,20 @@
   "bugs": {
     "url": "https://github.com/blacklabel/multicolor_series/issues"
   },
+  "files": [
+    "js/multicolor_series.js",
+    "js/multicolor_series.min.js",
+    "js/multicolor_series.min.js.map"
+  ],
   "homepage": "https://github.com/blacklabel/multicolor_series#readme",
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^2.0.0"
+    "gulp": "github:gulpjs/gulp.git#4.0",
+    "gulp-eslint": "^2.0.0",
+    "google-closure-compiler": "^20160517.1.0",
+    "gulp-sourcemaps": "1.6.0",
+    "gulp-bump": "^2.1.0",
+    "yargs": "^4.7.0",
+    "gulp-git": "^1.7.2",
+    "gulp-if": "^2.0.0"
   }
 }

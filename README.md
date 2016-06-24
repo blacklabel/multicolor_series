@@ -13,8 +13,9 @@ Go to project page to see this module in action: [http://blacklabel.github.io/mu
 
 * For NPM users: 
 ```
-var Highcharts = require('highcharts'),
-    HighchartsMulticolor = require('multicolor_series')(Highcharts);</code></pre>
+var Highcharts = require('highcharts');
+
+require('multicolor_series')(Highcharts);
 ```
 
 ### Code

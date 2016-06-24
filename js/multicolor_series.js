@@ -1,3 +1,10 @@
+/**
+* Multicolor Series v2.2.0(2016-06-24)
+*
+* (c) 2012-2016 Black Label
+*
+* License: Creative Commons Attribution (CC)
+*/
 /* global Highcharts window document module:true */
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
