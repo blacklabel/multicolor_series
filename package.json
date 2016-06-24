@@ -1,6 +1,6 @@
 {
   "name": "highcharts-multicolor-series",
-  "version": "2.1.3",
+  "version": "2.2.0",
   "description": "Highcharts plugin that adds new series: multicolor-series, where oyu can define color for each part of a path, between two points.",
   "main": "js/multicolor_series.js",
   "repository": {
