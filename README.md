@@ -18,6 +18,13 @@ var Highcharts = require('highcharts');
 require('multicolor_series')(Highcharts);
 ```
 
+* For BOWER users:
+
+```
+bower install highcharts-multicolor-series
+```
+
+
 ### Code
 
 The latest code is available on github: [https://github.com/blacklabel/multicolor_series/](https://github.com/blacklabel/multicolor_series/)
