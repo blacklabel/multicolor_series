@@ -579,8 +579,6 @@
 			translatedThreshold = this.yAxis.getThreshold(options.threshold), // #2181
 			yBottom;
 
-		closePath = closePath || true; // close the path by default
-
 		if (segLength === 3) { // for animation from 1 to two points
 			areaSegmentPath.push(L, segmentPath[1], segmentPath[2]);
 		}
