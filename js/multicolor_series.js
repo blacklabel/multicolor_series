@@ -1,5 +1,5 @@
 /**
-* Multicolor Series v2.2.1-0(2016-06-24)
+* Multicolor Series v2.2.1(2017-02-07)
 *
 * (c) 2012-2016 Black Label
 *
@@ -441,6 +441,7 @@
 			var attribs = {
 					stroke: prop[1],
 					'stroke-width': lineWidth,
+					fill: 'none',
 					zIndex: 1 // #1069
 				},
 				item;
@@ -455,8 +456,12 @@
 			
 			item = series.chart.renderer.path(segment[0])
 			.attr(attribs)
-			.add(series.group)
-			.shadow(!i && options.shadow);
+			.add(series.group);
+
+
+			if (item.shadow) {
+				item.shadow(!i && options.shadow);
+			}
 			
 			return item;
 		}
@@ -479,7 +484,7 @@
 					}
 				});
 				
-			} else if (lineWidth && graphPath.length) { // #1487
+			} else if (graphPath.length) { // #1487
 				graph = [];
 				each(graphPath, function (segment, j) {
 					graph[j] = getSegment(segment, prop, i);
