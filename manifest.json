@@ -16,8 +16,8 @@
                 "highcharts": "4.2.3"
         },
         "demo": [
-                "http://jsfiddle.net/BlackLabel/av87r7uo/",
-                "http://jsfiddle.net/BlackLabel/tg58gc6x/"
+                "https://jsfiddle.net/BlackLabel/av87r7uo/",
+                "https://jsfiddle.net/BlackLabel/tg58gc6x/"
         ],
         "description": "Plugin that allows define different color for each part of path between points.",
         "keywords": [
