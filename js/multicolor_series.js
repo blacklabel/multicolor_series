@@ -1,5 +1,5 @@
 /**
-* Multicolor Series v2.2.1(2017-02-07)
+* Multicolor Series v2.2.2(2017-09-29)
 *
 * (c) 2012-2016 Black Label
 *
@@ -71,8 +71,8 @@
 
 	/**
 	 * Return the graph path of a segment - compatibility with 4.2.3+
-	 * @param {object} segment of the path
-	 * @returns {array} Path (SVG)
+	 * @param {Object} segment of the path
+	 * @returns {Array} Path (SVG)
 	 */
 	H.Series.prototype.getSegmentPath = function (segment) {
 		var series = this,
@@ -327,12 +327,15 @@
 						lastColor = j;
 					}
 				});
-				// add the last segment (only single-point last segement is added)
-				if (lastColor !== pointsLength - 1) {
-					segments.push({
-						points: points.slice(lastColor, pointsLength),
-						color: points[pointsLength - 1].segmentColor
-					});
+
+				if (pointsLength) {
+					// add the last segment (only single-point last segement is added)
+					if (lastColor !== pointsLength - 1) {
+						segments.push({
+							points: points.slice(lastColor, pointsLength),
+							color: points[pointsLength - 1].segmentColor
+						});
+					}
 				}
 				
 				if (points.length && segments.length === 0) {
@@ -345,11 +348,6 @@
 				each(points, function (point, j) {
 					var colorChanged = j > 0 && (point.y === null || points[j - 1].y === null || (point.segmentColor !== points[j - 1].segmentColor && points[j].segmentColor !== previousColor)),
 						colorExists = points[j - 1] && points[j - 1].segmentColor && points[j - 1].y !== null ? true : false;
-					
-					// handle first point
-					if (!previousColor && point.segmetColor) {
-						previousColor = point.segmentColor;
-					}
 					
 					if (colorChanged) {
 						var p = points.slice(lastColor, j + 1);
@@ -571,8 +569,8 @@
 	/**
 	* Extend the base Series getSegmentPath method by adding the path for the area.
 	* This path is pushed to the series.areaPath property.
-	* @param {object} segment of the path
-	* @returns {array} Path (SVG)
+	* @param {Object} segment of the path
+	* @returns {Array} Path (SVG)
 	**/
 	H.seriesTypes.coloredarea.prototype.getSegmentPath = function (segment) {
 		var segmentPath = H.Series.prototype.getSegmentPath.call(this, segment), // call base method
