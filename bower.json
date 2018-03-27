@@ -1,6 +1,6 @@
 {
   "name": "highcharts-multicolor-series",
-  "version": "2.2.1-0",
+  "version": "2.2.4",
   "homepage": "http://blacklabel.github.io/multicolor_series/",
   "authors": [
     "Sebastian Bochan <sebastian@blacklabel.pl>",
@@ -11,7 +11,8 @@
   "main": "multicolor_series.js",
   "keywords": [
     "highcharts",
-    "multicolor"
+    "multicolor",
+    "highcharts-addon"
   ],
   "license": "Creative Commons Attribution (CC)",
   "ignore": [
