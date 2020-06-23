@@ -542,6 +542,7 @@
 	});
 
 	H.wrap(seriesTypes.coloredline.prototype, 'destroy', function (proceed) {
+		// destroy all parts
 		this.graph.destroy();
 		proceed.apply(this, Array.prototype.slice.call(arguments, 1));
 	});
