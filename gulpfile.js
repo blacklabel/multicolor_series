@@ -20,7 +20,7 @@ decorator = [
 	'/**',
 	'----',
 	'*',
-	'* (c) 2012-2016 Black Label',
+	'* (c) 2012-2022 Black Label',
 	'*',
 	'* License: Creative Commons Attribution (CC)',
 	'*/',
