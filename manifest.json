@@ -13,7 +13,7 @@
                 }
         ],
         "dependencies": {
-                "highcharts": "4.2.3"
+                "highcharts": ">9.2.0"
         },
         "demo": [
                 "https://jsfiddle.net/BlackLabel/av87r7uo/",
