@@ -1,5 +1,5 @@
 /**
-* Multicolor Series v2.3.0 (2022-02-24)
+* Multicolor Series v2.4.0(2022-03-15)
 *
 * (c) 2012-2022 Black Label
 *
