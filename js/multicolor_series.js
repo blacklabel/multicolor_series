@@ -248,8 +248,11 @@
 			[series.tracker, series.markerGroup].forEach(function (track) {
 				track.addClass(PREFIX + 'tracker')
 				.on('mouseover', onMouseOver)
-				.on('mouseout', function (e) { pointer.onTrackerMouseOut(e); })
-				.css(css);
+				.on('mouseout', function (e) { pointer.onTrackerMouseOut(e); });
+
+				if (css) {
+					track.css(css);
+				}
 				
 				if (hasTouch) {
 					track.on('touchstart', onMouseOver);
