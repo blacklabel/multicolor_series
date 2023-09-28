@@ -658,5 +658,5 @@
 	
 	};
 	
-	H.seriesTypes.coloredarea.prototype.drawLegendSymbol = Highcharts._modules['Core/Legend/LegendSymbol.js'].drawRectangle; // eslint-disable-line
+	H.seriesTypes.coloredarea.prototype.drawLegendSymbol = H._modules['Core/Legend/LegendSymbol.js'].rectangle; // eslint-disable-line
 }));
