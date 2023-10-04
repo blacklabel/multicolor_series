@@ -40,7 +40,7 @@ interface SeriesColoredSegment {
 interface SeriesColored extends Highcharts.Series {
     data: SeriesColoredPoint[];
     segments: SeriesColoredSegment[];
-    graphPath: any;
+    tracker: SVGPathElement;
 }
 
 interface ChartSeriesColored extends Highcharts.Chart {

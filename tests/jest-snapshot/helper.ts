@@ -1,6 +1,9 @@
 import { SeriesColored, SeriesColoredPoint, SeriesColoredSegment } from "../../types";
 
-export const generateFormattedSeries = (series: SeriesColored, data: SeriesColoredPoint[]) => ({
+export const generateFormattedSeries = (
+    series: SeriesColored,
+    data: SeriesColoredPoint[]
+) => ({
     seriesType: series.type,
     data: data.map((point) => ({
         segmentColor: point.segmentColor,
