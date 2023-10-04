@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        /**
+         * "allowJs" will be removed once refactor the js folder to ts
+         * (exists for js files import to tests files).
+         */
+        "allowJs": true,
+        "strict": true,
+        "noUncheckedIndexedAccess": true
+    }
+}

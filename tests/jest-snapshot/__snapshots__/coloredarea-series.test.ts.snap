@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The data structure for coloredarea series should be appropriate. The segments data should be appropriate. 1`] = `
+[
+  {
+    "color": "red",
+    "points": [
+      {
+        "index": 0,
+        "segmentColor": "red",
+        "x": 0,
+        "y": 10,
+      },
+      {
+        "index": 1,
+        "segmentColor": "blue",
+        "x": 1,
+        "y": 20,
+      },
+    ],
+  },
+  {
+    "color": "blue",
+    "points": [
+      {
+        "index": 1,
+        "segmentColor": "blue",
+        "x": 1,
+        "y": 20,
+      },
+      {
+        "index": 2,
+        "segmentColor": "yellow",
+        "x": 2,
+        "y": 30,
+      },
+    ],
+  },
+  {
+    "color": "yellow",
+    "points": [
+      {
+        "index": 2,
+        "segmentColor": "yellow",
+        "x": 2,
+        "y": 30,
+      },
+      {
+        "index": 3,
+        "segmentColor": "green",
+        "x": 3,
+        "y": 40,
+      },
+    ],
+  },
+  {
+    "color": "green",
+    "points": [
+      {
+        "index": 3,
+        "segmentColor": "green",
+        "x": 3,
+        "y": 40,
+      },
+      {
+        "index": 4,
+        "segmentColor": "pink",
+        "x": 4,
+        "y": 50,
+      },
+    ],
+  },
+]
+`;
+
+exports[`The data structure for coloredarea series should be appropriate. The series data should be appropriate. 1`] = `
+{
+  "data": [
+    {
+      "segmentColor": "red",
+      "x": 0,
+      "y": 10,
+    },
+    {
+      "segmentColor": "blue",
+      "x": 1,
+      "y": 20,
+    },
+    {
+      "segmentColor": "yellow",
+      "x": 2,
+      "y": 30,
+    },
+    {
+      "segmentColor": "green",
+      "x": 3,
+      "y": 40,
+    },
+    {
+      "segmentColor": "pink",
+      "x": 4,
+      "y": 50,
+    },
+  ],
+  "seriesType": "line",
+}
+`;
