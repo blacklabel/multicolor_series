@@ -10,7 +10,7 @@ describe("The data structure for coloredline series should be appropriate.", () 
     const containerElement = document.createElement("div");
     const chart = Highcharts.chart(containerElement, {
         accessibility: {
-          enabled: false
+            enabled: false
         },
 
         series: [
