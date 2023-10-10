@@ -14,7 +14,7 @@ describe('Refactoring regression tests - series coloredarea.', () => {
 
         plotOptions: {
             series: {
-              animation: false
+                animation: false
             }
         },
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Refactoring regression tests - series coloredline. Colored series graph element tests. The graph paths should match the snapshot. 1`] = `
+exports[`Refactoring regression tests - series coloredline. Coloredline series graph element tests. The graph paths should match the snapshot. 1`] = `
 [
   "<path fill="none" d="M 0 0" stroke="red" stroke-width="1" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
   "<path fill="none" d="M 0 0" stroke="blue" stroke-width="1" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",

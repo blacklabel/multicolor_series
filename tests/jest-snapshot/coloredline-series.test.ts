@@ -14,7 +14,7 @@ describe('Refactoring regression tests - series coloredline.', () => {
 
         plotOptions: {
             series: {
-              animation: false
+                animation: false
             }
         },
 
@@ -87,7 +87,7 @@ describe('Refactoring regression tests - series coloredline.', () => {
     const data = series.data,
         graph = series.graph as unknown as SVGElement[];
 
-    describe('Colored series graph element tests.', () => {
+    describe('Coloredline series graph element tests.', () => {
         test('The graph element should be an four elements array.', () => {
             expect(graph.length).toEqual(4);
         });
