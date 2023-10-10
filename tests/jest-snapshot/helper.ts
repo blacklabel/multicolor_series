@@ -1,7 +1,8 @@
-import { SeriesColored, SeriesColoredPoint, SeriesColoredSegment } from "../../types";
+import { Series } from "highcharts";
+import { SeriesColoredPoint, SeriesColoredSegment } from "types";
 
 export const generateFormattedSeries = (
-    series: SeriesColored,
+    series: Series,
     data: SeriesColoredPoint[]
 ) => ({
     seriesType: series.type,

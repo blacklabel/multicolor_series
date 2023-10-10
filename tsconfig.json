@@ -9,6 +9,10 @@
          */
         "allowJs": true,
         "strict": true,
-        "noUncheckedIndexedAccess": true
+        "noUncheckedIndexedAccess": true,
+        "baseUrl": ".",
+        "paths": {
+            "js/*": ["js/*"]
+        }
     }
 }
