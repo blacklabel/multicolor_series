@@ -1,10 +1,11 @@
-import { SeriesOptions, PointOptionsObject, Point } from "highcharts";
+import { SeriesOptions, PointOptionsObject, Point, Series, SVGElement } from "highcharts";
 
 /**
  * Shared types.
  */
 type SeriesColoredSegment = {
     color: string;
+    points: SeriesColoredPoint[];
 };
 
 /**
@@ -32,11 +33,6 @@ declare module "highcharts" {
         SeriesColoredlineOptions?: SeriesColoredlineOptions;
         SeriesColoredareaOptions?: SeriesColoredareaOptions;
     }
-
-    interface Series {
-        tracker: SVGElement;
-        segments: SeriesColoredSegment[];
-    }
 }
 
 /**
@@ -46,4 +42,10 @@ interface SeriesColoredPoint extends Point {
     segmentColor?: string;
 }
 
-export { SeriesColoredSegment, SeriesColoredPoint };
+interface SeriesColored extends Omit<Series, 'graph'> {
+    tracker: SVGElement;
+    segments: SeriesColoredSegment[];
+    graph: SVGElement[];
+}
+
+export { SeriesColored, SeriesColoredSegment, SeriesColoredPoint };

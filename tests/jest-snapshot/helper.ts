@@ -7,27 +7,18 @@ export const generateFormattedSeries = (
 ) => ({
     seriesType: series.type,
     data: data.map((point) => ({
-        segmentColor: point.segmentColor,
+        segmentColor: point?.segmentColor,
         x: point.x,
         y: point.y
     }))
 });
 
-const generateFormattedPoint = (point: SeriesColoredPoint | undefined) => ({
-    index: point?.index,
-    segmentColor: point?.segmentColor,
-    x: point?.x,
-    y: point?.y
-});
-
-export const generateFormattedSegments = (
-    segments: SeriesColoredSegment[],
-    data: SeriesColoredPoint[]
-) =>
-    segments.map((segment, index) => ({
+export const generateFormattedSegments = (segments: SeriesColoredSegment[]) =>
+    segments.map((segment) => ({
         color: segment.color,
-        points: [
-            generateFormattedPoint(data[index]),
-            generateFormattedPoint(data[index + 1])
-        ]
+        points: segment.points.map((point) => ({
+            segmentColor: point?.segmentColor,
+            x: point.x,
+            y: point.y
+        }))
     }));

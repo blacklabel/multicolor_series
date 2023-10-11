@@ -1,9 +1,9 @@
-import Highcharts, { SVGElement } from 'highcharts';
+import Highcharts from 'highcharts';
 import multicolorModule from 'js/multicolor_series';
+import { isSeriesColored } from 'typeguards';
 import { generateFormattedSegments, generateFormattedSeries } from './helper';
 
 multicolorModule(Highcharts);
-Highcharts.useSerialIds(true);
 
 describe('Refactoring regression tests - series coloredarea.', () => {
     const containerElement = document.createElement('div');
@@ -40,7 +40,7 @@ describe('Refactoring regression tests - series coloredarea.', () => {
                     },
                     {
                         y: 10,
-                        segmentColor: 'brown'
+                        segmentColor: 'green'
                     },
                     {
                         y: 50,
@@ -48,10 +48,11 @@ describe('Refactoring regression tests - series coloredarea.', () => {
                     },
                     {
                         y: 20,
-                        segmentColor: 'black'
+                        segmentColor: 'brown'
                     },
                     {
-                        y: 70
+                        y: 70,
+                        segmentColor: 'pink'
                     }
                 ]
             }
@@ -61,19 +62,18 @@ describe('Refactoring regression tests - series coloredarea.', () => {
     const series = chart.series[0];
 
     if (!series) {
-        test('Chart series should be defined.', () => {
-            expect(series).toBeDefined();
-        });
-
-        return;
+        throw Error('Series should be defined.');
     }
 
-    const data = series.data,
-        graph = series.graph as unknown as SVGElement[];
+    if (!isSeriesColored(series, 'coloredarea')) {
+        throw Error('Series type should be coloredarea.');
+    }
 
-    describe('Coloredarea series graph element tests.', () => {
-        test('The graph element should be an six elements array.', () => {
-            expect(graph.length).toEqual(6);
+    const graph = series.graph;
+
+    describe('Graph element tests.', () => {
+        test('The graph element should be an five elements array.', () => {
+            expect(graph.length).toEqual(5);
         });
 
         test('The graph paths should match the snapshot.', () => {
@@ -83,16 +83,16 @@ describe('Refactoring regression tests - series coloredarea.', () => {
     });
 
     test('The tracker element should match the snapshot.', () => {
-        expect(series.tracker).toMatchSnapshot();
+        expect(series.tracker.element).toMatchSnapshot();
     });
 
     test('The series data should match the snapshot.', () => {
-        const formattedSeries = generateFormattedSeries(series, data);
+        const formattedSeries = generateFormattedSeries(series, series.data);
         expect(formattedSeries).toMatchSnapshot();
     });
 
     test('The segments data should match the snapshot.', () => {
-        const formattedSegments = generateFormattedSegments(series.segments, data);
+        const formattedSegments = generateFormattedSegments(series.segments);
         expect(formattedSegments).toMatchSnapshot();
     });
 });

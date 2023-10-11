@@ -1,9 +1,9 @@
-import Highcharts, { SVGElement } from 'highcharts';
+import Highcharts from 'highcharts';
 import multicolorModule from 'js/multicolor_series';
+import { isSeriesColored } from 'typeguards';
 import { generateFormattedSegments, generateFormattedSeries } from './helper';
 
 multicolorModule(Highcharts);
-Highcharts.useSerialIds(true);
 
 describe('Refactoring regression tests - series coloredline.', () => {
     const containerElement = document.createElement('div');
@@ -31,7 +31,7 @@ describe('Refactoring regression tests - series coloredline.', () => {
                         segmentColor: 'red'
                     },
                     {
-                        y: 20,
+                        y: 60,
                         segmentColor: 'blue'
                     },
                     {
@@ -40,34 +40,19 @@ describe('Refactoring regression tests - series coloredline.', () => {
                     },
                     {
                         y: 10,
-                        segmentColor: 'brown'
-                    },
-                    {
-                        y: 50
-                    }
-                ]
-            },
-            {
-                type: 'coloredline',
-                data: [
-                    {
-                        y: 10,
-                        segmentColor: 'lime'
-                    },
-                    {
-                        y: 30,
-                        segmentColor: 'pink'
-                    },
-                    {
-                        y: 20,
-                        segmentColor: 'navy'
+                        segmentColor: 'green'
                     },
                     {
                         y: 50,
-                        segmentColor: 'olive'
+                        segmentColor: 'green'
                     },
                     {
-                        y: 40
+                        y: 20,
+                        segmentColor: 'brown'
+                    },
+                    {
+                        y: 70,
+                        segmentColor: 'pink'
                     }
                 ]
             }
@@ -77,19 +62,18 @@ describe('Refactoring regression tests - series coloredline.', () => {
     const series = chart.series[0];
 
     if (!series) {
-        test('Chart series should be defined.', () => {
-            expect(series).toBeDefined();
-        });
-
-        return;
+        throw Error('Series should be defined.');
     }
 
-    const data = series.data,
-        graph = series.graph as unknown as SVGElement[];
+    if (!isSeriesColored(series, 'coloredline')) {
+        throw Error('Series type should be coloredline.');
+    }
 
-    describe('Coloredline series graph element tests.', () => {
-        test('The graph element should be an four elements array.', () => {
-            expect(graph.length).toEqual(4);
+    const graph = series.graph;
+
+    describe('Graph element tests.', () => {
+        test('The graph element should be an five elements array.', () => {
+            expect(graph.length).toEqual(5);
         });
 
         test('The graph paths should match the snapshot.', () => {
@@ -99,16 +83,16 @@ describe('Refactoring regression tests - series coloredline.', () => {
     });
 
     test('The tracker element should match the snapshot.', () => {
-        expect(series.tracker).toMatchSnapshot();
+        expect(series.tracker.element).toMatchSnapshot();
     });
 
     test('The series data should match the snapshot.', () => {
-        const formattedSeries = generateFormattedSeries(series, data);
+        const formattedSeries = generateFormattedSeries(series, series.data);
         expect(formattedSeries).toMatchSnapshot();
     });
 
     test('The segments data should match the snapshot.', () => {
-        const formattedSegments = generateFormattedSegments(series.segments, data);
+        const formattedSegments = generateFormattedSegments(series.segments);
         expect(formattedSegments).toMatchSnapshot();
     });
 });
