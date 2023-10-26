@@ -1,6 +1,6 @@
-import Highcharts from 'highcharts';
-import multicolorModule from 'js/multicolor_series';
-import { isSeriesColored } from 'typeguards';
+import Highcharts from 'highcharts/ts/masters/highcharts.src';
+import multicolorModule from './../../js/multicolor_series';
+import { isSeriesColored } from './../../typeguards';
 import { generateFormattedSegments, generateFormattedSeries } from './helper';
 
 multicolorModule(Highcharts);
