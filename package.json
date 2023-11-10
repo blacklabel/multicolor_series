@@ -25,7 +25,8 @@
   "homepage": "https://github.com/blacklabel/multicolor_series#readme",
   "types": "types.d.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "gulp build"
   },
   "devDependencies": {
     "@types/jest": "^29.5.6",
@@ -37,9 +38,12 @@
     "gulp-eslint": "^2.0.0",
     "gulp-git": "^2.10.0",
     "gulp-if": "^2.0.0",
+    "gulp-replace": "^1.1.4",
     "gulp-sourcemaps": "1.6.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "through2": "^4.0.2",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",

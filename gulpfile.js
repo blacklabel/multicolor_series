@@ -1,5 +1,6 @@
 'use strict';
-var gulp = require('gulp'),
+
+const gulp = require('gulp'),
 	eslint = require('gulp-eslint'),
 	sourcemaps = require('gulp-sourcemaps'),
 	closureCompiler = require('google-closure-compiler').gulp(),
@@ -9,12 +10,14 @@ var gulp = require('gulp'),
 	gulpif = require('gulp-if'),
 	args = require('yargs').argv,
 	fs = require('fs'),
-	dateformat = require('dateformat');
+	dateformat = require('dateformat'),
+	gulpTypescript = require("gulp-typescript"),
+	through2 = require('through2'),
+	tsProject = gulpTypescript.createProject("tsconfig.json");
 
-var files = ['./js/multicolor_series.js', 'js/demo.js'],
+let files = ['./js/multicolor_series.js', 'js/demo.js'],
 	decorator,
 	version;
-
 
 decorator = [
 	'/**',
@@ -26,6 +29,64 @@ decorator = [
 	'*/',
 	''
 ];
+
+gulp.task("build", () => {
+	return tsProject
+    	.src()
+    	.pipe(tsProject())
+    	.js.pipe(through2.obj(async function (file, _encoding, callback) {
+			if (file.isBuffer()) {
+				let fileContent = file.contents.toString('utf8');
+				const removedSpecifiers = [],
+					removedPaths = [],
+					importPathReg = /import (.+?) from ["'](.+?)["'];/g,
+					formattedPathReg = /^highcharts\/ts\//;
+
+				fileContent = fileContent.replace(importPathReg, (_match, specifier, path) => {
+					removedSpecifiers.push(specifier);
+			   		removedPaths.push(`${path.replace(formattedPathReg, "")}.js`);
+			   		return '';
+				});
+
+		  		const iifeCode = `(function (factory) {
+						if (typeof module === 'object' && module.exports) {
+							module.exports = factory;
+						} else {
+							factory(Highcharts);
+						}
+					}(function (Highcharts) {
+						const _modules = Highcharts ? Highcharts._modules : {},
+							_registerModule = (obj, path, args, fn) => {
+								if (!obj.hasOwnProperty(path)) {
+									obj[path] = fn.apply(null, args);
+
+									if (typeof CustomEvent === 'function') {
+										window.dispatchEvent(new CustomEvent(
+											'HighchartsModuleLoaded',
+											{ detail: { path: path, module: obj[path] } }
+										));
+									}
+								}
+							}
+
+						_registerModule(
+							_modules,
+							'Extensions/MulticolorSeries.js',
+							[${removedPaths.map((path) => `_modules[${`'${path}'`}]`)}],
+							(${removedSpecifiers.map((specifier) => specifier)}) => {
+								${fileContent}
+							}
+						)
+					}));`;
+
+		  		file.contents = Buffer.from(iifeCode, 'utf8');
+			}
+
+			this.push(file);
+			callback();
+	  	}))
+		.pipe(gulp.dest('dist'));
+});
 
 gulp.task('lint', function () {
 	return gulp.src(files)

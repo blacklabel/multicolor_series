@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Multicolor series</title>
-  
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-  <script src="js/custom-module.js"></script>
-</head>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Multicolor series</title>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="dist/multicolor_series.js"></script>
+  </head>
   <body>
-    <div id="container"></div>
+    <div id="coloredline-container"></div>
+    <div id="coloredarea-container"></div>
   </body>
 
   <script>
-    Highcharts.chart('container', {
-      series: [{
-        type: 'coloredline',
-        data: [
-          439,
-          {
-            y: 525,
-            name: 'test'
-          },
-          571,
-          696,
-          970,
-          119,
-          137,
-          154
-        ]
-      }]
+    Highcharts.chart("coloredline-container", {
+      series: [
+        {
+          type: "coloredline",
+          data: [5, 2, 4, 3, 1],
+        }
+      ]
+    });
+
+    Highcharts.chart("coloredarea-container", {
+      series: [
+        {
+          type: "coloredarea",
+          data: [5, 2, 4, 3, 1],
+        }
+      ]
     });
   </script>
 </html>
