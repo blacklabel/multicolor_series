@@ -48,38 +48,39 @@ gulp.task("build", () => {
 			   		return '';
 				});
 
-		  		const iifeCode = `(function (factory) {
-						if (typeof module === 'object' && module.exports) {
-							module.exports = factory;
-						} else {
-							factory(Highcharts);
-						}
-					}(function (Highcharts) {
-						const _modules = Highcharts ? Highcharts._modules : {},
-							_registerModule = (obj, path, args, fn) => {
-								if (!obj.hasOwnProperty(path)) {
-									obj[path] = fn.apply(null, args);
+		  		const wrappedFileContent = 
+`(function (factory) {
+	if (typeof module === 'object' && module.exports) {
+		module.exports = factory;
+	} else {
+		factory(Highcharts);
+	}
+}(function (Highcharts) {
+	const _modules = Highcharts ? Highcharts._modules : {},
+		_registerModule = (obj, path, args, fn) => {
+			if (!obj.hasOwnProperty(path)) {
+				obj[path] = fn.apply(null, args);
 
-									if (typeof CustomEvent === 'function') {
-										window.dispatchEvent(new CustomEvent(
-											'HighchartsModuleLoaded',
-											{ detail: { path: path, module: obj[path] } }
-										));
-									}
-								}
-							}
+				if (typeof CustomEvent === 'function') {
+					window.dispatchEvent(new CustomEvent(
+						'HighchartsModuleLoaded',
+						{ detail: { path: path, module: obj[path] } }
+					));
+				}
+			}
+		}
 
-						_registerModule(
-							_modules,
-							'Extensions/MulticolorSeries.js',
-							[${removedPaths.map((path) => `_modules[${`'${path}'`}]`)}],
-							(${removedSpecifiers.map((specifier) => specifier)}) => {
-								${fileContent}
-							}
-						)
-					}));`;
+		_registerModule(
+			_modules,
+			'Extensions/MulticolorSeries.js',
+			[${removedPaths.map((path) => `_modules[${`'${path}'`}]`)}],
+			(${removedSpecifiers.map((specifier) => specifier)}) => {
+				${fileContent}
+			}
+		)
+}));`;
 
-		  		file.contents = Buffer.from(iifeCode, 'utf8');
+		  		file.contents = Buffer.from(wrappedFileContent, 'utf8');
 			}
 
 			this.push(file);
