@@ -7,7 +7,7 @@ settings:
 dependencies:
   highcharts:
     specifier: github:highcharts/highcharts
-    version: github.com/highcharts/highcharts/41258ad806b26101c2e8aa329340b6ccc0d5d86b
+    version: github.com/highcharts/highcharts/11fc07d7d2b0abc5fb05601dd380b510515274e5
 
 devDependencies:
   '@types/jest':
@@ -1350,7 +1350,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001561
-      electron-to-chromium: 1.4.580
+      electron-to-chromium: 1.4.581
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
     dev: true
@@ -1958,8 +1958,8 @@ packages:
       object.defaults: 1.1.0
     dev: true
 
-  /electron-to-chromium@1.4.580:
-    resolution: {integrity: sha512-T5q3pjQon853xxxHUq3ZP68ZpvJHuSMY2+BZaW3QzjS4HvNuvsMmZ/+lU+nCrftre1jFZ+OSlExynXWBihnXzw==}
+  /electron-to-chromium@1.4.581:
+    resolution: {integrity: sha512-6uhqWBIapTJUxgPTCHH9sqdbxIMPt7oXl0VcAL1kOtlU6aECdcMncCrX5Z7sHQ/invtrC9jUQUef7+HhO8vVFw==}
     dev: true
 
   /emittery@0.13.1:
@@ -6392,8 +6392,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/highcharts/highcharts/41258ad806b26101c2e8aa329340b6ccc0d5d86b:
-    resolution: {tarball: https://codeload.github.com/highcharts/highcharts/tar.gz/41258ad806b26101c2e8aa329340b6ccc0d5d86b}
+  github.com/highcharts/highcharts/11fc07d7d2b0abc5fb05601dd380b510515274e5:
+    resolution: {tarball: https://codeload.github.com/highcharts/highcharts/tar.gz/11fc07d7d2b0abc5fb05601dd380b510515274e5}
     name: highcharts
     version: 11.2.0
     engines: {node: '>=14.14.0'}
