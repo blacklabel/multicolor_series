@@ -78,21 +78,24 @@ class ColoredlineSeries extends LineSeries {
      */
     getSegmentPath(segment) {
         const series = this, segmentPath = [], step = series.options.step;
-        // build the segment line
+        // Build the segment line
         segment.forEach(function (point, i) {
             const plotX = point.plotX, plotY = point.plotY;
             let lastPoint;
             if (series.getPointSpline) {
-                // generate the spline as defined in the SplineSeries object
+                // Generate the spline as defined in the SplineSeries object
                 segmentPath.push.apply(segmentPath, series.getPointSpline(segment, point, i));
             }
             else {
-                // moveTo or lineTo
+                // Declarations: moveTo or lineTo
                 segmentPath.push(i ? 'L' : 'M');
-                // step line?
+                // Step line?
                 if (step && i) {
                     lastPoint = segment[i - 1];
-                    if (plotX && plotY && (lastPoint === null || lastPoint === void 0 ? void 0 : lastPoint.plotX) && (lastPoint === null || lastPoint === void 0 ? void 0 : lastPoint.plotY)) {
+                    if (plotX &&
+                        plotY &&
+                        (lastPoint === null || lastPoint === void 0 ? void 0 : lastPoint.plotX) &&
+                        (lastPoint === null || lastPoint === void 0 ? void 0 : lastPoint.plotY)) {
                         if (step === 'right') {
                             segmentPath.push(lastPoint.plotX, plotY, 'L');
                         }
@@ -104,7 +107,7 @@ class ColoredlineSeries extends LineSeries {
                         }
                     }
                 }
-                // normal line to next point
+                // Normal line to next point
                 if ((point === null || point === void 0 ? void 0 : point.plotX) && point.plotY) {
                     segmentPath.push(point.plotX, point.plotY);
                 }
@@ -112,7 +115,7 @@ class ColoredlineSeries extends LineSeries {
         });
         return segmentPath;
     }
-    // handle unsorted data, throw error anyway
+    // Handle unsorted data, throw error anyway
     error(code, stop) {
         const msg = 'Highcharts error #' + code + ': www.highcharts.com/errors/' + code;
         if (stop) {
@@ -123,19 +126,25 @@ class ColoredlineSeries extends LineSeries {
         }
     }
     processData(force) {
-        const series = this, processedXData = series.xData, // copied during slice operation below
+        const series = this, processedXData = series.xData, // Copied during slice operation below
         processedYData = series.yData, cropStart = 0, xAxis = series.xAxis, options = series.options, isCartesian = series.isCartesian;
         let cropped, distance, closestPointRange;
         // If the series data or axes haven't changed, don't go through this. Return false to pass
         // the message on to override methods like in data grouping.
-        if (isCartesian && !series.isDirty && !xAxis.isDirty && !series.yAxis.isDirty && !force) {
+        if (isCartesian &&
+            !series.isDirty &&
+            !xAxis.isDirty &&
+            !series.yAxis.isDirty &&
+            !force) {
             return false;
         }
         if (processedXData && processedYData) {
             // Find the closest distance between processed points
             for (let i = processedXData.length - 1; i >= 0; i--) {
                 distance = processedXData[i] - processedXData[i - 1];
-                if (distance > 0 && (typeof closestPointRange === 'undefined' || distance < closestPointRange)) {
+                if (distance > 0 &&
+                    (typeof closestPointRange === 'undefined' ||
+                        distance < closestPointRange)) {
                     closestPointRange = distance;
                     // Unsorted data is not supported by the line tooltip, as well as data grouping and
                     // navigation in Stock charts (#725) and width calculation of columns (#1900)
@@ -145,21 +154,20 @@ class ColoredlineSeries extends LineSeries {
                 }
             }
             // Record the properties
-            series.cropped = cropped; // undefined or true
+            series.cropped = cropped; // Type: undefined or true
             series.cropStart = cropStart;
             series.processedXData = processedXData;
             series.processedYData = processedYData;
-            if (options.pointRange === null) { // null means auto, as for columns, candlesticks and OHLC
+            if (options.pointRange === null) { // Type: null means auto, as for columns, candlesticks and OHLC
                 series.pointRange = closestPointRange || 1;
             }
             series.closestPointRange = closestPointRange;
         }
         return true;
     }
-    ;
     drawTracker() {
         var _a, _b, _c, _d, _e;
-        const series = this, options = series.options, trackByArea = options.trackByArea, trackerPath = trackByArea ? series.areaPaths : getPath(series.graphPaths), trackerPathLength = isArray(trackerPath) && trackerPath.length, chart = series.chart, pointer = chart.pointer, renderer = chart.renderer, snap = (_b = (_a = chart.options.tooltip) === null || _a === void 0 ? void 0 : _a.snap) !== null && _b !== void 0 ? _b : 0, tracker = series.tracker, cursor = options.cursor, css = cursor && { cursor: cursor }, singlePoints = series.singlePoints, trackerFill = 'rgba(192,192,192,0.002';
+        const series = this, options = series.options, trackByArea = options.trackByArea, trackerPath = trackByArea ? series.areaPaths : getPath(series.graphPaths), trackerPathLength = isArray(trackerPath) && trackerPath.length, chart = series.chart, pointer = chart.pointer, renderer = chart.renderer, snap = (_b = (_a = chart.options.tooltip) === null || _a === void 0 ? void 0 : _a.snap) !== null && _b !== void 0 ? _b : 0, tracker = series.tracker, cursor = options.cursor, css = cursor && { cursor }, singlePoints = series.singlePoints, trackerFill = 'rgba(192,192,192,0.002';
         let singlePoint, i;
         const onMouseOver = function () {
             if (chart.hoverSeries !== series) {
@@ -171,13 +179,15 @@ class ColoredlineSeries extends LineSeries {
         if (trackerPathLength && !trackByArea) {
             i = trackerPathLength + 1;
             while (i--) {
-                if (((_c = trackerPath[i]) === null || _c === void 0 ? void 0 : _c.toString()) === 'M') { // extend left side
+                if (((_c = trackerPath[i]) === null || _c === void 0 ? void 0 : _c.toString()) === 'M') { // Extend left side
                     const nextTrackerPath = trackerPath[i + 1];
                     if (typeof nextTrackerPath === 'number') {
                         trackerPath.splice(i + 1, 0, nextTrackerPath - snap, trackerPath[i + 2], 'L');
                     }
                 }
-                if ((i && ((_d = trackerPath[i]) === null || _d === void 0 ? void 0 : _d.toString()) === 'M') || i === trackerPathLength) { // extend right side
+                if ((i &&
+                    ((_d = trackerPath[i]) === null || _d === void 0 ? void 0 : _d.toString()) === 'M') ||
+                    i === trackerPathLength) { // Extend right side
                     const subPreviousTrackerPath = trackerPath[i - 2];
                     if (typeof subPreviousTrackerPath === 'number') {
                         trackerPath.splice(i, 0, 'L', subPreviousTrackerPath + snap, trackerPath[i - 1]);
@@ -185,40 +195,45 @@ class ColoredlineSeries extends LineSeries {
                 }
             }
         }
-        // handle single points
+        // Handle single points
         for (i = 0; i < singlePoints.length; i++) {
             singlePoint = singlePoints[i];
             if (singlePoint.plotX && singlePoint.plotY) {
                 trackerPath.push('M', singlePoint.plotX - snap, singlePoint.plotY, 'L', singlePoint.plotX + snap, singlePoint.plotY);
             }
         }
-        // draw the tracker
+        // Draw the tracker
         if (isSVGPathSegment(trackerPath)) {
             if (tracker) {
                 tracker.attr({ d: trackerPath });
             }
-            else { // create
+            else { // Create a tracker
                 series.tracker = renderer.path(trackerPath)
                     .attr({
                     'stroke-linejoin': 'round',
                     visibility: series.visible ? 'visible' : 'hidden',
                     stroke: trackerFill,
                     fill: trackByArea ? trackerFill : 'none',
-                    'stroke-width': (_e = options.lineWidth) !== null && _e !== void 0 ? _e : 0 + (trackByArea ? 0 : 2 * snap),
+                    'stroke-width': (_e = options.lineWidth) !== null && _e !== void 0 ? _e : 0 +
+                        (trackByArea ? 0 : 2 * snap),
                     zIndex: 2
                 })
                     .add(series.group);
                 // The tracker is added to the series group, which is clipped, but is covered
                 // by the marker group. So the marker group also needs to capture events.
-                [series.tracker, series.markerGroup].forEach(function (track) {
+                [series.tracker, series.markerGroup]
+                    .forEach(function (track) {
                     if (track) {
                         track.addClass('highcharts-tracker')
                             .on('mouseover', onMouseOver)
-                            .on('mouseout', function (e) { pointer.onTrackerMouseOut(e); });
+                            .on('mouseout', function (e) {
+                            pointer.onTrackerMouseOut(e);
+                        });
                         if (css) {
                             track.css(css);
                         }
-                        if (typeof document.documentElement.ontouchstart !== 'undefined') {
+                        if (typeof document.documentElement.ontouchstart !==
+                            'undefined') {
                             track.on('touchstart', onMouseOver);
                         }
                     }
@@ -226,7 +241,6 @@ class ColoredlineSeries extends LineSeries {
             }
         }
     }
-    ;
     setState(state) {
         var _a, _b, _c;
         const series = this, options = series.options, graphs = series.graphs, stateOptions = options.states;
@@ -234,13 +248,15 @@ class ColoredlineSeries extends LineSeries {
         state = state || '';
         if (series.state !== state) {
             series.state = state;
-            if (stateOptions && state && ((_b = stateOptions[state]) === null || _b === void 0 ? void 0 : _b.enabled) === false) {
+            if (stateOptions &&
+                state &&
+                ((_b = stateOptions[state]) === null || _b === void 0 ? void 0 : _b.enabled) === false) {
                 return;
             }
             if (stateOptions && state) {
                 lineWidth = ((_c = stateOptions[state]) === null || _c === void 0 ? void 0 : _c.lineWidth) || lineWidth + 1;
             }
-            if (graphs) { // hover is turned off for dashed lines in VML
+            if (graphs) { // Hover is turned off for dashed lines in VML
                 // use attr because animate will cause any other animation on the graph to stop
                 graphs.forEach(function (seg) {
                     if (!seg.dashstyle) {
@@ -250,15 +266,14 @@ class ColoredlineSeries extends LineSeries {
             }
         }
     }
-    ;
     getSegments() {
         var _a, _b;
         const series = this, points = series.points;
         let segments = [], lastColor = 0, pointsLength = points.length, i;
-        if (pointsLength) { // no action required for []
+        if (pointsLength) { // No action required for []
             // if connect nulls, just remove null points
             if (series.options.connectNulls) {
-                // iterate backwars for secure point removal
+                // Iterate backwars for secure point removal
                 for (i = pointsLength - 1; i >= 0; --i) {
                     if (points[i].y === null) {
                         points.splice(i, 1);
@@ -267,7 +282,8 @@ class ColoredlineSeries extends LineSeries {
                 pointsLength = points.length;
                 points.forEach(function (_point, j) {
                     var _a;
-                    if (j > 0 && points[j].segmentColor !== points[j - 1].segmentColor) {
+                    if (j > 0 &&
+                        points[j].segmentColor !== points[j - 1].segmentColor) {
                         segments.push({
                             points: points.slice(lastColor, j + 1),
                             color: (_a = points[j - 1].segmentColor) !== null && _a !== void 0 ? _a : ''
@@ -276,7 +292,7 @@ class ColoredlineSeries extends LineSeries {
                     }
                 });
                 if (pointsLength) {
-                    // add the last segment (only single-point last segement is added)
+                    // Add the last segment (only single-point last segement is added)
                     if (lastColor !== pointsLength - 1) {
                         segments.push({
                             points: points.slice(lastColor, pointsLength),
@@ -284,74 +300,87 @@ class ColoredlineSeries extends LineSeries {
                         });
                     }
                 }
-                if (points.length && segments.length === 0) {
-                    segments = [{ color: (_b = points[0].segmentColor) !== null && _b !== void 0 ? _b : '', points }];
+                if ((points.length > 0) && segments.length === 0) {
+                    segments = [
+                        {
+                            color: (_b = points[0].segmentColor) !== null && _b !== void 0 ? _b : '',
+                            points
+                        }
+                    ];
                 }
-                // else, split on null points or different colors
+                // Else, split on null points or different colors
             }
             else {
                 let previousColor = null;
                 points.forEach(function (point, j) {
-                    var _a, _b, _c;
-                    var colorChanged = j > 0 && (point.y === null || points[j - 1].y === null || (point.segmentColor !== points[j - 1].segmentColor && points[j].segmentColor !== previousColor)), colorExists = points[j - 1] && points[j - 1].segmentColor && points[j - 1].y !== null ? true : false;
+                    var _a, _b, _c, _d;
+                    const colorChanged = j > 0 && (point.y === null ||
+                        points[j - 1].y === null ||
+                        (point.segmentColor !==
+                            points[j - 1].segmentColor &&
+                            points[j].segmentColor !== previousColor)), colorExists = !!(((_a = points[j - 1]) === null || _a === void 0 ? void 0 : _a.segmentColor) &&
+                        points[j - 1].y !== null);
+                    let p = points.slice(lastColor, j + 1);
                     if (colorChanged) {
-                        var p = points.slice(lastColor, j + 1);
                         if (p.length > 0) {
-                            // do not create segments with null ponits
+                            // Do not create segments with null ponits
                             p.forEach(function (pointObject, k) {
                                 if (pointObject.y === null) {
-                                    // remove null points (might be on edges)
+                                    // Remove null points (might be on edges)
                                     p.splice(k, 1);
                                 }
                             });
                             segments.push({
                                 points: p,
-                                color: (_a = (colorExists ? points[j - 1].segmentColor : previousColor)) !== null && _a !== void 0 ? _a : ''
+                                color: (_b = (colorExists ? points[j - 1].segmentColor :
+                                    previousColor)) !== null && _b !== void 0 ? _b : ''
                             });
                             lastColor = j;
                         }
                     }
                     else if (j === pointsLength - 1) {
-                        var next = j + 1;
+                        let next = j + 1;
                         if (point.y === null) {
                             next--;
                         }
                         p = points.slice(lastColor, next);
                         if (p.length > 0) {
-                            // do not create segments with null ponits
+                            // Do not create segments with null ponits
                             p.forEach(function (pointObject, k) {
                                 if (pointObject.y === null) {
-                                    // remove null points (might be on edges)
+                                    // Remove null points (might be on edges)
                                     p.splice(k, 1);
                                 }
                             });
                             segments.push({
                                 points: p,
-                                color: (_b = (colorExists ? points[j - 1].segmentColor : previousColor)) !== null && _b !== void 0 ? _b : ''
+                                color: (_c = (colorExists ? points[j - 1].segmentColor :
+                                    previousColor)) !== null && _c !== void 0 ? _c : ''
                             });
                             lastColor = j;
                         }
                     }
-                    // store previous color
+                    // Store previous color
                     if (point) {
-                        previousColor = (_c = point.segmentColor) !== null && _c !== void 0 ? _c : '';
+                        previousColor = (_d = point.segmentColor) !== null && _d !== void 0 ? _d : '';
                     }
                 });
             }
         }
-        // register it
+        // Register it
         series.segments = segments;
     }
-    ;
     getGraphPaths() {
         const series = this, graphPaths = [];
-        let singlePoints = [], // used in drawTracker,
+        let singlePoints = [], // Used in drawTracker
         segmentPath;
         // Divide into segments and build graph and area paths
         series.segments.forEach(function (segment) {
             segmentPath = series.getSegmentPath(segment.points);
-            // add the segment to the graph, or a single point for tracking
-            if (graphPaths && segment.points.length > 1 && isSVGPathSegment(segmentPath)) {
+            // Add the segment to the graph, or a single point for tracking
+            if (graphPaths &&
+                segment.points.length > 1 &&
+                isSVGPathSegment(segmentPath)) {
                 graphPaths.push([segmentPath, segment.color]);
             }
             else {
@@ -363,22 +392,23 @@ class ColoredlineSeries extends LineSeries {
         series.graphPaths = graphPaths;
         return graphPaths;
     }
-    ;
     drawGraph() {
         const series = this, options = series.options, colorType = options.lineColor || series.color || '', lineWidth = options.lineWidth, dashStyle = options.dashStyle, roundCap = options.linecap !== 'square', graphPaths = series.getGraphPaths(), graphPathLength = graphPaths.length;
         let graphSegmentsLength = 0;
         function getSegment(segment, colorType) {
-            var attribs = {
+            const attribs = {
                 stroke: colorType,
                 'stroke-width': lineWidth,
                 fill: 'none',
                 zIndex: 1 // #1069
-            }, item;
+            };
+            let item;
             if (dashStyle) {
                 attribs.dashstyle = dashStyle;
             }
             else if (roundCap) {
-                attribs['stroke-linecap'] = attribs['stroke-linejoin'] = 'round';
+                attribs['stroke-linecap'] =
+                    attribs['stroke-linejoin'] = 'round';
             }
             if (segment[1]) {
                 attribs.stroke = segment[1];
@@ -388,19 +418,22 @@ class ColoredlineSeries extends LineSeries {
                     .attr(attribs)
                     .add(series.group);
             }
-            if (item && item.shadow) {
+            if (item === null || item === void 0 ? void 0 : item.shadow) {
                 item.shadow(!!options.shadow);
             }
             return item;
         }
-        // draw the graphs
+        // Draw the graphs
         let graphs = series.graphs;
-        if (graphs.length > 0) { // cancel running animations, #459
+        if (graphs.length > 0) { // Cancel running animations, #459
             // do we have animation
             graphPaths.forEach(function (segment, j) {
-                // update color and path
+                // Update color and path
                 if (series.graphs[j] && isSVGPathSegment(segment[0])) {
-                    series.graphs[j].attr({ d: segment[0], stroke: segment[1] });
+                    series.graphs[j].attr({
+                        d: segment[0],
+                        stroke: segment[1]
+                    });
                 }
                 else {
                     const formattedSegment = getSegment(segment, colorType);
@@ -410,7 +443,7 @@ class ColoredlineSeries extends LineSeries {
                 }
             });
         }
-        else if (graphPaths.length) { // #1487
+        else if (graphPaths.length > 0) { // #1487
             graphs = [];
             graphPaths.forEach(function (segment, j) {
                 const formattedSegment = getSegment(segment, colorType);
@@ -429,7 +462,6 @@ class ColoredlineSeries extends LineSeries {
             }
         }
     }
-    ;
     /**
      *
      *  Events

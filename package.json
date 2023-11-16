@@ -2,7 +2,7 @@
   "name": "highcharts-multicolor-series",
   "version": "2.4.1",
   "description": "Highcharts plugin that adds new series: multicolor-series, where you can define color for each part of a path, between two points.",
-  "main": "js/multicolor_series.js",
+  "main": "ts/multicolor_series.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/blacklabel/multicolor_series.git"
@@ -17,11 +17,6 @@
   "bugs": {
     "url": "https://github.com/blacklabel/multicolor_series/issues"
   },
-  "files": [
-    "js/multicolor_series.js",
-    "js/multicolor_series.min.js",
-    "js/multicolor_series.min.js.map"
-  ],
   "homepage": "https://github.com/blacklabel/multicolor_series#readme",
   "types": "types.d.ts",
   "scripts": {
@@ -32,6 +27,9 @@
     "@types/jest": "^29.5.6",
     "@types/jquery": "^3.5.6",
     "@types/trusted-types": "^2.0.2",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "eslint": "^8.0.1",
     "google-closure-compiler": "^20160517.1.0",
     "gulp": "^4.0.0",
     "gulp-bump": "^2.1.0",
