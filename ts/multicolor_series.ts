@@ -1,9 +1,3 @@
-/* *
- *
- *  Imports
- *
- * */
-
 import SeriesRegistry from "highcharts/ts/Core/Series/SeriesRegistry";
 import Utilities from "highcharts/ts/Core/Utilities";
 import LineSeries from "highcharts/ts/Series/Line/LineSeries";
@@ -11,52 +5,35 @@ import PointerEvent from "highcharts/ts/Core/PointerEvent";
 import SVGElement from "highcharts/ts/Core/Renderer/SVG/SVGElement";
 import SVGAttributes from "highcharts/ts/Core/Renderer/SVG/SVGAttributes";
 import ColorType from "highcharts/ts/Core/Color/ColorType";
-import LinePoint from "highcharts/ts/Series/Line/LinePoint";
 import SVGPath from "highcharts/ts/Core/Renderer/SVG/SVGPath";
 import { StatesOptionsKey } from "highcharts/ts/Core/Series/StatesOptions";
-import ColoredlineSeriesOptions from "./ColoredlineSeriesOptions";
+import {
+	ColoredlineSeriesOptions,
+	SeriesColoredGraphPath,
+	SeriesColoredPoint,
+	SeriesColoredSegment,
+	 SeriesColoredSegmentPath
+} from 'types';
 
 const { area: AreaSeries } = SeriesRegistry.seriesTypes;
 const { extend, isArray } = Utilities;
 
-/* *
- *
- *  Declarations
- *
- * */
-
-// TO DO: look if any types can be moved to the types.d.ts.
-interface SeriesColoredPoint extends LinePoint {
-    segmentColor?: string;
-}
-
-type SeriesColoredSegmentPath = SVGPath.Segment[] | string | number;
-
-type SeriesColoredGraphPath = [SeriesColoredSegmentPath, ColorType];
-
-type SeriesColoredSegment = {
-    color: string;
-    points: SeriesColoredPoint[];
-};
-
-/* *
+/**
  *
  *  Type guards
  *
- * */
+ */
 
-const isSVGPathSegment = (
-    value: SeriesColoredSegmentPath | SeriesColoredSegmentPath[] | SVGElement
-): value is SVGPath.Segment[] => typeof value !== 'string' && typeof value !== 'number';
+const isSVGPathSegment = (value: SeriesColoredSegmentPath[]): value is SVGPath.Segment[] => true;
 
-/* *
+/**
  *
  *  Functions
  *
- * */
+ */
 
 function getPath(graphPaths: SeriesColoredGraphPath[]) {
-    let segmentPath: SeriesColoredSegmentPath = [];
+    let segmentPath: SeriesColoredSegmentPath[] = [];
 
     if (graphPaths) {
         graphPaths.forEach(function (el) {
@@ -70,6 +47,7 @@ function getPath(graphPaths: SeriesColoredGraphPath[]) {
 }
 
 /**
+ * 
  * @private
  * @class
  * @name Highcharts.seriesTypes.coloredline
@@ -78,11 +56,11 @@ function getPath(graphPaths: SeriesColoredGraphPath[]) {
 
 class ColoredlineSeries extends LineSeries {
 
-    /* *
+	/**
      *
      *  Constructor
      *
-     * */
+     */
 
     constructor() {
         super();
@@ -93,11 +71,11 @@ class ColoredlineSeries extends LineSeries {
 		this.graphs = [];
     }
 
-    /* *
+    /**
      *
      *  Properties
      *
-     * */
+     */
 
     public pointRange: number | undefined;
 
@@ -109,20 +87,20 @@ class ColoredlineSeries extends LineSeries {
 
 	public options!: ColoredlineSeriesOptions;
 
-	// Overrides graphPath from Series type
+	// Overrides graphPath property from Series type
     public graphPaths: SeriesColoredGraphPath[];
 
-	// Overrides areaPath from Series type
-    public areaPaths: SeriesColoredSegmentPath;
+	// Overrides areaPath property from Series type
+    public areaPaths: SeriesColoredSegmentPath[];
 
-	// Overrides graph from Series type
+	// Overrides graph property from Series type
 	public graphs: SVGElement[] | [];
 
-    /* *
+    /**
      *
      *  Functions
      *
-     * */
+     */
 
     public getSegmentPath(segment: SeriesColoredPoint[]) {
         const series = this,
@@ -197,7 +175,7 @@ class ColoredlineSeries extends LineSeries {
         }
     }
 
-    public processData(force?: boolean | undefined): boolean | undefined {
+    public processData(force?: boolean | undefined) {
 		const series = this,
 			processedXData = series.xData, // copied during slice operation below
 			processedYData = series.yData,
@@ -249,7 +227,7 @@ class ColoredlineSeries extends LineSeries {
 		const series = this,
 			options = series.options,
 			trackByArea = options.trackByArea,
-			trackerPath: SeriesColoredSegmentPath = trackByArea ? series.areaPaths : getPath(series.graphPaths),
+			trackerPath: SeriesColoredSegmentPath[] = trackByArea ? series.areaPaths : getPath(series.graphPaths),
 			trackerPathLength = isArray(trackerPath) && trackerPath.length,
 			chart = series.chart,
 			pointer = chart.pointer,
@@ -275,12 +253,18 @@ class ColoredlineSeries extends LineSeries {
 			i = trackerPathLength + 1;
 			while (i--) {
 				if (trackerPath[i]?.toString() === 'M') { // extend left side
-                    // @ts-ignore
-					trackerPath.splice(i + 1, 0, trackerPath[i + 1] - snap, trackerPath[i + 2], 'L');
+					const nextTrackerPath = trackerPath[i + 1];
+					
+					if (typeof nextTrackerPath === 'number') {
+						trackerPath.splice(i + 1, 0, nextTrackerPath - snap, trackerPath[i + 2], 'L');
+					}
 				}
 				if ((i && trackerPath[i]?.toString() === 'M') || i === trackerPathLength) { // extend right side
-                    // @ts-ignore
-					trackerPath.splice(i, 0, 'L', trackerPath[i - 2] + snap, trackerPath[i - 1]);
+					const subPreviousTrackerPath = trackerPath[i - 2];
+
+					if (typeof subPreviousTrackerPath === 'number') {
+						trackerPath.splice(i, 0, 'L', subPreviousTrackerPath + snap, trackerPath[i - 1]);
+					}
 				}
 			}
 		}
@@ -289,7 +273,6 @@ class ColoredlineSeries extends LineSeries {
 		for (i = 0; i < singlePoints.length; i++) {
 			singlePoint = singlePoints[i];
 			if (singlePoint.plotX && singlePoint.plotY) {
-                // @ts-ignore
 				trackerPath.push('M', singlePoint.plotX - snap, singlePoint.plotY,
 					'L', singlePoint.plotX + snap, singlePoint.plotY);
 			}
@@ -524,7 +507,7 @@ class ColoredlineSeries extends LineSeries {
 				attribs.stroke = segment[1];
 			}
 			
-			if (isArray(segment[0])) {
+			if (isSVGPathSegment(segment[0])) {
 				item = series.chart.renderer.path(segment[0])
 					.attr(attribs)
 					.add(series.group);
@@ -539,8 +522,7 @@ class ColoredlineSeries extends LineSeries {
 		}
 
 		// draw the graphs
-		let graphs = series.graphs,
-			g;
+		let graphs = series.graphs;
 	
 		if (graphs.length > 0) { // cancel running animations, #459
 			// do we have animation
@@ -580,11 +562,11 @@ class ColoredlineSeries extends LineSeries {
 		}
 	};
 
-    /* *
+    /**
      *
      *  Events
      *
-     * */
+     */
 
     public translate(): void {
         super.translate.apply(this, arguments);
@@ -596,6 +578,12 @@ class ColoredlineSeries extends LineSeries {
 
 }
 
+/**
+ *
+ *  Class Prototype
+ *
+ */
+
 interface ColoredlineSeries extends LineSeries {
     getPointSpline: 
         (segment: SeriesColoredPoint[], point: SeriesColoredPoint, i: number) => SeriesColoredSegmentPath[];
@@ -605,9 +593,16 @@ extend(ColoredlineSeries.prototype, {
     getPointSpline: ColoredlineSeries.prototype.getPointSpline
 });
 
+/**
+ *
+ *  Registry
+ *
+ */
+
 SeriesRegistry.registerSeriesType('coloredline', ColoredlineSeries);
 
 /**
+ * 
  * @private
  * @class
  * @name Highcharts.seriesTypes.coloredarea
@@ -615,10 +610,12 @@ SeriesRegistry.registerSeriesType('coloredline', ColoredlineSeries);
  */
 
 class ColoredAreaSeries extends AreaSeries {
+
     drawGraph() {  
         super.drawGraph.apply(this);
-        console.log('Inside coloredarea drawGraph method!');
+        console.info('Inside coloredarea drawGraph method!');
     }
+	
 }
 
 SeriesRegistry.registerSeriesType('coloredarea', ColoredAreaSeries);

@@ -145,7 +145,3 @@ import 'highcharts/ts/masters/themes/high-contrast-light.src';
 import 'highcharts/ts/masters/themes/sand-signika.src';
 import 'highcharts/ts/masters/themes/skies.src';
 import 'highcharts/ts/masters/themes/sunset.src';
-
-import H from 'highcharts/ts/Core/Globals';
-
-export type Highcharts = typeof H;

@@ -24,27 +24,22 @@
 			'Extensions/MulticolorSeries.js',
 			[_modules['Core/Series/SeriesRegistry.js'],_modules['Core/Utilities.js'],_modules['Series/Line/LineSeries.js']],
 			(SeriesRegistry,Utilities,LineSeries) => {
-				/* *
- *
- *  Imports
- *
- * */
-
+				
 
 
 const { area: AreaSeries } = SeriesRegistry.seriesTypes;
 const { extend, isArray } = Utilities;
-/* *
+/**
  *
  *  Type guards
  *
- * */
-const isSVGPathSegment = (value) => typeof value !== 'string' && typeof value !== 'number';
-/* *
+ */
+const isSVGPathSegment = (value) => true;
+/**
  *
  *  Functions
  *
- * */
+ */
 function getPath(graphPaths) {
     let segmentPath = [];
     if (graphPaths) {
@@ -57,17 +52,18 @@ function getPath(graphPaths) {
     return segmentPath;
 }
 /**
+ *
  * @private
  * @class
  * @name Highcharts.seriesTypes.coloredline
  *
  */
 class ColoredlineSeries extends LineSeries {
-    /* *
+    /**
      *
      *  Constructor
      *
-     * */
+     */
     constructor() {
         super();
         this.singlePoints = [];
@@ -75,11 +71,11 @@ class ColoredlineSeries extends LineSeries {
         this.areaPaths = [];
         this.graphs = [];
     }
-    /* *
+    /**
      *
      *  Functions
      *
-     * */
+     */
     getSegmentPath(segment) {
         const series = this, segmentPath = [], step = series.options.step;
         // build the segment line
@@ -176,12 +172,16 @@ class ColoredlineSeries extends LineSeries {
             i = trackerPathLength + 1;
             while (i--) {
                 if (((_c = trackerPath[i]) === null || _c === void 0 ? void 0 : _c.toString()) === 'M') { // extend left side
-                    // @ts-ignore
-                    trackerPath.splice(i + 1, 0, trackerPath[i + 1] - snap, trackerPath[i + 2], 'L');
+                    const nextTrackerPath = trackerPath[i + 1];
+                    if (typeof nextTrackerPath === 'number') {
+                        trackerPath.splice(i + 1, 0, nextTrackerPath - snap, trackerPath[i + 2], 'L');
+                    }
                 }
                 if ((i && ((_d = trackerPath[i]) === null || _d === void 0 ? void 0 : _d.toString()) === 'M') || i === trackerPathLength) { // extend right side
-                    // @ts-ignore
-                    trackerPath.splice(i, 0, 'L', trackerPath[i - 2] + snap, trackerPath[i - 1]);
+                    const subPreviousTrackerPath = trackerPath[i - 2];
+                    if (typeof subPreviousTrackerPath === 'number') {
+                        trackerPath.splice(i, 0, 'L', subPreviousTrackerPath + snap, trackerPath[i - 1]);
+                    }
                 }
             }
         }
@@ -189,7 +189,6 @@ class ColoredlineSeries extends LineSeries {
         for (i = 0; i < singlePoints.length; i++) {
             singlePoint = singlePoints[i];
             if (singlePoint.plotX && singlePoint.plotY) {
-                // @ts-ignore
                 trackerPath.push('M', singlePoint.plotX - snap, singlePoint.plotY, 'L', singlePoint.plotX + snap, singlePoint.plotY);
             }
         }
@@ -384,7 +383,7 @@ class ColoredlineSeries extends LineSeries {
             if (segment[1]) {
                 attribs.stroke = segment[1];
             }
-            if (isArray(segment[0])) {
+            if (isSVGPathSegment(segment[0])) {
                 item = series.chart.renderer.path(segment[0])
                     .attr(attribs)
                     .add(series.group);
@@ -395,7 +394,7 @@ class ColoredlineSeries extends LineSeries {
             return item;
         }
         // draw the graphs
-        let graphs = series.graphs, g;
+        let graphs = series.graphs;
         if (graphs.length > 0) { // cancel running animations, #459
             // do we have animation
             graphPaths.forEach(function (segment, j) {
@@ -431,11 +430,11 @@ class ColoredlineSeries extends LineSeries {
         }
     }
     ;
-    /* *
+    /**
      *
      *  Events
      *
-     * */
+     */
     translate() {
         super.translate.apply(this, arguments);
         if (this.getSegments) {
@@ -446,8 +445,14 @@ class ColoredlineSeries extends LineSeries {
 extend(ColoredlineSeries.prototype, {
     getPointSpline: ColoredlineSeries.prototype.getPointSpline
 });
+/**
+ *
+ *  Registry
+ *
+ */
 SeriesRegistry.registerSeriesType('coloredline', ColoredlineSeries);
 /**
+ *
  * @private
  * @class
  * @name Highcharts.seriesTypes.coloredarea
@@ -456,7 +461,7 @@ SeriesRegistry.registerSeriesType('coloredline', ColoredlineSeries);
 class ColoredAreaSeries extends AreaSeries {
     drawGraph() {
         super.drawGraph.apply(this);
-        console.log('Inside coloredarea drawGraph method!');
+        console.info('Inside coloredarea drawGraph method!');
     }
 }
 SeriesRegistry.registerSeriesType('coloredarea', ColoredAreaSeries);
