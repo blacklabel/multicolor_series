@@ -30,7 +30,7 @@ decorator = [
 	''
 ];
 
-gulp.task("build", () => {
+gulp.task("compile", () => {
 	return tsProject
     	.src()
     	.pipe(tsProject())
@@ -90,11 +90,13 @@ gulp.task("build", () => {
 });
 
 gulp.task('lint', function () {
-	return gulp.src(files)
-		.pipe(eslint())
-		.pipe(gulpif(args.failonerror, eslint.failOnError()))
-		.pipe(eslint.formatEach());
+	return gulp.src(['ts/*.ts'])
+	  	.pipe(eslint())
+	  	.pipe(eslint.format())
+	  	.pipe(eslint.failAfterError());
 });
+
+gulp.task('build', gulp.series('lint', 'compile'));
 
 gulp.task('lint-watch', function () {
 	return gulp.src(files)

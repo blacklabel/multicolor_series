@@ -443,6 +443,7 @@ class ColoredlineSeries extends LineSeries {
                             points: points.slice(lastColor, j + 1),
                             color: points[j - 1].segmentColor ?? ''
                         });
+
                         lastColor = j;
                     }
                 });
@@ -502,6 +503,7 @@ class ColoredlineSeries extends LineSeries {
                                         previousColor
                                 ) ?? ''
                             });
+                            
                             lastColor = j;
                         }
                     } else if (j === pointsLength - 1) {
