@@ -1,5 +1,5 @@
 import { Series } from "highcharts";
-import { SeriesColored } from "types";
+import { SeriesColored } from "./types";
 
 export const isSeriesColored = (
     series: Series | SeriesColored,

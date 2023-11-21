@@ -22,12 +22,12 @@
 		_registerModule(
 			_modules,
 			'Extensions/MulticolorSeries.js',
-			[_modules['Core/Series/SeriesRegistry.js'],_modules['Core/Utilities.js'],_modules['Series/Line/LineSeries.js']],
-			(SeriesRegistry,Utilities,LineSeries) => {
+			[_modules['Core/Series/SeriesRegistry.js'],_modules['Core/Utilities.js'],_modules['Series/Line/LineSeries.js'],_modules['Series/Area/AreaSeries.js']],
+			(SeriesRegistry,Utilities,LineSeries,AreaSeries) => {
 				
 
 
-const { area: AreaSeries } = SeriesRegistry.seriesTypes;
+
 const { extend, isArray } = Utilities;
 /**
  *
@@ -35,22 +35,6 @@ const { extend, isArray } = Utilities;
  *
  */
 const isSVGPathSegment = (value) => true;
-/**
- *
- *  Functions
- *
- */
-function getPath(graphPaths) {
-    let segmentPath = [];
-    if (graphPaths) {
-        graphPaths.forEach(function (el) {
-            if (isArray(segmentPath) && isArray(el[0])) {
-                segmentPath = segmentPath.concat(el[0]);
-            }
-        });
-    }
-    return segmentPath;
-}
 /**
  *
  * @private
@@ -76,11 +60,22 @@ class ColoredlineSeries extends LineSeries {
      *  Functions
      *
      */
+    getPath(graphPaths) {
+        let segmentPath = [];
+        if (graphPaths) {
+            graphPaths.forEach(function (el) {
+                if (isArray(el[0])) {
+                    segmentPath = segmentPath.concat(el[0]);
+                }
+            });
+        }
+        return segmentPath;
+    }
     getSegmentPath(segment) {
         const series = this, segmentPath = [], step = series.options.step;
         // Build the segment line
         segment.forEach(function (point, i) {
-            const plotX = point.plotX, plotY = point.plotY;
+            const plotX = Number(point.plotX), plotY = Number(point.plotY);
             let lastPoint;
             if (series.getPointSpline) {
                 // Generate the spline as defined in the SplineSeries object
@@ -92,25 +87,19 @@ class ColoredlineSeries extends LineSeries {
                 // Step line?
                 if (step && i) {
                     lastPoint = segment[i - 1];
-                    if (plotX &&
-                        plotY &&
-                        (lastPoint === null || lastPoint === void 0 ? void 0 : lastPoint.plotX) &&
-                        (lastPoint === null || lastPoint === void 0 ? void 0 : lastPoint.plotY)) {
-                        if (step === 'right') {
-                            segmentPath.push(lastPoint.plotX, plotY, 'L');
-                        }
-                        else if (step === 'center') {
-                            segmentPath.push((lastPoint.plotX + plotX) / 2, lastPoint.plotY, 'L', (lastPoint.plotX + plotX) / 2, plotY, 'L');
-                        }
-                        else {
-                            segmentPath.push(plotX, lastPoint.plotY, 'L');
-                        }
+                    const lastPointPlotX = Number(lastPoint.plotX);
+                    if (step === 'right') {
+                        segmentPath.push(lastPoint.plotX, plotY, 'L');
+                    }
+                    else if (step === 'center') {
+                        segmentPath.push((lastPointPlotX + plotX) / 2, lastPoint.plotY, 'L', (lastPointPlotX + plotX) / 2, plotY, 'L');
+                    }
+                    else {
+                        segmentPath.push(plotX, lastPoint.plotY, 'L');
                     }
                 }
                 // Normal line to next point
-                if ((point === null || point === void 0 ? void 0 : point.plotX) && point.plotY) {
-                    segmentPath.push(point.plotX, point.plotY);
-                }
+                segmentPath.push(plotX, plotY);
             }
         });
         return segmentPath;
@@ -167,7 +156,8 @@ class ColoredlineSeries extends LineSeries {
     }
     drawTracker() {
         var _a, _b, _c, _d, _e;
-        const series = this, options = series.options, trackByArea = options.trackByArea, trackerPath = trackByArea ? series.areaPaths : getPath(series.graphPaths), trackerPathLength = isArray(trackerPath) && trackerPath.length, chart = series.chart, pointer = chart.pointer, renderer = chart.renderer, snap = (_b = (_a = chart.options.tooltip) === null || _a === void 0 ? void 0 : _a.snap) !== null && _b !== void 0 ? _b : 0, tracker = series.tracker, cursor = options.cursor, css = cursor && { cursor }, singlePoints = series.singlePoints, trackerFill = 'rgba(192,192,192,0.002';
+        const series = this, options = series.options, trackByArea = options.trackByArea, trackerPath = trackByArea ? series.areaPaths :
+            this.getPath(series.graphPaths), trackerPathLength = trackerPath.length, chart = series.chart, pointer = chart.pointer, renderer = chart.renderer, snap = (_b = (_a = chart.options.tooltip) === null || _a === void 0 ? void 0 : _a.snap) !== null && _b !== void 0 ? _b : 0, tracker = series.tracker, cursor = options.cursor, css = cursor && { cursor }, singlePoints = series.singlePoints, trackerFill = 'rgba(192,192,192,0.002)';
         let singlePoint, i;
         const onMouseOver = function () {
             if (chart.hoverSeries !== series) {
@@ -198,9 +188,8 @@ class ColoredlineSeries extends LineSeries {
         // Handle single points
         for (i = 0; i < singlePoints.length; i++) {
             singlePoint = singlePoints[i];
-            if (singlePoint.plotX && singlePoint.plotY) {
-                trackerPath.push('M', singlePoint.plotX - snap, singlePoint.plotY, 'L', singlePoint.plotX + snap, singlePoint.plotY);
-            }
+            const singlePointPlotX = Number(singlePoint.plotX);
+            trackerPath.push('M', singlePointPlotX - snap, singlePoint.plotY, 'L', singlePointPlotX + snap, singlePoint.plotY);
         }
         // Draw the tracker
         if (isSVGPathSegment(trackerPath)) {
@@ -242,7 +231,7 @@ class ColoredlineSeries extends LineSeries {
         }
     }
     setState(state) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         const series = this, options = series.options, graphs = series.graphs, stateOptions = options.states;
         let lineWidth = (_a = options.lineWidth) !== null && _a !== void 0 ? _a : 0;
         state = state || '';
@@ -250,11 +239,12 @@ class ColoredlineSeries extends LineSeries {
             series.state = state;
             if (stateOptions &&
                 state &&
-                ((_b = stateOptions[state]) === null || _b === void 0 ? void 0 : _b.enabled) === false) {
+                (((_b = stateOptions.hover) === null || _b === void 0 ? void 0 : _b.enabled) === false ||
+                    ((_c = stateOptions.inactive) === null || _c === void 0 ? void 0 : _c.enabled) === false)) {
                 return;
             }
             if (stateOptions && state) {
-                lineWidth = ((_c = stateOptions[state]) === null || _c === void 0 ? void 0 : _c.lineWidth) || lineWidth + 1;
+                lineWidth = ((_d = stateOptions[state]) === null || _d === void 0 ? void 0 : _d.lineWidth) || lineWidth + 1;
             }
             if (graphs) { // Hover is turned off for dashed lines in VML
                 // use attr because animate will cause any other animation on the graph to stop
@@ -378,9 +368,7 @@ class ColoredlineSeries extends LineSeries {
         series.segments.forEach(function (segment) {
             segmentPath = series.getSegmentPath(segment.points);
             // Add the segment to the graph, or a single point for tracking
-            if (graphPaths &&
-                segment.points.length > 1 &&
-                isSVGPathSegment(segmentPath)) {
+            if (segment.points.length > 1) {
                 graphPaths.push([segmentPath, segment.color]);
             }
             else {
@@ -425,7 +413,7 @@ class ColoredlineSeries extends LineSeries {
         }
         // Draw the graphs
         let graphs = series.graphs;
-        if (graphs.length > 0) { // Cancel running animations, #459
+        if (graphs) { // Cancel running animations, #459
             // do we have animation
             graphPaths.forEach(function (segment, j) {
                 // Update color and path

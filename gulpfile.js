@@ -13,6 +13,7 @@ const gulp = require('gulp'),
 	dateformat = require('dateformat'),
 	gulpTypescript = require("gulp-typescript"),
 	through2 = require('through2'),
+	rename = require('gulp-rename'),
 	tsProject = gulpTypescript.createProject("tsconfig.json");
 
 let files = ['./js/multicolor_series.js', 'js/demo.js'],
@@ -34,13 +35,15 @@ gulp.task("compile", () => {
 	return tsProject
     	.src()
     	.pipe(tsProject())
-    	.js.pipe(through2.obj(async function (file, _encoding, callback) {
+    	.js
+		.pipe(rename('multicolor-series.js'))
+		.pipe(through2.obj(async function (file, _encoding, callback) {
 			if (file.isBuffer()) {
 				let fileContent = file.contents.toString('utf8');
 				const removedSpecifiers = [],
 					removedPaths = [],
 					importPathReg = /import (.+?) from ["'](.+?)["'];/g,
-					formattedPathReg = /^highcharts\/ts\//;
+					formattedPathReg = /^highcharts-github\/ts\//;
 
 				fileContent = fileContent.replace(importPathReg, (_match, specifier, path) => {
 					removedSpecifiers.push(specifier);

@@ -1,26 +1,14 @@
 {
     "compilerOptions": {
-        "outDir": "./js",
-        "rootDir": "./ts",
-
         "baseUrl": ".",
-        "paths": {
-            "js/*": ["js/*"]
-        },
-
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
         "alwaysStrict": false,
         "declaration": false,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-
-        /**
-         * "ignoreDeprecations" - only to mute the warning of the keyofStringsOnly flag (set because Highcharts uses it)
-         */
         "keyofStringsOnly": true,
         "ignoreDeprecations": "5.0",
-
         "noEmitOnError": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitThis": true,
@@ -36,5 +24,5 @@
         "types": ["jquery", "trusted-types", "jest"]
     },
     "include": ["ts/**/*"],
-    "exclude": ["ts/tests/**/*"]
+    "exclude": ["tests/**/*"]
 }
