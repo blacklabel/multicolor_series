@@ -88,6 +88,7 @@ class ColoredlineSeries extends LineSeries {
     constructor () {
         super();
 
+        this.segments = [];
         this.singlePoints = [];
         this.graphPaths = [];
         this.areaPaths = [];
@@ -102,11 +103,11 @@ class ColoredlineSeries extends LineSeries {
 
     public pointRange: number | undefined;
 
-    public singlePoints!: SeriesColoredLinePoint[];
+    public singlePoints: SeriesColoredLinePoint[];
 
     public points!: SeriesColoredLinePoint[];
 
-    public segments!: SeriesColoredLineSegment[];
+    public segments: SeriesColoredLineSegment[];
 
     // Overrides graphPath property from Series type
     public graphPaths: SeriesColoredGraphPath[] | undefined;
@@ -274,36 +275,21 @@ class ColoredlineSeries extends LineSeries {
         return true;
     }
 
-    public drawTracker (): void {
+    public formatTrackerPath (
+        trackerPath: SeriesColoredSegmentPath[]
+    ): SeriesColoredSegmentPath[] {
         const series = this,
             options = series.options,
-            trackByArea = options.trackByArea,
-            trackerPath: SeriesColoredSegmentPath[] = 
-                trackByArea ? series.areaPaths :
-                    this.getPath(series.graphPaths),
             trackerPathLength = trackerPath.length,
-            chart = series.chart,
-            pointer = chart.pointer,
-            renderer = chart.renderer,
-            snap = chart.options.tooltip?.snap ?? 0,
-            tracker = series.tracker,
-            cursor = options.cursor,
-            css = cursor && { cursor },
             singlePoints = series.singlePoints,
-            trackerFill = 'rgba(192,192,192,0.002)';
+            snap = series.chart.options.tooltip?.snap ?? 0;
 
         let singlePoint,
             i;
 
-        const onMouseOver = (): void => {
-            if (chart.hoverSeries !== series) {
-                series.onMouseOver();
-            }
-        };
-        
         // Extend end points. A better way would be to use round linecaps,
         // but those are not clickable in VML.
-        if (trackerPathLength && !trackByArea) {
+        if (trackerPathLength && !options.trackByArea) {
             i = trackerPathLength + 1;
 
             while (i--) {
@@ -358,12 +344,39 @@ class ColoredlineSeries extends LineSeries {
             );
         }
 
+        return trackerPath;
+    }
+
+    public drawTracker (): void {
+        const series = this,
+            options = series.options,
+            trackByArea = options.trackByArea,
+            trackerPath: SeriesColoredSegmentPath[] = 
+                trackByArea ? series.areaPaths :
+                    this.getPath(series.graphPaths),
+            chart = series.chart,
+            pointer = chart.pointer,
+            renderer = chart.renderer,
+            snap = chart.options.tooltip?.snap ?? 0,
+            tracker = series.tracker,
+            cursor = options.cursor,
+            css = cursor && { cursor },
+            trackerFill = 'rgba(192,192,192,0.002)';
+
+        const onMouseOver = (): void => {
+            if (chart.hoverSeries !== series) {
+                series.onMouseOver();
+            }
+        };
+        
+        const formattedTrackerPath = this.formatTrackerPath(trackerPath);
+
         // Draw the tracker
-        if (isSVGPathSegment(trackerPath)) {
+        if (isSVGPathSegment(formattedTrackerPath)) {
             if (tracker) {
-                tracker.attr({ d: trackerPath });
+                tracker.attr({ d: formattedTrackerPath });
             } else { // Create a tracker
-                series.tracker = renderer.path(trackerPath)
+                series.tracker = renderer.path(formattedTrackerPath)
                     .attr({
                         'stroke-linejoin': 'round', // #1225
                         visibility: series.visible ? 'visible' : 'hidden',

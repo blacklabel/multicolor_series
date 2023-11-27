@@ -71,6 +71,7 @@ class ColoredlineSeries extends LineSeries {
      */
     constructor() {
         super();
+        this.segments = [];
         this.singlePoints = [];
         this.graphPaths = [];
         this.areaPaths = [];
@@ -175,19 +176,13 @@ class ColoredlineSeries extends LineSeries {
         }
         return true;
     }
-    drawTracker() {
-        var _a, _b, _c, _d, _e;
-        const series = this, options = series.options, trackByArea = options.trackByArea, trackerPath = trackByArea ? series.areaPaths :
-            this.getPath(series.graphPaths), trackerPathLength = trackerPath.length, chart = series.chart, pointer = chart.pointer, renderer = chart.renderer, snap = (_b = (_a = chart.options.tooltip) === null || _a === void 0 ? void 0 : _a.snap) !== null && _b !== void 0 ? _b : 0, tracker = series.tracker, cursor = options.cursor, css = cursor && { cursor }, singlePoints = series.singlePoints, trackerFill = 'rgba(192,192,192,0.002)';
+    formatTrackerPath(trackerPath) {
+        var _a, _b, _c, _d;
+        const series = this, options = series.options, trackerPathLength = trackerPath.length, singlePoints = series.singlePoints, snap = (_b = (_a = series.chart.options.tooltip) === null || _a === void 0 ? void 0 : _a.snap) !== null && _b !== void 0 ? _b : 0;
         let singlePoint, i;
-        const onMouseOver = () => {
-            if (chart.hoverSeries !== series) {
-                series.onMouseOver();
-            }
-        };
         // Extend end points. A better way would be to use round linecaps,
         // but those are not clickable in VML.
-        if (trackerPathLength && !trackByArea) {
+        if (trackerPathLength && !options.trackByArea) {
             i = trackerPathLength + 1;
             while (i--) {
                 if (((_c = trackerPath[i]) === null || _c === void 0 ? void 0 : _c.toString()) === 'M') { // Extend left side
@@ -212,20 +207,31 @@ class ColoredlineSeries extends LineSeries {
             const singlePointPlotX = Number(singlePoint.plotX);
             trackerPath.push('M', singlePointPlotX - snap, singlePoint.plotY, 'L', singlePointPlotX + snap, singlePoint.plotY);
         }
+        return trackerPath;
+    }
+    drawTracker() {
+        var _a, _b, _c;
+        const series = this, options = series.options, trackByArea = options.trackByArea, trackerPath = trackByArea ? series.areaPaths :
+            this.getPath(series.graphPaths), chart = series.chart, pointer = chart.pointer, renderer = chart.renderer, snap = (_b = (_a = chart.options.tooltip) === null || _a === void 0 ? void 0 : _a.snap) !== null && _b !== void 0 ? _b : 0, tracker = series.tracker, cursor = options.cursor, css = cursor && { cursor }, trackerFill = 'rgba(192,192,192,0.002)';
+        const onMouseOver = () => {
+            if (chart.hoverSeries !== series) {
+                series.onMouseOver();
+            }
+        };
+        const formattedTrackerPath = this.formatTrackerPath(trackerPath);
         // Draw the tracker
-        if (isSVGPathSegment(trackerPath)) {
-            console.info('1:', trackerPath);
+        if (isSVGPathSegment(formattedTrackerPath)) {
             if (tracker) {
-                tracker.attr({ d: trackerPath });
+                tracker.attr({ d: formattedTrackerPath });
             }
             else { // Create a tracker
-                series.tracker = renderer.path(trackerPath)
+                series.tracker = renderer.path(formattedTrackerPath)
                     .attr({
                     'stroke-linejoin': 'round',
                     visibility: series.visible ? 'visible' : 'hidden',
                     stroke: trackerFill,
                     fill: trackByArea ? trackerFill : 'none',
-                    'stroke-width': (_e = options.lineWidth) !== null && _e !== void 0 ? _e : 0 +
+                    'stroke-width': (_c = options.lineWidth) !== null && _c !== void 0 ? _c : 0 +
                         (trackByArea ? 0 : 2 * snap),
                     zIndex: 2
                 })
@@ -424,7 +430,6 @@ class ColoredlineSeries extends LineSeries {
                 attribs.stroke = segment[1];
             }
             if (isSVGPathSegment(segment[0])) {
-                console.info('2:', segment[0]);
                 item = series.chart.renderer.path(segment[0])
                     .attr(attribs)
                     .add(series.group);
@@ -441,7 +446,6 @@ class ColoredlineSeries extends LineSeries {
             graphPaths.forEach((segment, j) => {
                 // Update color and path
                 if (series.graphs[j] && isSVGPathSegment(segment[0])) {
-                    console.info('3:', segment[0]);
                     series.graphs[j].attr({
                         d: segment[0],
                         stroke: segment[1]
