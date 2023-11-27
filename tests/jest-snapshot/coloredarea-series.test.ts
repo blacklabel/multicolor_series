@@ -69,18 +69,21 @@ describe('Refactoring regression tests - series coloredarea.', (): void => {
         throw Error('Series type should be coloredarea.');
     }
 
+    // TO DO: change to graphs once refactored the coloredarea series.
     const graph = series.graph;
 
     describe('Graph element tests.', (): void => {
         test(
             'The graph element should be an five elements array.',
             (): void => {
-                expect(graph.length).toEqual(5);
+                // TO DO: check not needed once refactored the coloredarea series.
+                expect(graph?.length).toEqual(5);
             }
         );
 
         test('The graph paths should match the snapshot.', (): void => {
-            const paths = graph.map((graph): string =>
+            // TO DO: check not needed once refactored the coloredarea series.
+            const paths = graph?.map((graph): string =>
                 graph.element.outerHTML
             );
             expect(paths).toMatchSnapshot();
@@ -88,7 +91,7 @@ describe('Refactoring regression tests - series coloredarea.', (): void => {
     });
 
     test('The tracker element should match the snapshot.', (): void => {
-        expect(series.tracker.element).toMatchSnapshot();
+        expect(series?.tracker?.element).toMatchSnapshot();
     });
 
     test('The series data should match the snapshot.', (): void => {

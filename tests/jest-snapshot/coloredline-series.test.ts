@@ -69,7 +69,6 @@ describe('Refactoring regression tests - series coloredline.', (): void => {
         throw Error('Series type should be coloredline.');
     }
 
-    // TO DO: change to graphs once refactored the coloredarea series.
     const graphs = series.graphs;
 
     describe('Graph element tests.', (): void => {
@@ -89,7 +88,7 @@ describe('Refactoring regression tests - series coloredline.', (): void => {
     });
 
     test('The tracker element should match the snapshot.', (): void => {
-        expect(series.tracker.element).toMatchSnapshot();
+        expect(series?.tracker?.element).toMatchSnapshot();
     });
 
     test('The series data should match the snapshot.', (): void => {

@@ -43,13 +43,16 @@ gulp.task("compile", () => {
 				const removedSpecifiers = [],
 					removedPaths = [],
 					importPathReg = /import (.+?) from ["'](.+?)["'];/g,
-					formattedPathReg = /^highcharts-github\/ts\//;
+					formattedPathReg = /^highcharts-github\/ts\//,
+					exportReg = /\bexport\s*{[^}]*};?/g;
 
 				fileContent = fileContent.replace(importPathReg, (_match, specifier, path) => {
 					removedSpecifiers.push(specifier);
 			   		removedPaths.push(`${path.replace(formattedPathReg, "")}.js`);
 			   		return '';
 				});
+
+				fileContent = fileContent.replace(exportReg, '');
 
 		  		const wrappedFileContent = 
 `(function (factory) {

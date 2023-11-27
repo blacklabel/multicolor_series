@@ -35,20 +35,6 @@ type SeriesColoredGraphPath = [SeriesColoredSegmentPath[], ColorType];
 
 /**
  * 
- * Tests types
- * 
- */
-
-interface SeriesColored extends Omit<Series, 'graph'> {
-    tracker: SVGElement;
-    segments: SeriesColoredSegment<Point>[];
-    graphs: SVGElement[];
-    // TO DO: remove once refactored the coloredarea series.
-    graph: SVGElement[];
-}
-
-/**
- * 
  * Extended Highcharts module types
  * 
  */
@@ -80,6 +66,5 @@ export {
     SeriesColoredPoint,
     SeriesColoredSegment,
     SeriesColoredSegmentPath,
-    SeriesColoredGraphPath,
-    SeriesColored
+    SeriesColoredGraphPath
 };
