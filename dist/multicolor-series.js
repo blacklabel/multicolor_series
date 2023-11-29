@@ -99,30 +99,24 @@ class ColoredlineSeries extends LineSeries {
         segment.forEach((point, i) => {
             const plotX = Number(point.plotX), plotY = Number(point.plotY);
             let lastPoint;
-            if (series.getPointSpline) {
-                // Generate the spline as defined in the SplineSeries object
-                segmentPath.push.apply(segmentPath, series.getPointSpline(segment, point, i));
-            }
-            else {
-                // Declarations: moveTo or lineTo
-                segmentPath.push(i ? 'L' : 'M');
-                // Step line?
-                if (step && i) {
-                    lastPoint = segment[i - 1];
-                    const lastPointPlotX = Number(lastPoint.plotX);
-                    if (step === 'right') {
-                        segmentPath.push(lastPoint.plotX, plotY, 'L');
-                    }
-                    else if (step === 'center') {
-                        segmentPath.push((lastPointPlotX + plotX) / 2, lastPoint.plotY, 'L', (lastPointPlotX + plotX) / 2, plotY, 'L');
-                    }
-                    else {
-                        segmentPath.push(plotX, lastPoint.plotY, 'L');
-                    }
+            // Declarations: moveTo or lineTo
+            segmentPath.push(i ? 'L' : 'M');
+            // Step line?
+            if (step && i) {
+                lastPoint = segment[i - 1];
+                const lastPointPlotX = Number(lastPoint.plotX);
+                if (step === 'right') {
+                    segmentPath.push(lastPoint.plotX, plotY, 'L');
                 }
-                // Normal line to next point
-                segmentPath.push(plotX, plotY);
+                else if (step === 'center') {
+                    segmentPath.push((lastPointPlotX + plotX) / 2, lastPoint.plotY, 'L', (lastPointPlotX + plotX) / 2, plotY, 'L');
+                }
+                else {
+                    segmentPath.push(plotX, lastPoint.plotY, 'L');
+                }
             }
+            // Normal line to next point
+            segmentPath.push(plotX, plotY);
         });
         return segmentPath;
     }

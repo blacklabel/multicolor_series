@@ -85,7 +85,7 @@ class ColoredlineSeries extends LineSeries {
      *
      */
 
-    constructor () {
+    constructor() {
         super();
 
         this.segments = [];
@@ -109,13 +109,13 @@ class ColoredlineSeries extends LineSeries {
 
     public segments: SeriesColoredLineSegment[];
 
-    // Overrides graphPath property from Series type
+    // Overrides graphPath property from the Series type.
     public graphPaths: SeriesColoredGraphPath[] | undefined;
 
-    // Overrides areaPath property from Series type
+    // Overrides areaPath property from the Series type.
     public areaPaths: SeriesColoredSegmentPath[];
 
-    // Overrides graph property from Series type
+    // Overrides graph property from Series type.
     public graphs: SVGElement[] | [];
 
     /**
@@ -154,50 +154,43 @@ class ColoredlineSeries extends LineSeries {
 
             let lastPoint;
 
-            if (series.getPointSpline) {
-                // Generate the spline as defined in the SplineSeries object
-                segmentPath.push.apply(
-                    segmentPath, series.getPointSpline(segment, point, i)
-                );
-            } else {
-                // Declarations: moveTo or lineTo
-                segmentPath.push(i ? 'L' : 'M');
+            // Declarations: moveTo or lineTo
+            segmentPath.push(i ? 'L' : 'M');
 
-                // Step line?
-                if (step && i) {
-                    lastPoint = segment[i - 1];
-                    const lastPointPlotX = Number(lastPoint.plotX);
+            // Step line?
+            if (step && i) {
+                lastPoint = segment[i - 1];
+                const lastPointPlotX = Number(lastPoint.plotX);
 
-                    if (step === 'right') {
-                        segmentPath.push(
-                            lastPoint.plotX,
-                            plotY,
-                            'L'
-                        );
-                    } else if (step === 'center') {
-                        segmentPath.push(
-                            (lastPointPlotX + plotX) / 2,
-                            lastPoint.plotY,
-                            'L',
-                            (lastPointPlotX + plotX) / 2,
-                            plotY,
-                            'L'
-                        );
-                    } else {
-                        segmentPath.push(
-                            plotX,
-                            lastPoint.plotY,
-                            'L'
-                        );
-                    }
+                if (step === 'right') {
+                    segmentPath.push(
+                        lastPoint.plotX,
+                        plotY,
+                        'L'
+                    );
+                } else if (step === 'center') {
+                    segmentPath.push(
+                        (lastPointPlotX + plotX) / 2,
+                        lastPoint.plotY,
+                        'L',
+                        (lastPointPlotX + plotX) / 2,
+                        plotY,
+                        'L'
+                    );
+                } else {
+                    segmentPath.push(
+                        plotX,
+                        lastPoint.plotY,
+                        'L'
+                    );
                 }
-
-                // Normal line to next point
-                segmentPath.push(
-                    plotX,
-                    plotY
-                );
             }
+
+            // Normal line to next point
+            segmentPath.push(
+                plotX,
+                plotY
+            );
         });
 
         return segmentPath;
@@ -347,11 +340,11 @@ class ColoredlineSeries extends LineSeries {
         return trackerPath;
     }
 
-    public drawTracker (): void {
+    public drawTracker(): void {
         const series = this,
             options = series.options,
             trackByArea = options.trackByArea,
-            trackerPath: SeriesColoredSegmentPath[] = 
+            trackerPath = 
                 trackByArea ? series.areaPaths :
                     this.getPath(series.graphPaths),
             chart = series.chart,
@@ -454,9 +447,9 @@ class ColoredlineSeries extends LineSeries {
         }
     }
 
-    public getSegments (): void {
+    public getSegments(): void {
         const series = this,
-            points: SeriesColoredLinePoint[] = series.points;
+            points = series.points;
 
         let segments: SeriesColoredLineSegment[] = [],
             lastColor = 0,
@@ -588,7 +581,7 @@ class ColoredlineSeries extends LineSeries {
         series.segments = segments;
     }
 
-    public setSeriesGraphPathsAndSinglePoints (): SeriesColoredGraphPath[] {
+    public setSeriesGraphPathsAndSinglePoints(): SeriesColoredGraphPath[] {
         const series = this,
             graphPaths: SeriesColoredGraphPath[] = [];
 
@@ -614,15 +607,14 @@ class ColoredlineSeries extends LineSeries {
         return graphPaths;
     }
 
-    public drawGraph (): void {
+    public drawGraph(): void {
         const series = this,
             options = series.options,
             colorType = options.lineColor || series.color || '',
             lineWidth = options.lineWidth,
             dashStyle = options.dashStyle,
             roundCap = options.linecap !== 'square',
-            graphPaths: SeriesColoredGraphPath[] =
-                series.setSeriesGraphPathsAndSinglePoints(),
+            graphPaths = series.setSeriesGraphPathsAndSinglePoints(),
             graphPathLength = graphPaths.length;
 
         let graphSegmentsLength = 0;
@@ -713,27 +705,13 @@ class ColoredlineSeries extends LineSeries {
      *
      */
 
-    public translate (): void {
+    public translate(): void {
         super.translate.apply(this, arguments);
 
         if (this.getSegments) {
             this.getSegments();
         }
     }
-}
-
-/**
- *
- *  Class Prototype
- *
- */
-
-interface ColoredlineSeries extends LineSeries {
-    getPointSpline: (
-        segment: SeriesColoredLinePoint[],
-        point: SeriesColoredLinePoint,
-        i: number
-    ) => SeriesColoredSegmentPath[]
 }
 
 /**
@@ -753,7 +731,7 @@ SeriesRegistry.registerSeriesType('coloredline', ColoredlineSeries);
  */
 
 class ColoredAreaSeries extends AreaSeries {
-    drawGraph (): void {
+    drawGraph(): void {
         super.drawGraph.apply(this);
         console.info('Inside coloredarea drawGraph method!');
     }
