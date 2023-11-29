@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Multicolor series</title>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="dist/multicolor-series.js"></script>
+  </head>
+  <body>
+    <div id="coloredline-container"></div>
+    <div id="coloredarea-container"></div>
+  </body>
+
+  <script>
+    Highcharts.chart("coloredline-container", {
+      series: [
+        {
+          type: "coloredline",
+          data: [
+                    {
+                        y: 40,
+                        segmentColor: 'red'
+                    },
+                    {
+                        y: 60,
+                        segmentColor: 'blue'
+                    },
+                    {
+                        y: 30,
+                        segmentColor: 'yellow'
+                    },
+                    {
+                        y: 10,
+                        segmentColor: 'green'
+                    },
+                    {
+                        y: 50,
+                        segmentColor: 'green'
+                    },
+                    {
+                        y: 20,
+                        segmentColor: 'brown'
+                    },
+                    {
+                        y: 70,
+                        segmentColor: 'pink'
+                    }
+                ]
+        }
+      ]
+    });
+
+    Highcharts.chart("coloredarea-container", {
+      series: [
+        {
+          type: "coloredarea",
+          data: [5, 2, 4, 3, 1],
+        }
+      ]
+    });
+  </script>
+</html>

@@ -2,11 +2,11 @@
 
 exports[`Refactoring regression tests - series coloredarea. Graph element tests. The graph paths should match the snapshot. 1`] = `
 [
-  "<path fill="red" d="M 0 0" stroke="red" stroke-width="1" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
-  "<path fill="blue" d="M 0 0" stroke="blue" stroke-width="1" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
-  "<path fill="yellow" d="M 0 0" stroke="yellow" stroke-width="1" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
-  "<path fill="green" d="M 0 0" stroke="green" stroke-width="1" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
-  "<path fill="brown" d="M 0 0" stroke="brown" stroke-width="1" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
+  "<path fill="red" d="M 0 0" stroke="red" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
+  "<path fill="blue" d="M 0 0" stroke="blue" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
+  "<path fill="yellow" d="M 0 0" stroke="yellow" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
+  "<path fill="green" d="M 0 0" stroke="green" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
+  "<path fill="brown" d="M 0 0" stroke="brown" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
 ]
 `;
 
@@ -146,7 +146,7 @@ exports[`Refactoring regression tests - series coloredarea. The tracker element 
   fill="none"
   stroke="rgba(192,192,192,0.002)"
   stroke-linejoin="round"
-  stroke-width="21"
+  stroke-width="22"
   visibility="visible"
 />
 `;

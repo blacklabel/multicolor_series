@@ -1,23 +1,53 @@
-import { SeriesOptions, PointOptionsObject, Point, Series, SVGElement } from "highcharts";
+import type SVGPath from "highcharts-github/ts/Core/Renderer/SVG/SVGPath";
+import type ColorType from "highcharts-github/ts/Core/Color/ColorType";
+import type {
+    SeriesOptions,
+    PointOptionsObject,
+    Point,
+    Series,
+    SVGElement
+} from 'highcharts';
 
 /**
- * Shared types.
+ * 
+ * Shared types
+ * 
  */
-type SeriesColoredSegment = {
+
+type SeriesColoredPoint<T> = T & {
+    segmentColor?: string;
+};
+
+type SeriesColoredSegment<T> = {
     color: string;
-    points: SeriesColoredPoint[];
+    points: SeriesColoredPoint<T>[];
 };
 
 /**
- * Represents data for chart options.
+ * 
+ * Core code types
+ * 
  */
+
+type SeriesColoredSegmentPath = SVGPath.Segment | string | number | undefined;
+
+type SeriesColoredGraphPath = [SeriesColoredSegmentPath[], ColorType];
+
+/**
+ * 
+ * Extended Highcharts module types
+ * 
+ */
+
 interface SeriesColoredPointOptions extends PointOptionsObject {
     segmentColor?: string;
 }
 
 type SeriesColoredType = 'coloredline' | 'coloredarea';
 
-interface SeriesColoredOptions<Type extends SeriesColoredType> extends SeriesOptions {
+interface SeriesColoredOptions<
+    Type extends SeriesColoredType
+> extends SeriesOptions {
     type: Type;
     data?: SeriesColoredPointOptions[];
 }
@@ -25,9 +55,6 @@ interface SeriesColoredOptions<Type extends SeriesColoredType> extends SeriesOpt
 type SeriesColoredlineOptions = SeriesColoredOptions<'coloredline'>;
 type SeriesColoredareaOptions = SeriesColoredOptions<'coloredarea'>;
 
-/**
- * Globally accessible on the Highcharts module.
- */
 declare module "highcharts" {
     interface SeriesOptionsRegistry {
         SeriesColoredlineOptions?: SeriesColoredlineOptions;
@@ -35,17 +62,9 @@ declare module "highcharts" {
     }
 }
 
-/**
- * Represents created chart data.
- */
-interface SeriesColoredPoint extends Point {
-    segmentColor?: string;
-}
-
-interface SeriesColored extends Omit<Series, 'graph'> {
-    tracker: SVGElement;
-    segments: SeriesColoredSegment[];
-    graph: SVGElement[];
-}
-
-export { SeriesColored, SeriesColoredSegment, SeriesColoredPoint };
+export {
+    SeriesColoredPoint,
+    SeriesColoredSegment,
+    SeriesColoredSegmentPath,
+    SeriesColoredGraphPath
+};
