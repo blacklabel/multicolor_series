@@ -386,7 +386,7 @@ class ColoredlineSeries extends LineSeries {
                         stroke: trackerFill,
                         fill: trackByArea ? trackerFill : 'none',
                         'stroke-width': options.lineWidth ?? 0 +
-                                (trackByArea ? 0 : 2 * snap),
+                            (trackByArea ? 0 : 2 * snap),
                         zIndex: 2
                     })
                     .add(series.group);
@@ -408,7 +408,7 @@ class ColoredlineSeries extends LineSeries {
 
                             if (
                                 typeof document.documentElement.ontouchstart !==
-                                        'undefined'
+                                    'undefined'
                             ) {
                                 track.on('touchstart', onMouseOver);
                             }
