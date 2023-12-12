@@ -852,7 +852,6 @@ class ColoredareaSeries extends ColoredlineSeries {
             areaSegmentPath = [...segmentPath], // Work on a copy for the area path
             options = this.options,
             segLength = segmentPath.length,
-            // TO DO: Test the below ?? 0.
             translatedThreshold =
                 this.yAxis.getThreshold(options.threshold ?? 0); // #2181
 
