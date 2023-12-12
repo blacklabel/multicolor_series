@@ -82,6 +82,8 @@ Demos are available at project's github page: [http://blacklabel.github.io/multi
 
 ### Releases
 
+- Versions v3.0.0: compatible with Highcharts v10.3.3+
+
 - Versions v2.4.0+: compatible with Highcharts v10.0.0+
 
 - Version v2.3.0: compatible with Highcharts v9.2.0 - v9.3.3

@@ -1,16 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://goo.gl/fbAQLP d
 
-exports[`Refactoring regression tests - series coloredline. Graph element tests. The graph paths should match the snapshot. 1`] = `
-[
-  "<path fill="none" d="M 0 0" stroke="red" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
-  "<path fill="none" d="M 0 0" stroke="blue" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
-  "<path fill="none" d="M 0 0" stroke="yellow" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
-  "<path fill="none" d="M 0 0" stroke="green" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
-  "<path fill="none" d="M 0 0" stroke="brown" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
-]
-`;
-
-exports[`Refactoring regression tests - series coloredline. Graph element tests. The graphs paths should match the snapshot. 1`] = `
+exports[`Refactoring regression tests - series coloredline. Graphs element tests. The graphs paths should match the snapshot. 1`] = `
 [
   "<path fill="none" d="M 0 0" stroke="red" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
   "<path fill="none" d="M 0 0" stroke="blue" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",

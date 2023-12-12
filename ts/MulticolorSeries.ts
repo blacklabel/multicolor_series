@@ -1,8 +1,9 @@
 import SeriesRegistry from 'highcharts-github/ts/Core/Series/SeriesRegistry';
 import Utilities from 'highcharts-github/ts/Core/Utilities';
+import Series from 'highcharts-github/ts/Core/Series/Series';
 import LineSeries from 'highcharts-github/ts/Series/Line/LineSeries';
-import AreaSeries from 'highcharts-github/ts/Series/Area/AreaSeries';
 import type LinePoint from 'highcharts-github/ts/Series/Line/LinePoint';
+import type AreaPoint from 'highcharts-github/ts/Series/Area/AreaPoint';
 import type PointerEvent from 'highcharts-github/ts/Core/PointerEvent';
 import type SVGElement from 'highcharts-github/ts/Core/Renderer/SVG/SVGElement';
 import type SVGAttributes from 
@@ -11,6 +12,9 @@ import type ColorType from 'highcharts-github/ts/Core/Color/ColorType';
 import type SVGPath from 'highcharts-github/ts/Core/Renderer/SVG/SVGPath';
 import { type StatesOptionsKey } from 
     'highcharts-github/ts/Core/Series/StatesOptions';
+import type { SeriesTypeOptions } from
+    'highcharts-github/ts/Core/Series/SeriesType';
+import type Chart from 'highcharts-github/ts/Core/Chart/Chart';
 import {
     type SeriesColoredPoint,
     type SeriesColoredSegment,
@@ -24,18 +28,18 @@ import {
  *
  */
 
-const { isArray } = Utilities;
+const { isArray, pick } = Utilities;
 
 const containsStringNumberNumberSequence = (
     sequenceValue: SeriesColoredSegmentPath[]
 ): boolean => {
     let isSequenceFound = false;
-        
-    for (let i = 0; i < sequenceValue.length; i++) {
+
+    for (let index = 0; index < sequenceValue.length; index++) {
         if (
-            typeof sequenceValue[i] === 'string' &&
-            typeof sequenceValue[i + 1] === 'number' &&
-            typeof sequenceValue[i + 2] === 'number'
+            typeof sequenceValue[index] === 'string' &&
+            typeof sequenceValue[index + 1] === 'number' &&
+            typeof sequenceValue[index + 2] === 'number'
         ) {
             isSequenceFound = true;
         } else {
@@ -43,21 +47,11 @@ const containsStringNumberNumberSequence = (
             break;
         }
 
-        i += 2;
+        index += 2;
     }
-    
+
     return isSequenceFound;
 };
-
-/**
- *
- *  Declarations
- *
- */
-
-type SeriesColoredLinePoint = SeriesColoredPoint<LinePoint>;
-
-type SeriesColoredLineSegment = SeriesColoredSegment<SeriesColoredLinePoint>;
 
 /**
  *
@@ -71,6 +65,22 @@ const isSVGPathSegment = (
 
 /**
  *
+ *  Coloredline series
+ *
+ */
+
+/**
+ *
+ *  Declarations
+ *
+ */
+
+type SeriesColoredlinePoint = SeriesColoredPoint<LinePoint>;
+
+type SeriesColoredlineSegment = SeriesColoredSegment<SeriesColoredlinePoint>;
+
+/**
+ *
  * @private
  * @class
  * @name Highcharts.seriesTypes.coloredline
@@ -78,7 +88,7 @@ const isSVGPathSegment = (
  */
 
 class ColoredlineSeries extends LineSeries {
-    
+
     /**
      *
      *  Constructor
@@ -103,11 +113,11 @@ class ColoredlineSeries extends LineSeries {
 
     public pointRange: number | undefined;
 
-    public singlePoints: SeriesColoredLinePoint[];
+    public singlePoints: SeriesColoredlinePoint[];
 
-    public points!: SeriesColoredLinePoint[];
+    public points!: SeriesColoredlinePoint[];
 
-    public segments: SeriesColoredLineSegment[];
+    public segments: SeriesColoredlineSegment[];
 
     // Overrides graphPath property from the Series type.
     public graphPaths: SeriesColoredGraphPath[] | undefined;
@@ -128,38 +138,38 @@ class ColoredlineSeries extends LineSeries {
         graphPaths: SeriesColoredGraphPath[] | undefined
     ): SeriesColoredSegmentPath[] {
         let segmentPath: SeriesColoredSegmentPath[] = [];
-    
+
         if (graphPaths) {
-            graphPaths.forEach((el): void => {
-                if (isArray(el[0])) {
-                    segmentPath = segmentPath.concat(el[0]);
+            graphPaths.forEach((graphPath): void => {
+                if (isArray(graphPath[0])) {
+                    segmentPath = segmentPath.concat(graphPath[0]);
                 }
             });
         }
-    
+
         return segmentPath;
     }
 
     public getSegmentPath (
-        segment: SeriesColoredLinePoint[]
+        segment: SeriesColoredlinePoint[]
     ): SeriesColoredSegmentPath[] {
         const series = this,
             segmentPath: SeriesColoredSegmentPath[] = [],
             step = series.options.step;
 
         // Build the segment line
-        segment.forEach((point, i: number): void => {
+        segment.forEach((point, index: number): void => {
             const plotX = Number(point.plotX),
                 plotY = Number(point.plotY);
 
             let lastPoint;
 
             // Declarations: moveTo or lineTo
-            segmentPath.push(i ? 'L' : 'M');
+            segmentPath.push(index ? 'L' : 'M');
 
             // Step line?
-            if (step && i) {
-                lastPoint = segment[i - 1];
+            if (step && index) {
+                lastPoint = segment[index - 1];
                 const lastPointPlotX = Number(lastPoint.plotX);
 
                 if (step === 'right') {
@@ -235,8 +245,8 @@ class ColoredlineSeries extends LineSeries {
 
         if (processedXData && processedYData) {
             // Find the closest distance between processed points
-            for (let i = processedXData.length - 1; i >= 0; i--) {
-                distance = processedXData[i] - processedXData[i - 1];
+            for (let index = processedXData.length - 1; index >= 0; index--) {
+                distance = processedXData[index] - processedXData[index - 1];
 
                 if (
                     distance > 0 &&
@@ -278,44 +288,44 @@ class ColoredlineSeries extends LineSeries {
             snap = series.chart.options.tooltip?.snap ?? 0;
 
         let singlePoint,
-            i;
+            index;
 
         // Extend end points. A better way would be to use round linecaps,
         // but those are not clickable in VML.
         if (trackerPathLength && !options.trackByArea) {
-            i = trackerPathLength + 1;
+            index = trackerPathLength + 1;
 
-            while (i--) {
-                if (trackerPath[i]?.toString() === 'M') { // Extend left side
-                    const nextTrackerPath = trackerPath[i + 1];
+            while (index--) {
+                if (trackerPath[index]?.toString() === 'M') { // Extend left side
+                    const nextTrackerPath = trackerPath[index + 1];
 
                     if (typeof nextTrackerPath === 'number') {
                         trackerPath.splice(
-                            i + 1,
+                            index + 1,
                             0,
                             nextTrackerPath - snap,
-                            trackerPath[i + 2],
+                            trackerPath[index + 2],
                             'L'
                         );
                     }
                 }
-                
+
                 if (
                     (
-                        i &&
-                        trackerPath[i]?.toString() === 'M'
+                        index &&
+                        trackerPath[index]?.toString() === 'M'
                     ) ||
-                    i === trackerPathLength
+                    index === trackerPathLength
                 ) { // Extend right side
-                    const subPreviousTrackerPath = trackerPath[i - 2];
+                    const subPreviousTrackerPath = trackerPath[index - 2];
 
                     if (typeof subPreviousTrackerPath === 'number') {
                         trackerPath.splice(
-                            i,
+                            index,
                             0,
                             'L',
                             subPreviousTrackerPath + snap,
-                            trackerPath[i - 1]
+                            trackerPath[index - 1]
                         );
                     }
                 }
@@ -323,8 +333,8 @@ class ColoredlineSeries extends LineSeries {
         }
 
         // Handle single points
-        for (i = 0; i < singlePoints.length; i++) {
-            singlePoint = singlePoints[i];
+        for (index = 0; index < singlePoints.length; index++) {
+            singlePoint = singlePoints[index];
             const singlePointPlotX = Number(singlePoint.plotX);
 
             trackerPath.push(
@@ -344,7 +354,7 @@ class ColoredlineSeries extends LineSeries {
         const series = this,
             options = series.options,
             trackByArea = options.trackByArea,
-            trackerPath = 
+            trackerPath =
                 trackByArea ? series.areaPaths :
                     this.getPath(series.graphPaths),
             chart = series.chart,
@@ -361,7 +371,7 @@ class ColoredlineSeries extends LineSeries {
                 series.onMouseOver();
             }
         };
-        
+
         const formattedTrackerPath = this.formatTrackerPath(trackerPath);
 
         // Draw the tracker
@@ -376,7 +386,7 @@ class ColoredlineSeries extends LineSeries {
                         stroke: trackerFill,
                         fill: trackByArea ? trackerFill : 'none',
                         'stroke-width': options.lineWidth ?? 0 +
-                            (trackByArea ? 0 : 2 * snap),
+                                (trackByArea ? 0 : 2 * snap),
                         zIndex: 2
                     })
                     .add(series.group);
@@ -388,8 +398,8 @@ class ColoredlineSeries extends LineSeries {
                         if (track) {
                             track.addClass('highcharts-tracker')
                                 .on('mouseover', onMouseOver)
-                                .on('mouseout', (e: PointerEvent): void => {
-                                    pointer.onTrackerMouseOut(e);
+                                .on('mouseout', (event: PointerEvent): void => {
+                                    pointer.onTrackerMouseOut(event);
                                 });
 
                             if (css) {
@@ -398,7 +408,7 @@ class ColoredlineSeries extends LineSeries {
 
                             if (
                                 typeof document.documentElement.ontouchstart !==
-                                    'undefined'
+                                        'undefined'
                             ) {
                                 track.on('touchstart', onMouseOver);
                             }
@@ -438,9 +448,9 @@ class ColoredlineSeries extends LineSeries {
 
             if (graphs) { // Hover is turned off for dashed lines in VML
                 // use attr because animate will cause any other animation on the graph to stop
-                graphs.forEach((seg: SVGElement): void => {
-                    if (!seg.dashstyle) {
-                        seg.attr({ 'stroke-width': lineWidth });
+                graphs.forEach((graph: SVGElement): void => {
+                    if (!graph.dashstyle) {
+                        graph.attr({ 'stroke-width': lineWidth });
                     }
                 });
             }
@@ -451,33 +461,33 @@ class ColoredlineSeries extends LineSeries {
         const series = this,
             points = series.points;
 
-        let segments: SeriesColoredLineSegment[] = [],
+        let segments: SeriesColoredlineSegment[] = [],
             lastColor = 0,
-            pointsLength = points.length,
-            i;
+            pointsLength = points.length;
 
         if (pointsLength) { // No action required for []
             // if connect nulls, just remove null points
             if (series.options.connectNulls) {
                 // Iterate backwars for secure point removal
-                for (i = pointsLength - 1; i >= 0; --i) {
-                    if (points[i].y === null) {
-                        points.splice(i, 1);
+                for (let index = pointsLength - 1; index >= 0; --index) {
+                    if (points[index].y === null) {
+                        points.splice(index, 1);
                     }
                 }
                 pointsLength = points.length;
 
-                points.forEach((_point, j): void => {
+                points.forEach((_point, pointIndex): void => {
                     if (
-                        j > 0 &&
-                        points[j].segmentColor !== points[j - 1].segmentColor
+                        pointIndex > 0 &&
+                        points[pointIndex].segmentColor !==
+                            points[pointIndex - 1].segmentColor
                     ) {
                         segments.push({
-                            points: points.slice(lastColor, j + 1),
-                            color: points[j - 1].segmentColor ?? ''
+                            points: points.slice(lastColor, pointIndex + 1),
+                            color: points[pointIndex - 1].segmentColor ?? ''
                         });
 
-                        lastColor = j;
+                        lastColor = pointIndex;
                     }
                 });
 
@@ -504,68 +514,76 @@ class ColoredlineSeries extends LineSeries {
             } else {
                 let previousColor: string | null = null;
 
-                points.forEach((point, j): void => {
-                    const colorChanged = j > 0 && (
+                points.forEach((point, pointIndex): void => {
+                    const colorChanged = pointIndex > 0 && (
                             point.y === null ||
-                            points[j - 1].y === null ||
+                            points[pointIndex - 1].y === null ||
                             (
                                 point.segmentColor !==
-                                    points[j - 1].segmentColor &&
-                                points[j].segmentColor !== previousColor
+                                    points[pointIndex - 1].segmentColor &&
+                                points[pointIndex].segmentColor !==
+                                    previousColor
                             )
                         ),
-                        colorExists = !!(points[j - 1]?.segmentColor &&
-                            points[j - 1].y !== null);
+                        colorExists = !!(points[pointIndex - 1]?.segmentColor &&
+                            points[pointIndex - 1].y !== null);
 
-                    let p = points.slice(lastColor, j + 1);
+                    let formattedPoints =
+                        points.slice(lastColor, pointIndex + 1);
 
                     if (colorChanged) {
-                        if (p.length > 0) {
+                        if (formattedPoints.length > 0) {
                             // Do not create segments with null ponits
-                            p.forEach((pointObject, k): void => {
+                            formattedPoints.forEach((pointObject, k): void => {
                                 if (pointObject.y === null) {
                                     // Remove null points (might be on edges)
-                                    p.splice(k, 1);
+                                    formattedPoints.splice(k, 1);
                                 }
                             });
 
                             segments.push({
-                                points: p,
+                                points: formattedPoints,
                                 color: (
-                                    colorExists ? points[j - 1].segmentColor :
+                                    colorExists ?
+                                        points[pointIndex - 1].segmentColor :
                                         previousColor
                                 ) ?? ''
                             });
-                            
-                            lastColor = j;
+
+                            lastColor = pointIndex;
                         }
-                    } else if (j === pointsLength - 1) {
-                        let next = j + 1;
+                    } else if (pointIndex === pointsLength - 1) {
+                        let next = pointIndex + 1;
 
                         if (point.y === null) {
                             next--;
                         }
 
-                        p = points.slice(lastColor, next);
-                        
-                        if (p.length > 0) {
+                        formattedPoints = points.slice(lastColor, next);
+
+                        if (formattedPoints.length > 0) {
                             // Do not create segments with null ponits
-                            p.forEach((pointObject, k): void => {
-                                if (pointObject.y === null) {
+                            formattedPoints.forEach((
+                                formattedPoint, formattedPointIndex
+                            ): void => {
+                                if (formattedPoint.y === null) {
                                     // Remove null points (might be on edges)
-                                    p.splice(k, 1);
+                                    formattedPoints.splice(
+                                        formattedPointIndex, 1
+                                    );
                                 }
                             });
 
                             segments.push({
-                                points: p,
+                                points: formattedPoints,
                                 color: (
-                                    colorExists ? points[j - 1].segmentColor :
+                                    colorExists ?
+                                        points[pointIndex - 1].segmentColor :
                                         previousColor
                                 ) ?? ''
                             });
-                            
-                            lastColor = j;
+
+                            lastColor = pointIndex;
                         }
                     }
 
@@ -585,7 +603,7 @@ class ColoredlineSeries extends LineSeries {
         const series = this,
             graphPaths: SeriesColoredGraphPath[] = [];
 
-        let singlePoints: SeriesColoredLinePoint[] = [], // Used in drawTracker
+        let singlePoints: SeriesColoredlinePoint[] = [], // Used in drawTracker
             segmentPath;
 
         // Divide into segments and build graph and area paths
@@ -607,82 +625,87 @@ class ColoredlineSeries extends LineSeries {
         return graphPaths;
     }
 
-    public drawGraph(): void {
+    public getSegment = (
+        segment: SeriesColoredGraphPath,
+        colorType: ColorType
+    ): SVGElement | undefined => {
         const series = this,
             options = series.options,
-            colorType = options.lineColor || series.color || '',
             lineWidth = options.lineWidth,
             dashStyle = options.dashStyle,
             roundCap = options.linecap !== 'square',
-            graphPaths = series.setSeriesGraphPathsAndSinglePoints(),
-            graphPathLength = graphPaths.length;
-
-        let graphSegmentsLength = 0;
-
-        const getSegment = (
-            segment: SeriesColoredGraphPath,
-            colorType: ColorType
-        ): SVGElement | undefined => {
-            const attribs: SVGAttributes = {
+            attribs: SVGAttributes = {
                 stroke: colorType,
                 'stroke-width': lineWidth,
                 fill: 'none',
                 zIndex: 1 // #1069
             };
 
-            let item;
+        let item;
 
-            if (dashStyle) {
-                attribs.dashstyle = dashStyle;
-            } else if (roundCap) {
-                attribs['stroke-linecap'] =
-                    attribs['stroke-linejoin'] = 'round';
-            }
+        if (dashStyle) {
+            attribs.dashstyle = dashStyle;
+        } else if (roundCap) {
+            attribs['stroke-linecap'] =
+                attribs['stroke-linejoin'] = 'round';
+        }
 
-            if (segment[1]) {
-                attribs.stroke = segment[1];
-            }
+        if (segment[1]) {
+            attribs.stroke = segment[1];
+        }
 
-            if (isSVGPathSegment(segment[0])) {
-                item = series.chart.renderer.path(segment[0])
-                    .attr(attribs)
-                    .add(series.group);
-            }
+        if (isSVGPathSegment(segment[0])) {
+            item = series.chart.renderer.path(segment[0])
+                .attr(attribs)
+                .add(series.group);
+        }
 
-            if (item?.shadow) {
-                item.shadow(!!options.shadow);
-            }
+        if (item?.shadow) {
+            item.shadow(!!options.shadow);
+        }
 
-            return item;
-        };
+        return item;
+    };
+
+    public drawGraph(): void {
+        const series = this,
+            options = series.options,
+            colorType = options.lineColor || series.color || '',
+            graphPaths = series.setSeriesGraphPathsAndSinglePoints(),
+            graphPathLength = graphPaths.length;
+
+        let graphSegmentsLength = 0;
 
         // Draw the graphs
         let graphs = series.graphs;
 
         if (graphs) { // Cancel running animations, #459
             // do we have animation
-            graphPaths.forEach((segment, j): void => {
+            graphPaths.forEach((segment, segmentIndex): void => {
                 // Update color and path
-                if (series.graphs[j] && isSVGPathSegment(segment[0])) {
-                    series.graphs[j].attr({
+                if (
+                    series.graphs[segmentIndex] && isSVGPathSegment(segment[0])
+                ) {
+                    series.graphs[segmentIndex].attr({
                         d: segment[0],
                         stroke: segment[1]
                     });
                 } else {
-                    const formattedSegment = getSegment(segment, colorType);
+                    const formattedSegment =
+                        this.getSegment(segment, colorType);
 
                     if (formattedSegment) {
-                        series.graphs[j] = formattedSegment;
+                        series.graphs[segmentIndex] = formattedSegment;
                     }
                 }
             });
         } else if (graphPaths.length > 0) { // #1487
             graphs = [];
-            graphPaths.forEach((segment, j): void => {
-                const formattedSegment = getSegment(segment, colorType);
+            graphPaths.forEach((segment, segmentIndex): void => {
+                const formattedSegment = this.getSegment(segment, colorType);
 
                 if (formattedSegment) {
-                    graphs[j] = formattedSegment;
+                    graphs[segmentIndex] = formattedSegment;
                 }
             });
 
@@ -691,10 +714,14 @@ class ColoredlineSeries extends LineSeries {
         // Checks if series.graphs exists. #3
         graphSegmentsLength = (series.graphs && series.graphs.length) || -1;
 
-        for (let j = graphSegmentsLength; j >= graphPathLength; j--) {
-            if (series.graphs && series.graphs[j]) {
-                series.graphs[j].destroy();
-                series.graphs.splice(j, 1);
+        for (
+            let index = graphSegmentsLength;
+            index >= graphPathLength;
+            index--
+        ) {
+            if (series.graphs && series.graphs[index]) {
+                series.graphs[index].destroy();
+                series.graphs.splice(index, 1);
             }
         }
     }
@@ -724,19 +751,170 @@ SeriesRegistry.registerSeriesType('coloredline', ColoredlineSeries);
 
 /**
  *
+ *  Coloredarea series
+ *
+ */
+
+/**
+ *
+ *  Declarations
+ *
+ */
+
+type SeriesColoredareaPoint = SeriesColoredPoint<AreaPoint>;
+
+type SeriesColoredareaSegment = SeriesColoredSegment<SeriesColoredareaPoint>;
+
+/**
+ *
  * @private
  * @class
  * @name Highcharts.seriesTypes.coloredarea
  *
  */
 
-class ColoredAreaSeries extends AreaSeries {
-    drawGraph(): void {
-        super.drawGraph.apply(this);
-        console.info('Inside coloredarea drawGraph method!');
+class ColoredareaSeries extends ColoredlineSeries {
+
+    /**
+     *
+     *  Constructor
+     *
+     */
+
+    constructor() {
+        super();
+
+        this.segments = [];
+        this.singlePoints = [];
+    }
+
+    /**
+     *
+     *  Properties
+     *
+     */
+
+    public singlePoints: SeriesColoredareaPoint[];
+
+    public points!: SeriesColoredareaPoint[];
+
+    public segments: SeriesColoredareaSegment[];
+
+    /**
+     *
+     *  Functions
+     *
+     */
+
+    public init(chart: Chart, options: DeepPartial<SeriesTypeOptions>): void {
+        options.threshold = options.threshold || null;
+        Series.prototype.init.call(this, chart, options);
+    }
+
+    public closeSegment(
+        path: SeriesColoredSegmentPath[],
+        segment: SeriesColoredareaPoint[],
+        translatedThreshold: number
+    ): void {
+        path.push(
+            'L',
+            segment[segment.length - 1].plotX,
+            translatedThreshold,
+            'L',
+            segment[0].plotX,
+            translatedThreshold
+        );
+    }
+
+    public drawGraph(): void {
+        ColoredlineSeries.prototype.drawGraph.call(this);
+
+        const series = this,
+            graphs = series.graphs;
+
+        if (graphs) { // Cancel running animations, #459
+            // do we have animation
+            series?.graphPaths?.forEach((segment, index): void => {
+
+                // Update color and path
+                if (series.graphs[index]) {
+                    series.graphs[index].attr({ fill: segment[1] });
+                }
+            });
+        }
+    }
+
+    public getSegmentPath(
+        segment: SeriesColoredareaPoint[]
+    ): SeriesColoredSegmentPath[] {
+        const segmentPath = 
+            ColoredlineSeries.prototype.getSegmentPath.call(this, segment), // Call base method
+            areaSegmentPath = [...segmentPath], // Work on a copy for the area path
+            options = this.options,
+            segLength = segmentPath.length,
+            // TO DO: Test the below ?? 0.
+            translatedThreshold =
+                this.yAxis.getThreshold(options.threshold ?? 0); // #2181
+
+        let yBottom;
+
+        if (segLength === 3) { // For animation from 1 to two points
+            areaSegmentPath.push('L', segmentPath[1], segmentPath[2]);
+        }
+
+        if (options.stacking) {
+            for (let index = segment.length - 1; index >= 0; index--) {
+                yBottom = pick(segment[index].yBottom, translatedThreshold);
+
+                // Step line?
+                if (index < segment.length - 1 && options.step) {
+                    areaSegmentPath.push(segment[index + 1].plotX, yBottom);
+                }
+
+                areaSegmentPath.push(segment[index].plotX, yBottom);
+            }
+        } else { // Follow zero line back
+            this.closeSegment(areaSegmentPath, segment, translatedThreshold);
+        }
+
+        return areaSegmentPath;
+    }
+
+    public setSeriesGraphPathsAndSinglePoints(): SeriesColoredGraphPath[] {
+        const series = this,
+            graphPaths: SeriesColoredGraphPath[] = [];
+
+        let singlePoints: SeriesColoredareaPoint[] = [], // Used in drawTracker
+            segmentPaths;
+
+        // Divide into segments and build graph and area paths
+        this.areaPaths = [];
+        series.segments.forEach((segment): void => {
+            segmentPaths = series.getSegmentPath(segment.points);
+
+            // Add the segment to the graph, or a single point for tracking
+            if (segment.points.length > 1) {
+                graphPaths.push([segmentPaths, segment.color]);
+            } else {
+                singlePoints = [...singlePoints, ...segment.points];
+            }
+        });
+
+        // Record it for use in drawGraph and drawTracker, and return graphPaths
+        series.singlePoints = singlePoints;
+        series.graphPaths = graphPaths;
+
+        return graphPaths;
+
     }
 }
 
-SeriesRegistry.registerSeriesType('coloredarea', ColoredAreaSeries);
+/**
+ *
+ *  Registry
+ *
+ */
 
-export { ColoredlineSeries, ColoredAreaSeries };
+SeriesRegistry.registerSeriesType('coloredarea', ColoredareaSeries);
+
+export { ColoredlineSeries, ColoredareaSeries };

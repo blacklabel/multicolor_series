@@ -65,13 +65,13 @@ describe('Refactoring regression tests - series coloredline.', (): void => {
         throw Error('Series should be defined.');
     }
 
-    if (!isSeriesColored(series, 'coloredline')) {
+    if (!isSeriesColored(series)) {
         throw Error('Series type should be coloredline.');
     }
 
     const graphs = series.graphs;
 
-    describe('Graph element tests.', (): void => {
+    describe('Graphs element tests.', (): void => {
         test(
             'The graphs element should be an five elements array.',
             (): void => {

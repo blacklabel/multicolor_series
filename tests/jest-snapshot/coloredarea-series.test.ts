@@ -1,5 +1,5 @@
 import Highcharts from 'highcharts';
-import multicolorModule from '../../js/multicolor_series';
+import multicolorModule from '../../dist/multicolor-series';
 import { isSeriesColored } from './../../typeguards';
 import { generateFormattedSegments, generateFormattedSeries } from './helper';
 
@@ -65,25 +65,22 @@ describe('Refactoring regression tests - series coloredarea.', (): void => {
         throw Error('Series should be defined.');
     }
 
-    if (!isSeriesColored(series, 'coloredarea')) {
+    if (!isSeriesColored(series)) {
         throw Error('Series type should be coloredarea.');
     }
 
-    // TO DO: change to graphs once refactored the coloredarea series.
-    const graph = series.graph;
+    const graphs = series.graphs;
 
-    describe('Graph element tests.', (): void => {
+    describe('Graphs element tests.', (): void => {
         test(
-            'The graph element should be an five elements array.',
+            'The graphs element should be an five elements array.',
             (): void => {
-                // TO DO: check not needed once refactored the coloredarea series.
-                expect(graph?.length).toEqual(5);
+                expect(graphs.length).toEqual(5);
             }
         );
 
-        test('The graph paths should match the snapshot.', (): void => {
-            // TO DO: check not needed once refactored the coloredarea series.
-            const paths = graph?.map((graph): string =>
+        test('The graphs paths should match the snapshot.', (): void => {
+            const paths = graphs.map((graph): string =>
                 graph.element.outerHTML
             );
             expect(paths).toMatchSnapshot();

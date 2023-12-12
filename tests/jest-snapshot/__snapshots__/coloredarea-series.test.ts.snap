@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Refactoring regression tests - series coloredarea. Graph element tests. The graph paths should match the snapshot. 1`] = `
+exports[`Refactoring regression tests - series coloredarea. Graphs element tests. The graphs paths should match the snapshot. 1`] = `
 [
   "<path fill="red" d="M 0 0" stroke="red" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
   "<path fill="blue" d="M 0 0" stroke="blue" stroke-width="2" data-z-index="1" stroke-linejoin="round" stroke-linecap="round" filter="none"></path>",
@@ -134,7 +134,7 @@ exports[`Refactoring regression tests - series coloredarea. The series data shou
       "y": 70,
     },
   ],
-  "seriesType": "line",
+  "seriesType": "coloredarea",
 }
 `;
 
@@ -146,7 +146,7 @@ exports[`Refactoring regression tests - series coloredarea. The tracker element 
   fill="none"
   stroke="rgba(192,192,192,0.002)"
   stroke-linejoin="round"
-  stroke-width="22"
+  stroke-width="2"
   visibility="visible"
 />
 `;
