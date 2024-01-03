@@ -21,10 +21,10 @@
   "types": "types.d.ts",
   "scripts": {
     "test": "testem",
+    "test-dot": "testem ci -R dot",
     "build": "gulp build",
     "lint": "gulp lint",
-    "prepare": "husky install",
-    "pre-commit": "testem ci -R teamcity"
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@types/jest": "^29.5.6",
