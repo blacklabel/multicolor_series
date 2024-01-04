@@ -36,6 +36,10 @@ const chartColoredarea = Highcharts.chart('coloredarea-container', {
     ]
 });
 
-QUnit.test('Should be coloredarea series.', (assert) => {
-    assert.equal(chartColoredarea.series[0].type, 'coloredarea', 'Coloredarea series rendered properly!');
+QUnit.test('Coloredarea series render.', (assert) => {
+    assert.equal(
+        chartColoredarea.series[0].type,
+        'coloredarea',
+        'Coloredarea series should render properly.'
+    );
 });
