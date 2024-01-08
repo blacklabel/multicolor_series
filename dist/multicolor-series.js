@@ -55,9 +55,7 @@ const containsStringNumberNumberSequence = (sequenceValue) => {
  *  Type guards
  *
  */
-const isSVGPathSegment = (value
-// The tests problem lies here.
-) => containsStringNumberNumberSequence(value);
+const isSVGPathSegment = (value) => containsStringNumberNumberSequence(value);
 /**
  *
  * @private
@@ -544,9 +542,7 @@ class ColoredareaSeries extends ColoredlineSeries {
         var _a;
         const segmentPath = ColoredlineSeries.prototype.getSegmentPath.call(this, segment), // Call base method
         areaSegmentPath = [...segmentPath], // Work on a copy for the area path
-        options = this.options, segLength = segmentPath.length, 
-        // TO DO: Test the below ?? 0.
-        translatedThreshold = this.yAxis.getThreshold((_a = options.threshold) !== null && _a !== void 0 ? _a : 0); // #2181
+        options = this.options, segLength = segmentPath.length, translatedThreshold = this.yAxis.getThreshold((_a = options.threshold) !== null && _a !== void 0 ? _a : 0); // #2181
         let yBottom;
         if (segLength === 3) { // For animation from 1 to two points
             areaSegmentPath.push('L', segmentPath[1], segmentPath[2]);

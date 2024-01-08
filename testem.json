@@ -1,6 +1,6 @@
 {
     "framework": "qunit",
-    "test_page": "tests/unit-tests/index.html",
+    "test_page": "test/index.html",
     "launch_in_ci": [
       "Chrome"
     ],

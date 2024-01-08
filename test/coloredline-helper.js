@@ -1,4 +1,4 @@
-window.seriesPointsTestData = [
+const coloredlineSeriesPointsTestData = [
     {
         segmentColor: "red"
     },
@@ -22,7 +22,7 @@ window.seriesPointsTestData = [
     }
 ];
 
-window.trackerPathArrayTestData = [
+const coloredlineTrackerPathArrayTestData = [
     [
         "M",
         -4.2549019607843,
@@ -130,7 +130,95 @@ window.trackerPathArrayTestData = [
     ]
 ];
 
-window.graphPathsTestData = [
+const coloredlineGraphsTestData = [
+    {
+        stroke: "red",
+        "stroke-width": 2,
+        pathArray: [
+            [
+                "M",
+                5.7450980392157,
+                145
+            ],
+            [
+                "L",
+                101.49673202614,
+                72.5
+            ]
+        ]
+    },
+    {
+        stroke: "blue",
+        "stroke-width": 2,
+        pathArray: [
+            [
+                "M",
+                101.49673202614,
+                72.5
+            ],
+            [
+                "L",
+                197.24836601307,
+                181.25
+            ]
+        ]
+    },
+    {
+        stroke: "yellow",
+        "stroke-width": 2,
+        pathArray: [
+            [
+                "M",
+                197.24836601307,
+                181.25
+            ],
+            [
+                "L",
+                293,
+                253.75
+            ]
+        ]
+    },
+    {
+        stroke: "green",
+        "stroke-width": 2,
+        pathArray: [
+            [
+                "M",
+                293,
+                253.75
+            ],
+            [
+                "L",
+                388.75163398693,
+                108.75
+            ],
+            [
+                "L",
+                484.50326797386,
+                217.5
+            ]
+        ]
+    },
+    {
+        stroke: "brown",
+        "stroke-width": 2,
+        pathArray: [
+            [
+                "M",
+                484.50326797386,
+                217.5
+            ],
+            [
+                "L",
+                580.25490196078,
+                36.25
+            ]
+        ]
+    }
+];
+
+const coloredlineGraphPathsTestData = [
     [
         [
             "M",
@@ -191,7 +279,7 @@ window.graphPathsTestData = [
     ]
 ];
 
-window.segmentsTestData = [
+const coloredlineSegmentsTestData = [
     {
         color: "red",
         points: [
@@ -457,94 +545,6 @@ window.segmentsTestData = [
                     ]
                 ]
             }
-        ]
-    }
-];
-
-window.graphsTestData = [
-    {
-        stroke: "red",
-        "stroke-width": 2,
-        pathArray: [
-            [
-                "M",
-                5.7450980392157,
-                145
-            ],
-            [
-                "L",
-                101.49673202614,
-                72.5
-            ]
-        ]
-    },
-    {
-        stroke: "blue",
-        "stroke-width": 2,
-        pathArray: [
-            [
-                "M",
-                101.49673202614,
-                72.5
-            ],
-            [
-                "L",
-                197.24836601307,
-                181.25
-            ]
-        ]
-    },
-    {
-        stroke: "yellow",
-        "stroke-width": 2,
-        pathArray: [
-            [
-                "M",
-                197.24836601307,
-                181.25
-            ],
-            [
-                "L",
-                293,
-                253.75
-            ]
-        ]
-    },
-    {
-        stroke: "green",
-        "stroke-width": 2,
-        pathArray: [
-            [
-                "M",
-                293,
-                253.75
-            ],
-            [
-                "L",
-                388.75163398693,
-                108.75
-            ],
-            [
-                "L",
-                484.50326797386,
-                217.5
-            ]
-        ]
-    },
-    {
-        stroke: "brown",
-        "stroke-width": 2,
-        pathArray: [
-            [
-                "M",
-                484.50326797386,
-                217.5
-            ],
-            [
-                "L",
-                580.25490196078,
-                36.25
-            ]
         ]
     }
 ];
