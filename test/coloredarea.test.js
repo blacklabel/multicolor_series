@@ -1,5 +1,8 @@
 const colorsColoredarea = ['red', 'blue', 'yellow', 'green', 'brown', 'pink'],
     chartColoredarea = Highcharts.chart('coloredarea-container', {
+        chart: {
+            spacing: [0, 0, 0, 0]
+        },
         series: [
             {
                 type: 'coloredarea',
