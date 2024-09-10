@@ -8,85 +8,97 @@
     <script src="dist/multicolor-series.js"></script>
   </head>
   <body>
-    <div id="coloredline-container"></div>
-    <div id="coloredarea-container"></div>
+    <div id="coloredline-container" style="margin: 0 auto; width: max-content;"></div>
+    <div id="coloredarea-container" style="margin: 0 auto; width: max-content;"></div>
   </body>
 
   <script>
+    const colors = ['red', 'blue', 'yellow', 'green', 'brown', 'pink'];
+
     Highcharts.chart("coloredline-container", {
-      series: [
-        {
-          type: "coloredline",
-          data: [
+      chart: {
+            width: 640,
+            height: 400,
+            spacing: [0, 0, 0, 0]
+        },
+        series: [
+            {
+                type: 'coloredline',
+                data: [
                     {
                         y: 40,
-                        segmentColor: 'red'
+                        segmentColor: colors[0]
                     },
                     {
                         y: 60,
-                        segmentColor: 'blue'
+                        segmentColor: colors[1]
                     },
                     {
                         y: 30,
-                        segmentColor: 'yellow'
+                        segmentColor: colors[2]
                     },
                     {
                         y: 10,
-                        segmentColor: 'green'
+                        segmentColor: colors[3]
                     },
                     {
                         y: 50,
-                        segmentColor: 'green'
+                        segmentColor: colors[3]
                     },
                     {
                         y: 20,
-                        segmentColor: 'brown'
+                        segmentColor: colors[4]
                     },
                     {
                         y: 70,
-                        segmentColor: 'pink'
+                        segmentColor: colors[5]
                     }
-            ]
-        }
-      ]
+                ]
+            }
+        ]
     });
 
     Highcharts.chart("coloredarea-container", {
-      series: [
-        {
-          type: "coloredarea",
-          data: [
+      chart: {
+            width: 640,
+            height: 400,
+            spacing: [0, 0, 0, 0]
+        },
+        series: [
+            {
+                type: 'coloredarea',
+                data: [
                     {
                         y: 40,
-                        segmentColor: 'red'
+                        segmentColor: colors[0]
                     },
                     {
                         y: 60,
-                        segmentColor: 'blue'
+                        segmentColor: colors[1]
                     },
                     {
                         y: 30,
-                        segmentColor: 'yellow'
+                        segmentColor: colors[2]
                     },
                     {
                         y: 10,
-                        segmentColor: 'green'
+                        segmentColor: colors[3]
                     },
                     {
                         y: 50,
-                        segmentColor: 'green'
+                        segmentColor: colors[3]
                     },
                     {
                         y: 20,
-                        segmentColor: 'brown'
+                        segmentColor: colors[4]
                     },
                     {
                         y: 70,
-                        segmentColor: 'pink'
+                        segmentColor: colors[5]
                     }
-            ]
-        }
-      ]
+                ]
+            }
+        ]
     });
   </script>
 </html>
