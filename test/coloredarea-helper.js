@@ -417,8 +417,8 @@ const coloredareaSegmentsTestData = [
                 graphicPathArray: [
                     [
                         "M",
-                        5,
-                        150
+                        5.5,
+                        149
                     ],
                     [
                         "A",
@@ -427,8 +427,8 @@ const coloredareaSegmentsTestData = [
                         0,
                         1,
                         1,
-                        5.0039999993333355,
-                        149.99999800000018
+                        5.500199999999918,
+                        148.999999995
                     ],
                     [
                         "Z"
@@ -439,8 +439,8 @@ const coloredareaSegmentsTestData = [
                 graphicPathArray: [
                     [
                         "M",
-                        101,
-                        77
+                        101.5,
+                        76.5
                     ],
                     [
                         "A",
@@ -449,8 +449,8 @@ const coloredareaSegmentsTestData = [
                         0,
                         1,
                         1,
-                        101.00399999933333,
-                        76.99999800000016
+                        101.50019999999992,
+                        76.499999995
                     ],
                     [
                         "Z"
@@ -466,8 +466,8 @@ const coloredareaSegmentsTestData = [
                 graphicPathArray: [
                     [
                         "M",
-                        101,
-                        77
+                        101.5,
+                        76.5
                     ],
                     [
                         "A",
@@ -476,8 +476,8 @@ const coloredareaSegmentsTestData = [
                         0,
                         1,
                         1,
-                        101.00399999933333,
-                        76.99999800000016
+                        101.50019999999992,
+                        76.499999995
                     ],
                     [
                         "Z"
@@ -488,8 +488,8 @@ const coloredareaSegmentsTestData = [
                 graphicPathArray: [
                     [
                         "M",
-                        197,
-                        186
+                        197.5,
+                        185.25
                     ],
                     [
                         "A",
@@ -498,8 +498,8 @@ const coloredareaSegmentsTestData = [
                         0,
                         1,
                         1,
-                        197.00399999933333,
-                        185.99999800000018
+                        197.50019999999992,
+                        185.249999995
                     ],
                     [
                         "Z"
@@ -515,8 +515,8 @@ const coloredareaSegmentsTestData = [
                 graphicPathArray: [
                     [
                         "M",
-                        197,
-                        186
+                        197.5,
+                        185.25
                     ],
                     [
                         "A",
@@ -525,8 +525,8 @@ const coloredareaSegmentsTestData = [
                         0,
                         1,
                         1,
-                        197.00399999933333,
-                        185.99999800000018
+                        197.50019999999992,
+                        185.249999995
                     ],
                     [
                         "Z"
@@ -537,8 +537,8 @@ const coloredareaSegmentsTestData = [
                 graphicPathArray: [
                     [
                         "M",
-                        293,
-                        259
+                        293.5,
+                        257.75
                     ],
                     [
                         "A",
@@ -547,8 +547,8 @@ const coloredareaSegmentsTestData = [
                         0,
                         1,
                         1,
-                        293.00399999933336,
-                        258.9999980000002
+                        293.5001999999999,
+                        257.749999995
                     ],
                     [
                         "Z"
@@ -564,8 +564,8 @@ const coloredareaSegmentsTestData = [
                 graphicPathArray: [
                     [
                         "M",
-                        293,
-                        259
+                        293.5,
+                        257.75
                     ],
                     [
                         "A",
@@ -574,8 +574,8 @@ const coloredareaSegmentsTestData = [
                         0,
                         1,
                         1,
-                        293.00399999933336,
-                        258.9999980000002
+                        293.5001999999999,
+                        257.749999995
                     ],
                     [
                         "Z"
@@ -586,8 +586,8 @@ const coloredareaSegmentsTestData = [
                 graphicPathArray: [
                     [
                         "M",
-                        388,
-                        113
+                        388.5,
+                        112.75
                     ],
                     [
                         "A",
@@ -596,8 +596,8 @@ const coloredareaSegmentsTestData = [
                         0,
                         1,
                         1,
-                        388.00399999933336,
-                        112.99999800000016
+                        388.5001999999999,
+                        112.749999995
                     ],
                     [
                         "Z"
@@ -608,8 +608,8 @@ const coloredareaSegmentsTestData = [
                 graphicPathArray: [
                     [
                         "M",
-                        484,
-                        222
+                        484.5,
+                        221.5
                     ],
                     [
                         "A",
@@ -618,8 +618,8 @@ const coloredareaSegmentsTestData = [
                         0,
                         1,
                         1,
-                        484.00399999933336,
-                        221.99999800000018
+                        484.5001999999999,
+                        221.499999995
                     ],
                     [
                         "Z"
@@ -635,8 +635,8 @@ const coloredareaSegmentsTestData = [
                 graphicPathArray: [
                     [
                         "M",
-                        484,
-                        222
+                        484.5,
+                        221.5
                     ],
                     [
                         "A",
@@ -645,8 +645,8 @@ const coloredareaSegmentsTestData = [
                         0,
                         1,
                         1,
-                        484.00399999933336,
-                        221.99999800000018
+                        484.5001999999999,
+                        221.499999995
                     ],
                     [
                         "Z"
@@ -657,8 +657,8 @@ const coloredareaSegmentsTestData = [
                 graphicPathArray: [
                     [
                         "M",
-                        580,
-                        40
+                        580.5,
+                        40.25
                     ],
                     [
                         "A",
@@ -667,8 +667,8 @@ const coloredareaSegmentsTestData = [
                         0,
                         1,
                         1,
-                        580.0039999993334,
-                        39.99999800000017
+                        580.5002,
+                        40.249999995
                     ],
                     [
                         "Z"

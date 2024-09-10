@@ -1,6 +1,8 @@
 const colorsColoredline = ['red', 'blue', 'yellow', 'green', 'brown', 'pink'],
     chartColoredline = Highcharts.chart('coloredline-container', {
         chart: {
+            width: 640,
+            height: 400,
             spacing: [0, 0, 0, 0]
         },
         series: [

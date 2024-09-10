@@ -266,7 +266,9 @@ class ColoredlineSeries extends LineSeries {
                         track.addClass('highcharts-tracker')
                             .on('mouseover', onMouseOver)
                             .on('mouseout', (event) => {
-                            pointer.onTrackerMouseOut(event);
+                            if (pointer) {
+                                pointer.onTrackerMouseOut(event);
+                            }
                         });
                         if (css) {
                             track.css(css);
