@@ -1,3 +1,10 @@
+/**
+----
+*
+* (c) 2012-2024 Black Label
+*
+* License: Creative Commons Attribution (CC)
+*/
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {
 		module.exports = factory;
@@ -33,7 +40,7 @@
  *  Helpers
  *
  */
-const { isArray, pick } = Utilities;
+const { isArray, pick, error } = Utilities;
 const containsStringNumberNumberSequence = (sequenceValue) => {
     let isSequenceFound = false;
     for (let index = 0; index < sequenceValue.length; index++) {
@@ -148,16 +155,6 @@ class ColoredlineSeries extends LineSeries {
         });
         return segmentPath;
     }
-    // Handle unsorted data, throw error anyway
-    error(code, stop) {
-        const msg = 'Highcharts error #' + code + ': www.highcharts.com/errors/' + code;
-        if (stop) {
-            throw msg;
-        }
-        else if (window.console) {
-            console.error(msg);
-        }
-    }
     processData(force) {
         const series = this, processedXData = series.xData, // Copied during slice operation below
         processedYData = series.yData, cropStart = 0, xAxis = series.xAxis, options = series.options, isCartesian = series.isCartesian;
@@ -183,7 +180,7 @@ class ColoredlineSeries extends LineSeries {
                     // navigation in Stock charts (#725) and width calculation of columns (#1900)
                 }
                 else if (distance < 0 && series.requireSorting) {
-                    this.error(15);
+                    error(15);
                 }
             }
             // Record the properties
@@ -528,7 +525,7 @@ class ColoredareaSeries extends ColoredlineSeries {
     }
     drawGraph() {
         var _a;
-        ColoredlineSeries.prototype.drawGraph.call(this);
+        super.drawGraph.call(this);
         const series = this, graphs = series.graphs;
         if (graphs) { // Cancel running animations, #459
             // do we have animation
