@@ -28,7 +28,7 @@ import {
  *
  */
 
-const { isArray, pick } = Utilities;
+const { isArray, pick, error } = Utilities;
 
 const containsStringNumberNumberSequence = (
     sequenceValue: SeriesColoredSegmentPath[]
@@ -206,17 +206,6 @@ class ColoredlineSeries extends LineSeries {
         return segmentPath;
     }
 
-    // Handle unsorted data, throw error anyway
-    public error (code: number, stop?: boolean): void {
-        const msg =
-            'Highcharts error #' + code + ': www.highcharts.com/errors/' + code;
-
-        if (stop) {
-            throw msg;
-        } else if (window.console) {
-            console.error(msg);
-        }
-    }
 
     public processData (force?: boolean): boolean {
         const series = this,
@@ -237,7 +226,7 @@ class ColoredlineSeries extends LineSeries {
             isCartesian &&
             !series.isDirty &&
             !xAxis.isDirty &&
-            !series.yAxis.isDirty && 
+            !series.yAxis.isDirty &&
             !force
         ) {
             return false;
@@ -258,7 +247,7 @@ class ColoredlineSeries extends LineSeries {
                     // Unsorted data is not supported by the line tooltip, as well as data grouping and
                     // navigation in Stock charts (#725) and width calculation of columns (#1900)
                 } else if (distance < 0 && series.requireSorting) {
-                    this.error(15);
+                    error(15);
                 }
             }
 
@@ -829,7 +818,7 @@ class ColoredareaSeries extends ColoredlineSeries {
     }
 
     public drawGraph(): void {
-        ColoredlineSeries.prototype.drawGraph.call(this);
+        super.drawGraph.call(this);
 
         const series = this,
             graphs = series.graphs;
