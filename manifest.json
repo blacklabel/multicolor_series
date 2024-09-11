@@ -4,7 +4,7 @@
         "title": "Multicolor",
         "author": {
                 "name": "Black Label",
-                "url": "http://www.blacklabel.pl/"
+                "url": "https://www.blacklabel.net/"
         },
         "licenses": [
                 {
@@ -28,16 +28,16 @@
         "maintainers": [
     {
       "name": "Sebastian Bochan",
-      "email": "sebastian@blacklabel.pl",
-      "url": "http://www.blacklabel.pl"
+      "email": "sebastian.bochan@blacklabel.net",
+      "url": "https://www.blacklabel.net"
     },{
       "name": "Paweł Fus",
-      "email": "pawel@blacklabel.pl",
-      "url": "http://www.blacklabel.pl"
+      "email": "pawel.fus@blacklabel.net",
+      "url": "https://www.blacklabel.net"
     }
   ],
-        "homepage": "http://blacklabel.github.io/multicolor_series/",        
-        "docs": "https://github.com/blacklabel/multicolor_series/",        
+        "homepage": "http://blacklabel.github.io/multicolor_series/",
+        "docs": "https://github.com/blacklabel/multicolor_series/",
         "bugs": "https://github.com/blacklabel/multicolor_series/issues",
         "download": "https://github.com/blacklabel/multicolor_series/archive/master.zip"
 }

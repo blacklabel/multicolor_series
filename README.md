@@ -4,14 +4,14 @@ Go to project page to see this module in action: [http://blacklabel.github.io/mu
 
 ### Requirements
 
-* Plugin requires the latest Highcharts (4+)
+* Plugin requires the latest Highcharts (v11.0.0+)
 
 ### Installation
 
 * Like any other Highcharts module (e.g. exporting), add `<script>` tag pointing to `multicolor_series.js` below Highcharts script tag.
 
 
-* For NPM users: 
+* For NPM users:
 ```
 var Highcharts = require('highcharts');
 
@@ -31,7 +31,6 @@ The latest code is available on github: [https://github.com/blacklabel/multicolo
 
 ### Usage and demos
 
-* 
 
 ```
 	series: [{
@@ -82,7 +81,7 @@ Demos are available at project's github page: [http://blacklabel.github.io/multi
 
 ### Releases
 
-- Versions v3.0.0: compatible with Highcharts v10.3.3+
+- Versions v3.0.0: compatible with Highcharts v11.0.0+
 
 - Versions v2.4.0+: compatible with Highcharts v10.0.0+
 

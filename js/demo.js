@@ -38,7 +38,7 @@ $(function () {
 			useHTML: true,
 			x: -10,
 			y: 8,
-			text: '<span class="chart-title">Multicolor (line) series<span class="chart-href"> <a href="http://www.blacklabel.pl/highcharts" target="_blank"> Black Label </a> </span> <span class="chart-subtitle">plugin by </span></span>'
+			text: '<span class="chart-title">Multicolor (line) series<span class="chart-href"> <a href="https://www.blacklabel.net/highcharts" target="_blank"> Black Label </a> </span> <span class="chart-subtitle">plugin by </span></span>'
 		},
 		series: [{
 			data: genData(256)
@@ -56,7 +56,7 @@ $(function () {
 			useHTML: true,
 			x: -10,
 			y: 8,
-			text: '<span class="chart-title">Multicolor (area) series<span class="chart-href"> <a href="http://www.blacklabel.pl/highcharts" target="_blank"> Black Label </a> </span> <span class="chart-subtitle">plugin by </span></span>'
+			text: '<span class="chart-title">Multicolor (area) series<span class="chart-href"> <a href="https://www.blacklabel.net/highcharts" target="_blank"> Black Label </a> </span> <span class="chart-subtitle">plugin by </span></span>'
 		},
 		series: [{
 			data: genData(256)
