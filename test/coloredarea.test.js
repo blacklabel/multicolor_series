@@ -122,7 +122,7 @@ QUnit.test('Coloredarea series segments property.', (assert) => {
             }))
         })),
         coloredareaSegmentsTestData,
-        1
+        2
     );
     const isError = differences.length > 0;
 
