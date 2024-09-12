@@ -18,6 +18,7 @@
 
       const snippets = document.getElementsByTagName('pre');
       const numberOfSnippets = snippets.length;
+
       for (let i = 0; i < numberOfSnippets; i++) {
         const code = snippets[i].getElementsByTagName('code')[0].innerText,
           copyIcon = `<svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,12 +26,13 @@
             </svg>`;
 
         snippets[i].innerHTML = `<button class="hljs-copy">${copyIcon}</button>` + snippets[i].innerHTML;
-
         snippets[i].getElementsByClassName('hljs-copy')[0].addEventListener("click", function () {
-          this.innerText = 'Copying..';
-          navigator.clipboard.writeText(code);
-          this.innerText = 'Copied!';
           button = this;
+          button.innerText = 'Copying..';
+
+          navigator.clipboard.writeText(code);
+          button.innerText = 'Copied!';
+
           setTimeout(function () {
             button.innerHTML = copyIcon;
           }, 1000)
@@ -41,14 +43,7 @@
 
   <script src="https://code.highcharts.com/highcharts.src.js"></script>
   <script src="dist/multicolor-series.js"></script>
-  <script src="js/demo.js" defer></script>
-
-  <style>
-    .hljs-copy {
-      float: right;
-      cursor: pointer;
-    }
-  </style>
+  <script src="docs-demo.js" defer></script>
 
 </head>
 
@@ -62,7 +57,7 @@
               alt="Black Label">
           </a>
           <h1>Multicolor Series Highcharts Module</h1>
-          <p>Highcharts plugin that adds new multicolor series, where you can define color for each part of a path,
+          <p>Highcharts plugin that adds a new multicolor series, where you can define color for each part of a path,
             between
             two points.</p>
         </div>
@@ -94,6 +89,9 @@
         <li>
           <a href="#faq">FAQ</a>
         </li>
+        <li>
+          <a href="#license">License</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -109,12 +107,12 @@
     <section>
       <h2 id="prerequisites">General prerequisites</h2>
       <p>This module requires highcharts package with the following versions installed in your project:</p>
-      <ul>
-        <li>For version <b>3.0.0</b> - Highcharts <b>v11.4.0+</b></li>
-        <li>For version <b>2.4.0 - 3.0.0</b> - Highcharts <b>v10.0.0 - v11.4.0</b></li>
-        <li>For version <b>2.3.0</b> - Highcharts <b>v9.2.0 - v9.3.3</b></li>
-        <li>For version <b>2.x.x</b> - Highcharts <b>v4.2.2 - v9.2.0</b></li>
-        <li>For version <b>1.x.x</b> - Highcharts <b>v4.0.0 - v4.2.2</b></li>
+      <ul class="prerequisites-list">
+        <li>For version <b>3.0.0</b>: Highcharts <b>v11.4.8+</b></li>
+        <li>For version <b>2.4.0 - 3.0.0</b>: Highcharts <b>v10.0.0 - v11.4.8</b></li>
+        <li>For version <b>2.3.0</b>: Highcharts <b>v9.2.0 - v9.3.3</b></li>
+        <li>For version <b>2.x.x</b>: Highcharts <b>v4.2.2 - v9.2.0</b></li>
+        <li>For version <b>1.x.x</b>: Highcharts <b>v4.0.0 - v4.2.2</b></li>
       </ul>
     </section>
     <section>
@@ -143,23 +141,24 @@
   series: [{
     type: 'coloredline',
     data: [{
-      y: 200,
-      segmentColor: 'red'
-    },{
-      y: 210,
-      segmentColor: 'red'
-    },{
-      y: 210,
-      segmentColor: 'red'
-    },{
-      y: 100,
+      y: 70,
+      segmentColor: 'blue'
+    }, {
+      y: 20,
       segmentColor: 'green'
     }, {
-      y: 100,
+      y: 40,
+      segmentColor: 'yellow'
+    }, {
+      y: 50,
       segmentColor: 'red'
+    }, {
+      y: 10,
+      segmentColor: 'pink'
     }]
   }]
-});</code></pre>
+});
+</code></pre>
       <h3>Basic usage example with Typescript:</h3>
       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat, nemo veniam. Iste, nesciunt quae? Beatae nam
         odio excepturi vero itaque tempora tempore natus minima odit. Beatae nesciunt perspiciatis hic a.</p>
@@ -208,23 +207,7 @@
     </section>
     <section>
       <h2 id="changelog">Changelog</h2>
-      <ul>
-        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus repellendus labore dignissimos
-          asperiores ut, dolore inventore voluptate voluptatum provident odio culpa ea explicabo voluptates accusamus
-          commodi aspernatur molestiae dolorem ipsa?</li>
-        <li>Nemo incidunt aliquid atque, id iure odio fuga molestias accusantium corrupti provident eius necessitatibus
-          rem aliquam repellat quo quod dolorum consectetur rerum dolorem possimus odit eveniet. Asperiores, quasi?
-          Dolor, eos?</li>
-        <li>Adipisci aliquam tempora cupiditate pariatur maxime quae, recusandae, iusto ullam veritatis ipsam possimus
-          sapiente eveniet dolorem necessitatibus corporis. Nobis quisquam dolorum excepturi ea temporibus consectetur,
-          velit corporis pariatur accusamus deserunt?</li>
-        <li>Atque error quidem maiores incidunt soluta ea quod id, praesentium magni cupiditate doloremque quasi
-          reprehenderit illo temporibus labore adipisci distinctio dolorum harum magnam impedit, optio perspiciatis
-          obcaecati? Veniam, recusandae explicabo.</li>
-        <li>Eius, quisquam facilis. Ratione impedit soluta reprehenderit aut, quos earum aliquid omnis quasi velit.
-          Laborum excepturi, molestiae praesentium adipisci magni rerum obcaecati similique et deleniti at hic id natus
-          minima.</li>
-      </ul>
+      <p>The changelog is available <a href="https://github.com/blacklabel/multicolor_series/blob/master/CHANGELOG.md">here</a>.</p>
     </section>
     <section>
       <h2 id="faq">FAQ</h2>
@@ -244,6 +227,10 @@
       <p>Dolorum quam eaque tempore est ullam consequatur accusamus aliquam illum repellendus, corporis veniam ea
         blanditiis cumque architecto delectus temporibus incidunt assumenda! Enim expedita laboriosam repellendus? Eius
         illo iusto quae corrupti.</p>
+    </section>
+    <section>
+      <h2 id="license">License</h2>
+      <p>Link to the license?</p>
     </section>
   </main>
   <footer>

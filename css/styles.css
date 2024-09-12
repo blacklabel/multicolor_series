@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
   --main-color: #157af2;
@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -94,6 +94,7 @@ nav ul li a {
   justify-content: center;
   padding: 1.25rem;
 }
+
 nav ul li a:hover {
   background-color: var(--main-color);
 }
@@ -135,6 +136,10 @@ pre {
   position: relative;
 }
 
+.prerequisites-list li {
+  margin-top: 4px;
+}
+
 pre .hljs-copy {
   position: absolute;
   top: 5px;
@@ -164,6 +169,7 @@ pre .hljs-copy + code.hljs {
 .table-container {
   overflow-x: auto;
 }
+
 table {
   border-radius: 4px;
   color: #abb2bf;
@@ -229,13 +235,15 @@ footer .social-img {
   height: 100%;
 }
 
+.hljs-copy {
+  float: right;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1279px) {
   .container {
     padding: 0 2.5rem;
   }
-}
-
-@media screen and (max-width: 1023px) {
 }
 
 @media screen and (max-width: 767px) {
@@ -249,7 +257,7 @@ footer .social-img {
   }
 }
 
-// Retina
+/* Retina */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .container {
     max-width: 1100px;
