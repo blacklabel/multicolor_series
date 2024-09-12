@@ -838,8 +838,7 @@ class ColoredareaSeries extends ColoredlineSeries {
     public getSegmentPath(
         segment: SeriesColoredareaPoint[]
     ): SeriesColoredSegmentPath[] {
-        const segmentPath = 
-            ColoredlineSeries.prototype.getSegmentPath.call(this, segment), // Call base method
+        const segmentPath = super.getSegmentPath.call(this, segment), // Call base method
             areaSegmentPath = [...segmentPath], // Work on a copy for the area path
             options = this.options,
             segLength = segmentPath.length,
