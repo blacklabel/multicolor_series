@@ -2,9 +2,9 @@ import type SVGPath from "highcharts-github/ts/Core/Renderer/SVG/SVGPath";
 import type ColorType from "highcharts-github/ts/Core/Color/ColorType";
 
 /**
- * 
+ *
  * Shared types
- * 
+ *
  */
 
 type SeriesColoredPoint<T> = T & {
