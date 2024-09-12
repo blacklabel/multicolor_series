@@ -1,97 +1,259 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>Multicolor series</title>
-  
-	<link rel="stylesheet" charset="utf-8" type="text/css" href="css/styles.css"/>
-  
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" charset="utf-8" type="text/css" href="css/styles.css" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css">
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('code').forEach((el) => {
+        hljs.highlightElement(el);
+      });
+
+      const snippets = document.getElementsByTagName('pre');
+      const numberOfSnippets = snippets.length;
+
+      for (let i = 0; i < numberOfSnippets; i++) {
+        const code = snippets[i].getElementsByTagName('code')[0].innerText,
+          copyIcon = `<svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.5 14H19C20.1046 14 21 13.1046 21 12V5C21 3.89543 20.1046 3 19 3H12C10.8954 3 10 3.89543 10 5V6.5M5 10H12C13.1046 10 14 10.8954 14 12V19C14 20.1046 13.1046 21 12 21H5C3.89543 21 3 20.1046 3 19V12C3 10.8954 3.89543 10 5 10Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>`;
+
+        snippets[i].innerHTML = `<button class="hljs-copy">${copyIcon}</button>` + snippets[i].innerHTML;
+        snippets[i].getElementsByClassName('hljs-copy')[0].addEventListener("click", function () {
+          button = this;
+          button.innerText = 'Copying..';
+
+          navigator.clipboard.writeText(code);
+          button.innerText = 'Copied!';
+
+          setTimeout(function () {
+            button.innerHTML = copyIcon;
+          }, 1000)
+        });
+      }
+    });
+  </script>
+
   <script src="https://code.highcharts.com/highcharts.src.js"></script>
   <script src="dist/multicolor-series.js"></script>
-  <script src="js/demo.js"></script>
- 
+  <script src="docs-demo.js" defer></script>
+
 </head>
+
 <body>
-<div id="main-content">
-<h1>Multicolor series - Highcharts module</h1>
-
-<p>Go to project page to see this module in action: <a href="http://blacklabel.github.io/multicolor_series/">http://blacklabel.github.io/multicolor_series/</a>.</p>
-
-<h3>Requirements</h3>
-
-<p>Plugin requires the latest Highcharts (4+)</p>
-
-<h3>Installation</h3>
-
-<p>Like any other Highcharts module (e.g. exporting), add <code>&lt;script&gt;</code> tag pointing to <code>multicolor_series.js</code> below Highcharts script tag.</p>
-
-<p>For NPM users:</p>
-<pre><code>var Highcharts = require('highcharts');
-require('multicolor_series')(Highcharts);</code></pre>
-
-<h3>Code</h3>
-
-<p>The latest code is available on github: <a href="https://github.com/blacklabel/multicolor_series/">https://github.com/blacklabel/multicolor_series/</a></p>
-
-<h3>Usage and demos</h3>
-
-<pre><code>
-	series: [{
-            type: 'coloredline',
-            data: [{
-            		y: 200,
-            		segmentColor: 'red'
-            },{
-            		y: 210,
-            		segmentColor: 'red'
-            },{
-            		y: 210,
-            		segmentColor: 'red'
-            },{
-            		y: 100,
-            		segmentColor: 'green'
-            }, {
-            		y: 100,
-            		segmentColor: 'red'
-            }]
-	}]
+  <header>
+    <div class="container">
+      <div class="columns">
+        <div class="details">
+          <a href="http://blacklabel.net">
+            <img class="logo" src="https://blacklabel.net/wp-content/uploads/2023/09/blacklabel_logo_white.png"
+              alt="Black Label">
+          </a>
+          <h1>Multicolor Series Highcharts Module</h1>
+          <p>Highcharts plugin that adds a new multicolor series, where you can define color for each part of a path,
+            between
+            two points.</p>
+        </div>
+        <div id="showcase-demo" class="chart"></div>
+      </div>
+    </div>
+  </header>
+  <nav>
+    <div class="container">
+      <ul>
+        <li>
+          <a href="#prerequisites">Prerequisites</a>
+        </li>
+        <li>
+          <a href="#installation">Installation</a>
+        </li>
+        <li>
+          <a href="#usage">Usage</a>
+        </li>
+        <li>
+          <a href="#parameters">Parameters</a>
+        </li>
+        <li>
+          <a href="#demos">Demos</a>
+        </li>
+        <li>
+          <a href="#changelog">Changelog</a>
+        </li>
+        <li>
+          <a href="#faq">FAQ</a>
+        </li>
+        <li>
+          <a href="#license">License</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <main class="container">
+    <section>
+      <p>
+        The latest code is available on GitHub:
+        <a href="https://github.com/blacklabel/multicolor_series/">
+          https://github.com/blacklabel/multicolor_series/
+        </a>
+      </p>
+    </section>
+    <section>
+      <h2 id="prerequisites">General prerequisites</h2>
+      <p>This module requires highcharts package with the following versions installed in your project:</p>
+      <ul class="prerequisites-list">
+        <li>For version <b>3.0.0</b>: Highcharts <b>v11.4.8+</b></li>
+        <li>For version <b>2.4.0 - 3.0.0</b>: Highcharts <b>v10.0.0 - v11.4.8</b></li>
+        <li>For version <b>2.3.0</b>: Highcharts <b>v9.2.0 - v9.3.3</b></li>
+        <li>For version <b>2.x.x</b>: Highcharts <b>v4.2.2 - v9.2.0</b></li>
+        <li>For version <b>1.x.x</b>: Highcharts <b>v4.0.0 - v4.2.2</b></li>
+      </ul>
+    </section>
+    <section>
+      <h2 id="installation">Installation</h2>
+      <h3>NPM:</h3>
+      <p>
+        Get the package from NPM in your app:
+      <pre><code class="language-javascript">npm install highcharts-multicolor-series</code></pre>
+      </p>
+      <p>
+        If Highcharts is not already installed, get the package with Highcharts:
+      <pre><code class="language-javascript">npm install highcharts highcharts-multicolor-series</code></pre>
+      </p>
+      <h3>CDN</h3>
+      <p>
+        Like any other Highcharts module (e.g. exporting), add <code class="language-html">&lt;script&gt;</code>
+        tag pointing to
+        <code class="language-html">multicolor_series.js</code> below Highcharts script tag:
+      </p>
+      <pre><code class="language-javascript">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/highcharts-multicolor-series&quot;&gt;&lt;/script&gt;</code></pre>
+    </section>
+    <section>
+      <h2 id="usage">Usage</h2>
+      <h3>Basic usage example:</h3>
+      <pre><code class="language-javascript">Highcharts.chart('container', {
+  series: [{
+    type: 'coloredline',
+    data: [{
+      y: 70,
+      segmentColor: 'blue'
+    }, {
+      y: 20,
+      segmentColor: 'green'
+    }, {
+      y: 40,
+      segmentColor: 'yellow'
+    }, {
+      y: 50,
+      segmentColor: 'red'
+    }, {
+      y: 10,
+      segmentColor: 'pink'
+    }]
+  }]
+});
 </code></pre>
-
-<h3>Parameters</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th align="left">Property</th>
-      <th align="left">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-    	<td align="left">point.segmentColor</td>
-			<td align="left">Controls line color between N and N+1 point, independent from point.color, which changes marker color.</td>
-		</tr>
-    <tr>
-    	<td align="left">series.type</td>
-			<td align="left">Set it to "coloredline" or "coloreadarea" to use multicolor series.</td>
-		</tr>
-  </tbody>
-</table>
-
-<h3>Demo</h3>
-
-<div id="container-line" class="chart"></div>
-<div id="container-area" class="chart"></div>
-
-
-
-<h3>Releases</h3>
-
-<ul>
-  <li> Versions 2.x.y: compatible with Highcharts &gt;= 4.2.2 </li>
-  <li> Versions 1.x.y: compatible with Highcharts &lt; 4.2.2 </li>
-</ul>
-</div>
+      <h3>Basic usage example with Typescript:</h3>
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat, nemo veniam. Iste, nesciunt quae? Beatae nam
+        odio excepturi vero itaque tempora tempore natus minima odit. Beatae nesciunt perspiciatis hic a.</p>
+      <h3>Multicolor series typing:</h3>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut blanditiis fugit possimus adipisci. Culpa nostrum,
+        perferendis tempora obcaecati recusandae debitis fugit, provident dolore id repudiandae consequatur ipsam ut
+        dolorum dolores.</p>
+    </section>
+    <section>
+      <h2 id="parameters">Parameters</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Type</th>
+              <th>Required</th>
+              <th>Defaults</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code class="language-javascript">series.type</code></td>
+              <td>String</td>
+              <td>Yes</td>
+              <td>-</td>
+              <td>Must be set to <code class="language-javascript">coloredline</code> or <code
+                  class="language-javascript">coloredarea</code> to use the module.</td>
+            </tr>
+            <tr>
+              <td><code class="language-javascript">point.segmentColor</code></td>
+              <td>String</td>
+              <td>Yes</td>
+              <td>-</td>
+              <td>Controls line/area color between n and n+1 point.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section>
+      <h2 id="demos">Demos</h2>
+      <div id="coloredline" class="chart"></div>
+      <div id="coloredarea" class="chart"></div>
+    </section>
+    <section>
+      <h2 id="changelog">Changelog</h2>
+      <p>The changelog is available <a href="https://github.com/blacklabel/multicolor_series/blob/master/CHANGELOG.md">here</a>.</p>
+    </section>
+    <section>
+      <h2 id="faq">FAQ</h2>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit facilis id totam quaerat expedita
+        labore quibusdam voluptatibus laudantium tempora. Voluptas neque velit asperiores quasi tenetur culpa dicta ea?
+        Error, quasi?</p>
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam quos unde et numquam quisquam dicta nam
+        voluptatibus. Omnis dolore dolorem pariatur autem quas! Laborum quod esse modi corporis quis ea.</p>
+      <p>Deserunt ex corporis facere non ut natus sit, ipsa soluta. Doloremque consectetur illo fuga repellat est
+        voluptate ab? Blanditiis sequi sint eos amet soluta nulla et illo voluptatibus libero sunt!</p>
+      <p>Numquam perferendis laborum porro commodi, similique qui ullam excepturi, laudantium in accusamus possimus
+        quisquam placeat omnis eum. Debitis esse similique facilis laboriosam rem ipsam, ad distinctio. Praesentium
+        tempora nemo eveniet!</p>
+      <p>Dignissimos ea reiciendis quibusdam sint provident doloribus nostrum, ducimus dolores unde at deleniti
+        temporibus sunt cumque fuga facilis. Laborum consectetur neque voluptatem vel iste deserunt minima obcaecati
+        aspernatur quibusdam excepturi!</p>
+      <p>Dolorum quam eaque tempore est ullam consequatur accusamus aliquam illum repellendus, corporis veniam ea
+        blanditiis cumque architecto delectus temporibus incidunt assumenda! Enim expedita laboriosam repellendus? Eius
+        illo iusto quae corrupti.</p>
+    </section>
+    <section>
+      <h2 id="license">License</h2>
+      <p>Link to the license?</p>
+    </section>
+  </main>
+  <footer>
+    <div class="container">
+      <div class="links">
+        <a href="http://blacklabel.net">
+          <img class="logo" src="https://blacklabel.net/wp-content/uploads/2023/09/blacklabel_logo_white.png"
+            alt="Black Label">
+        </a>
+        © 2024
+        <div class="social">
+          <a class="social-link" href="https://github.com/blacklabel" title="GitHub">
+            <img class="social-img"
+              src="https://blacklabel.net/wp-content/themes/website-wordpress/assets/img/github.png" alt="GitHub">
+          </a>
+          <a class="social-link" href="https://www.linkedin.com/company/black-label" title="LinkedIn">
+            <img class="social-img"
+              src="https://blacklabel.net/wp-content/themes/website-wordpress/assets/img/linkedin.png" alt="LinkedIn">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
+
 </html>
