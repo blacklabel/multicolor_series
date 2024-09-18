@@ -28,7 +28,7 @@ import {
  *
  */
 
-const { isArray, pick, error } = Utilities;
+const { isArray, pick } = Utilities;
 
 const containsStringNumberNumberSequence = (
     sequenceValue: SeriesColoredSegmentPath[]
@@ -204,67 +204,6 @@ class ColoredlineSeries extends LineSeries {
         });
 
         return segmentPath;
-    }
-
-
-    public processData (force?: boolean): boolean {
-        const series = this,
-            processedXData = series.xData, // Copied during slice operation below
-            processedYData = series.yData,
-            cropStart = 0,
-            xAxis = series.xAxis,
-            options = series.options,
-            isCartesian = series.isCartesian;
-
-        let cropped,
-            distance,
-            closestPointRange: undefined | number;
-
-        // If the series data or axes haven't changed, don't go through this. Return false to pass
-        // the message on to override methods like in data grouping.
-        if (
-            isCartesian &&
-            !series.isDirty &&
-            !xAxis.isDirty &&
-            !series.yAxis.isDirty &&
-            !force
-        ) {
-            return false;
-        }
-
-        if (processedXData && processedYData) {
-            // Find the closest distance between processed points
-            for (let index = processedXData.length - 1; index >= 0; index--) {
-                distance = processedXData[index] - processedXData[index - 1];
-
-                if (
-                    distance > 0 &&
-                    (typeof closestPointRange === 'undefined' ||
-                    distance < closestPointRange)
-                ) {
-                    closestPointRange = distance;
-
-                    // Unsorted data is not supported by the line tooltip, as well as data grouping and
-                    // navigation in Stock charts (#725) and width calculation of columns (#1900)
-                } else if (distance < 0 && series.requireSorting) {
-                    error(15);
-                }
-            }
-
-            // Record the properties
-            series.cropped = cropped; // Type: undefined or true
-            series.cropStart = cropStart;
-            series.processedXData = processedXData;
-            series.processedYData = processedYData;
-
-            if (options.pointRange === null) { // Type: null means auto, as for columns, candlesticks and OHLC
-                series.pointRange = closestPointRange || 1;
-            }
-
-            series.closestPointRange = closestPointRange;
-        }
-
-        return true;
     }
 
     public formatTrackerPath (
