@@ -93,7 +93,7 @@ gulp.task("compile", () => {
 	  	}))
 		.pipe(gulp.dest('dist'))
 		.pipe(babel({
-			presets: ['@babel/preset-env']
+			presets: ['@babel/preset-env', { "targets": "defaults" }]
 		}))
 		.pipe(closureCompiler({
 			compilation_level: 'SIMPLE',
