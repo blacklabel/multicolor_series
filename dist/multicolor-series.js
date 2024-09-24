@@ -29,10 +29,9 @@
 		_registerModule(
 			_modules,
 			'Extensions/MulticolorSeries.js',
-			[_modules['Core/Series/SeriesRegistry.js'],_modules['Core/Utilities.js'],_modules['Core/Series/Series.js'],_modules['Series/Line/LineSeries.js']],
-			(SeriesRegistry,Utilities,Series,LineSeries) => {
+			[_modules['Core/Series/SeriesRegistry.js'],_modules['Core/Utilities.js'],_modules['Series/Line/LineSeries.js']],
+			(SeriesRegistry,Utilities,LineSeries) => {
 				
-
 
 
 /**
@@ -279,7 +278,9 @@ class ColoredlineSeries extends LineSeries {
             }
         }
     }
-    setState(state) {
+    setState(state, 
+    // Unused inherit argument added to keep the same type as in the Series.
+    _inherit) {
         var _a, _b, _c, _d;
         const series = this, options = series.options, graphs = series.graphs, stateOptions = options.states;
         let lineWidth = (_a = options.lineWidth) !== null && _a !== void 0 ? _a : 0;
@@ -516,10 +517,6 @@ class ColoredareaSeries extends ColoredlineSeries {
      *  Functions
      *
      */
-    init(chart, options) {
-        options.threshold = options.threshold || null;
-        Series.prototype.init.call(this, chart, options);
-    }
     closeSegment(path, segment, translatedThreshold) {
         path.push('L', segment[segment.length - 1].plotX, translatedThreshold, 'L', segment[0].plotX, translatedThreshold);
     }
