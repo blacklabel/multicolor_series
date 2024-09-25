@@ -14,9 +14,18 @@ type SeriesColoredSegment = {
     color: string;
     points: SeriesColoredPoint[];
 };
+
 type GraphPaths = SeriesColoredGraphPath[] | undefined;
-type SeriesColoredSegmentPath = _Highcharts.SVGPathArray | string | number| undefined;
-type SeriesColoredGraphPath = [SeriesColoredSegmentPath[], _Highcharts.ColorType];
+type SeriesColoredSegmentPath =
+    | _Highcharts.SVGPathArray
+    | string
+    | number
+    | undefined;
+
+type SeriesColoredGraphPath = [
+    SeriesColoredSegmentPath[],
+    _Highcharts.ColorType
+];
 
 type SeriesMulticolor = {
     pointRange?: number | undefined;
@@ -26,13 +35,20 @@ type SeriesMulticolor = {
     areaPaths?: SeriesColoredSegmentPath[];
     graphs?: _Highcharts.SVGElement[] | [];
     getPath?: (graphPaths: GraphPaths) => SeriesColoredSegmentPath[];
-    getSegmentPath?: (segment: SeriesColoredPoint[]) => SeriesColoredSegmentPath[];
+    getSegmentPath?: (
+        segment: SeriesColoredPoint[]
+    ) => SeriesColoredSegmentPath[];
     processData?: (force?: boolean) => boolean;
-    formatTrackerPath?: (trackerPath: SeriesColoredSegmentPath[]) => SeriesColoredSegmentPath[];
+    formatTrackerPath?: (
+        trackerPath: SeriesColoredSegmentPath[]
+    ) => SeriesColoredSegmentPath[];
     drawTracker?: () => void;
     getSegments?: () => void;
     setSeriesGraphPathsAndSinglePoints?: () => SeriesColoredGraphPath[];
-    getSegment?: (segment: SeriesColoredGraphPath,colorType: _Highcharts.ColorType) => SVGElement | undefined;
+    getSegment?: (
+        segment: SeriesColoredGraphPath,
+        colorType: _Highcharts.ColorType
+    ) => SVGElement | undefined;
     drawGraph?: () => void;
 };
 
@@ -40,9 +56,14 @@ declare module "highcharts" {
     interface Point {
         segmentColor?: string;
     }
+
     interface Series extends SeriesMulticolor {}
-    interface SeriesMulticolorLineOptions extends _Highcharts.SeriesOptions, SeriesMulticolor {}
-    interface SeriesMulticolorAreaOptions extends _Highcharts.SeriesOptions, SeriesMulticolor {
+
+    interface SeriesMulticolorLineOptions
+        extends _Highcharts.SeriesOptions, SeriesMulticolor {}
+
+    interface SeriesMulticolorAreaOptions
+        extends _Highcharts.SeriesOptions, SeriesMulticolor {
         closeSegment?: (
             path: SeriesColoredSegmentPath[],
             segment: SeriesColoredPoint[],
