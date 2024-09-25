@@ -29,9 +29,10 @@
 		_registerModule(
 			_modules,
 			'Extensions/MulticolorSeries.js',
-			[_modules['Core/Series/SeriesRegistry.js'],_modules['Core/Utilities.js'],_modules['Series/Line/LineSeries.js']],
-			(SeriesRegistry,Utilities,LineSeries) => {
+			[_modules['Core/Series/SeriesRegistry.js'],_modules['Core/Utilities.js'],_modules['Core/Series/Series.js'],_modules['Series/Line/LineSeries.js']],
+			(SeriesRegistry,Utilities,Series,LineSeries) => {
 				
+
 
 
 /**
@@ -39,7 +40,7 @@
  *  Helpers
  *
  */
-const { isArray, pick, error } = Utilities;
+const { isArray, pick } = Utilities;
 const containsStringNumberNumberSequence = (sequenceValue) => {
     let isSequenceFound = false;
     for (let index = 0; index < sequenceValue.length; index++) {
@@ -154,46 +155,6 @@ class ColoredlineSeries extends LineSeries {
         });
         return segmentPath;
     }
-    processData(force) {
-        const series = this, processedXData = series.xData, // Copied during slice operation below
-        processedYData = series.yData, cropStart = 0, xAxis = series.xAxis, options = series.options, isCartesian = series.isCartesian;
-        let cropped, distance, closestPointRange;
-        // If the series data or axes haven't changed, don't go through this. Return false to pass
-        // the message on to override methods like in data grouping.
-        if (isCartesian &&
-            !series.isDirty &&
-            !xAxis.isDirty &&
-            !series.yAxis.isDirty &&
-            !force) {
-            return false;
-        }
-        if (processedXData && processedYData) {
-            // Find the closest distance between processed points
-            for (let index = processedXData.length - 1; index >= 0; index--) {
-                distance = processedXData[index] - processedXData[index - 1];
-                if (distance > 0 &&
-                    (typeof closestPointRange === 'undefined' ||
-                        distance < closestPointRange)) {
-                    closestPointRange = distance;
-                    // Unsorted data is not supported by the line tooltip, as well as data grouping and
-                    // navigation in Stock charts (#725) and width calculation of columns (#1900)
-                }
-                else if (distance < 0 && series.requireSorting) {
-                    error(15);
-                }
-            }
-            // Record the properties
-            series.cropped = cropped; // Type: undefined or true
-            series.cropStart = cropStart;
-            series.processedXData = processedXData;
-            series.processedYData = processedYData;
-            if (options.pointRange === null) { // Type: null means auto, as for columns, candlesticks and OHLC
-                series.pointRange = closestPointRange || 1;
-            }
-            series.closestPointRange = closestPointRange;
-        }
-        return true;
-    }
     formatTrackerPath(trackerPath) {
         var _a, _b, _c, _d;
         const series = this, options = series.options, trackerPathLength = trackerPath.length, singlePoints = series.singlePoints, snap = (_b = (_a = series.chart.options.tooltip) === null || _a === void 0 ? void 0 : _a.snap) !== null && _b !== void 0 ? _b : 0;
@@ -280,6 +241,7 @@ class ColoredlineSeries extends LineSeries {
     }
     setState(state, 
     // Unused inherit argument added to keep the same type as in the Series.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _inherit) {
         var _a, _b, _c, _d;
         const series = this, options = series.options, graphs = series.graphs, stateOptions = options.states;
@@ -517,6 +479,10 @@ class ColoredareaSeries extends ColoredlineSeries {
      *  Functions
      *
      */
+    init(chart, options) {
+        options.threshold = options.threshold || null;
+        Series.prototype.init.call(this, chart, options);
+    }
     closeSegment(path, segment, translatedThreshold) {
         path.push('L', segment[segment.length - 1].plotX, translatedThreshold, 'L', segment[0].plotX, translatedThreshold);
     }

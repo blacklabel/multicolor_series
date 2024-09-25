@@ -1,5 +1,6 @@
 import SeriesRegistry from 'highcharts-github/ts/Core/Series/SeriesRegistry';
 import Utilities from 'highcharts-github/ts/Core/Utilities';
+import Series from 'highcharts-github/ts/Core/Series/Series';
 import LineSeries from 'highcharts-github/ts/Series/Line/LineSeries';
 import type LinePoint from 'highcharts-github/ts/Series/Line/LinePoint';
 import type AreaPoint from 'highcharts-github/ts/Series/Area/AreaPoint';
@@ -11,6 +12,9 @@ import type ColorType from 'highcharts-github/ts/Core/Color/ColorType';
 import type SVGPath from 'highcharts-github/ts/Core/Renderer/SVG/SVGPath';
 import { type StatesOptionsKey } from 
     'highcharts-github/ts/Core/Series/StatesOptions';
+import type { SeriesTypeOptions } from
+    'highcharts-github/ts/Core/Series/SeriesType';
+import type Chart from 'highcharts-github/ts/Core/Chart/Chart';
 import {
     type SeriesColoredPoint,
     type SeriesColoredSegment,
@@ -736,6 +740,11 @@ class ColoredareaSeries extends ColoredlineSeries {
      *  Functions
      *
      */
+
+    public init(chart: Chart, options: DeepPartial<SeriesTypeOptions>): void {
+        options.threshold = options.threshold || null;
+        Series.prototype.init.call(this, chart, options);
+    }
 
     public closeSegment(
         path: SeriesColoredSegmentPath[],
