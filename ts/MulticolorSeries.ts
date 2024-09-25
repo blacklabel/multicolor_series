@@ -85,6 +85,8 @@ type SeriesColoredlineSegment = SeriesColoredSegment<SeriesColoredlinePoint>;
  * @class
  * @name Highcharts.seriesTypes.coloredline
  *
+ * @augments Highcharts.seriesTypes.LineSeries
+ *
  */
 
 class ColoredlineSeries extends LineSeries {
