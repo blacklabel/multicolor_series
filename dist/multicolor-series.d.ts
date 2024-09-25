@@ -14,12 +14,9 @@ type SeriesColoredSegment = {
     color: string;
     points: SeriesColoredPoint[];
 };
-
 type GraphPaths = SeriesColoredGraphPath[] | undefined;
-
 type SeriesColoredSegmentPath = _Highcharts.SVGPathArray | string | number| undefined;
-
-type SeriesColoredGraphPath = [SeriesColoredSegmentPath[],_Highcharts.ColorType];
+type SeriesColoredGraphPath = [SeriesColoredSegmentPath[], _Highcharts.ColorType];
 
 type SeriesMulticolor = {
     pointRange?: number | undefined;
