@@ -536,7 +536,7 @@ class ColoredareaSeries extends ColoredlineSeries {
     }
     getSegmentPath(segment) {
         var _a;
-        const segmentPath = ColoredlineSeries.prototype.getSegmentPath.call(this, segment), // Call base method
+        const segmentPath = super.getSegmentPath.call(this, segment), // Call base method
         areaSegmentPath = [...segmentPath], // Work on a copy for the area path
         options = this.options, segLength = segmentPath.length, translatedThreshold = this.yAxis.getThreshold((_a = options.threshold) !== null && _a !== void 0 ? _a : 0); // #2181
         let yBottom;
