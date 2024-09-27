@@ -241,7 +241,10 @@ class ColoredlineSeries extends LineSeries {
             }
         }
     }
-    setState(state) {
+    setState(state, 
+    // Unused inherit argument added to keep the same type as in the Series.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _inherit) {
         var _a, _b, _c, _d;
         const series = this, options = series.options, graphs = series.graphs, stateOptions = options.states;
         let lineWidth = (_a = options.lineWidth) !== null && _a !== void 0 ? _a : 0;
