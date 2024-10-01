@@ -6,7 +6,7 @@
 
 import * as _Highcharts from "highcharts";
 
-interface SeriesColoredPoint extends Highcharts.Point {
+interface SeriesColoredPoint extends _Highcharts.Point {
     segmentColor?: string;
 }
 
@@ -63,12 +63,12 @@ declare module "highcharts" {
         segmentColor?: string;
     }
 
-    interface SeriesMulticolorLineOptions extends PlotLineOptions, SeriesOptions {
+    interface SeriesMulticolorLineOptions extends _Highcharts.PlotLineOptions, _Highcharts.SeriesOptions {
         type: 'coloredline',
         data?: Array<(number|[(number|string), (number|null)]|null|PointOptionsObject)>;
     }
 
-    interface SeriesMulticolorAreaOptions extends PlotAreaOptions, SeriesOptions {
+    interface SeriesMulticolorAreaOptions extends _Highcharts.PlotAreaOptions, _Highcharts.SeriesOptions {
         type: 'coloredarea',
         data?: Array<(number|[(number|string), (number|null)]|null|PointOptionsObject)>;
     }
