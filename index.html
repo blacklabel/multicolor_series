@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" charset="utf-8" type="text/css" href="css/styles.css" />
   <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/atom-one-dark.min.css">
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
 
   <script>
@@ -43,7 +43,7 @@
 
   <script src="https://code.highcharts.com/highcharts.src.js"></script>
   <script src="dist/multicolor-series.js"></script>
-  <script src="docs-demo.js" defer></script>
+  <script src="demo.js" defer></script>
 
 </head>
 
@@ -57,9 +57,7 @@
               alt="Black Label">
           </a>
           <h1>Multicolor Series Highcharts Module</h1>
-          <p>Highcharts plugin that adds a new multicolor series, where you can define color for each part of a path,
-            between
-            two points.</p>
+          <p>Typescript-supported Highcharts plugin that adds both line/area multicolor series, where you can define color for each part of a path.</p>
         </div>
         <div id="showcase-demo" class="chart"></div>
       </div>
@@ -99,7 +97,7 @@
     <section>
       <p>
         The latest code is available on GitHub:
-        <a href="https://github.com/blacklabel/multicolor_series/">
+        <a href="https://github.com/blacklabel/multicolor_series/" target=”_blank”>
           https://github.com/blacklabel/multicolor_series/
         </a>
       </p>
@@ -108,8 +106,8 @@
       <h2 id="prerequisites">General prerequisites</h2>
       <p>This module requires highcharts package with the following versions installed in your project:</p>
       <ul class="prerequisites-list">
-        <li>For version <b>3.0.0</b>: Highcharts <b>v11.4.8+</b></li>
-        <li>For version <b>2.4.0 - 3.0.0</b>: Highcharts <b>v10.0.0 - v11.4.8</b></li>
+        <li>For version <b>3.0.0</b>: Highcharts <b>v11.3.0+</b></li>
+        <li>For version <b>2.4.0 - 3.0.0</b>: Highcharts <b>v10.0.0 - v11.2.0</b></li>
         <li>For version <b>2.3.0</b>: Highcharts <b>v9.2.0 - v9.3.3</b></li>
         <li>For version <b>2.x.x</b>: Highcharts <b>v4.2.2 - v9.2.0</b></li>
         <li>For version <b>1.x.x</b>: Highcharts <b>v4.0.0 - v4.2.2</b></li>
@@ -137,6 +135,7 @@
     <section>
       <h2 id="usage">Usage</h2>
       <h3>Basic usage example:</h3>
+      <p>The Live example is available <a href="https://jsfiddle.net/BlackLabel/ou4L32cn/" target=”_blank”>here</a>.</p>
       <pre><code class="language-javascript">Highcharts.chart('container', {
   series: [{
     type: 'coloredline',
@@ -159,13 +158,64 @@
   }]
 });
 </code></pre>
-      <h3>Basic usage example with Typescript:</h3>
-      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat, nemo veniam. Iste, nesciunt quae? Beatae nam
-        odio excepturi vero itaque tempora tempore natus minima odit. Beatae nesciunt perspiciatis hic a.</p>
-      <h3>Multicolor series typing:</h3>
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut blanditiis fugit possimus adipisci. Culpa nostrum,
-        perferendis tempora obcaecati recusandae debitis fugit, provident dolore id repudiandae consequatur ipsam ut
-        dolorum dolores.</p>
+      <h3>Basic usage example with Typescript (React):</h3>
+      <p>The Live example is available <a href="https://codesandbox.io/p/sandbox/highcharts-multicolor-series-forked-6m6dd9?file=%2Fsrc%2FApp.tsx&workspaceId=e204a32a-9996-4c96-b99d-9fe3d6fc96d0" target=”_blank”>here</a>.</p>
+      <pre><code class="language-javascript">import * as Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+
+// Implement the package module.
+import MulticolorSeries from "highcharts-multicolor-series";
+MulticolorSeries(Highcharts);
+
+// The package allows you to import both `Highcharts.SeriesMulticolorLineOptions` and
+// `Highcharts.SeriesMulticolorAreaOptions` interfaces, accordingly to the series.
+// Interfaces extend the default series options.
+        
+const App = () => {
+  // Type the chart options.
+  const options: Highcharts.Options = {
+    series: [
+      {
+        type: "coloredarea",
+        data: [
+          {
+            y: 40,
+            segmentColor: "red"
+          },
+          {
+            y: 60,
+            segmentColor: "blue"
+          },
+          {
+            y: 30,
+            segmentColor: "yellow"
+          },
+          {
+            y: 10,
+            segmentColor: "green"
+          },
+          {
+            y: 50,
+            segmentColor: "brown"
+          },
+          {
+            y: 20,
+            segmentColor: "pink"
+          },
+          {
+            y: 70,
+            segmentColor: "orange"
+          },
+        ]
+      }
+    ]
+  };
+
+  return &lt;HighchartsReact highcharts={Highcharts} options={options} /&gt;;
+};
+        
+export default App;
+      </code></pre>
     </section>
     <section>
       <h2 id="parameters">Parameters</h2>
@@ -192,7 +242,7 @@
             <tr>
               <td><code class="language-javascript">point.segmentColor</code></td>
               <td>String</td>
-              <td>Yes</td>
+              <td>No</td>
               <td>-</td>
               <td>Controls line/area color between n and n+1 point.</td>
             </tr>
@@ -205,10 +255,7 @@
       <div id="coloredline" class="chart"></div>
       <div id="coloredarea" class="chart"></div>
     </section>
-    <section>
-      <h2 id="changelog">Changelog</h2>
-      <p>The changelog is available <a href="https://github.com/blacklabel/multicolor_series/blob/master/CHANGELOG.md">here</a>.</p>
-    </section>
+  </section>
     <section>
       <h2 id="faq">FAQ</h2>
       <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit facilis id totam quaerat expedita
@@ -229,8 +276,12 @@
         illo iusto quae corrupti.</p>
     </section>
     <section>
+      <h2 id="changelog">Changelog</h2>
+      <p>The changelog is available <a href="https://github.com/blacklabel/multicolor_series/blob/master/CHANGELOG.md" target=”_blank”>here</a>.</p>
+    </section>
+    <section>
       <h2 id="license">License</h2>
-      <p>Link to the license?</p>
+      <p>The package is built on top of the Highcharts library which requires a commercial license. Non-commercial use may qualify for a free educational or personal license. Read more about licenses <a href="https://shop.highcharts.com/?utm_source=npmjs&utm_medium=referral&utm_campaign=highchartspage&utm_content=licenseinfo">here</a>.</p>
     </section>
   </main>
   <footer>
