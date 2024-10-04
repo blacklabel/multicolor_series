@@ -117,15 +117,8 @@ gulp.task('lint', function () {
 
 gulp.task('build', gulp.series('lint', 'compile'));
 
-gulp.task('lint-watch', function () {
-	return gulp.src(files)
-		.pipe(eslint())
-		.pipe(eslint.formatEach());
-});
-
-
 gulp.task('add-decorator', function (done) {
-	var minFile = './dist/multicolor-series.min.js',
+	const minFile = './dist/multicolor-series.min.js',
 		main = fs.readFileSync(files[0], 'utf8'),
 		min = fs.readFileSync(minFile, 'utf8'),
 		old = main.match('(.*\r?\n){7}')[0];
@@ -137,17 +130,17 @@ gulp.task('add-decorator', function (done) {
 });
 
 gulp.task('get-version', function (done) {
-	var options = fs.readFileSync('package.json', {encoding: 'utf8'}),
+	const options = fs.readFileSync('package.json', {encoding: 'utf8'}),
 		optJSON = JSON.parse(options),
 		now = new Date();
 
 	version = optJSON.version;
-	decorator[1] = '* Multicolor Series v' + version + '(' + now.toLocaleDateString('en-CA') + ')';
+	decorator[1] = '* Multicolor Series v' + version + ' (' + now.toLocaleDateString('en-CA') + ')';
 	done();
 });
 
 gulp.task('release-commit', function (done) {
-	var message = 'Release version ' + version;
+	const message = 'Release version ' + version;
 	gulp.src(['package.json', 'manifest.json', 'js/*'])
 		.pipe(git.add())
 		.pipe(git.commit(message, {emitData: true}))
@@ -202,9 +195,9 @@ gulp.task('push-master', function (done) {
 gulp.task('bump-files', function () {
 	// Props to: http://stackoverflow.com/questions/36339694/how-to-increment-version-number-via-gulp-task
 
-	var type = args.type;
-	var v = args.ver;
-	var options = {};
+	const type = args.type;
+	const v = args.ver;
+	let options = {};
 	if (v) {
 		options.version = v;
 	} else {
@@ -221,13 +214,13 @@ gulp.task('default', function (done) {
 	log([
 		'\n',
 		colors.yellow('TASKS: '),
-		colors.cyan('prerelease:') + ' lind and compile sources',
-		colors.cyan('lint      :') + ' lint JS files',
-		colors.cyan('compile   :') + ' compile JS files',
-		colors.cyan('watch     :') + ' watch changes in JS files and automatically lint',
+		colors.cyan('prerelease:') + ' lint and compile sources',
+		colors.cyan('lint      :') + ' lint TS files',
+		colors.cyan('compile   :') + ' compile TS files',
+		colors.cyan('watch     :') + ' watch changes in TS files and automatically lint',
 		colors.cyan('release   :') + ' updates a version, usage: ',
 		colors.blue('      1. gulp release:') + ' releases the package to the next minor revision.',
-		'                       Includes: liniting, compiling, commit with new tags, merge with gh-pages, and push to the repo for commits and tags.',
+		'                       Includes: linting, compiling, commit with new tags, merge with gh-pages, and push to the repo for commits and tags.',
 		'                       i.e. from 0.1.1 to 0.1.2',
 		colors.blue('      2. gulp release --ver 1.1.1') + '        => Release the package with specific version.',
 		colors.blue('      3. gulp release --type major') + '       => Increment major: 1.0.0',
@@ -241,7 +234,7 @@ gulp.task('default', function (done) {
 
 
 gulp.task('watch', function () {
-	return gulp.watch(files, gulp.series('lint-watch'));
+	return gulp.watch('ts/*.ts', gulp.series('lint', 'compile'));
 });
 
 gulp.task('prerelease', gulp.series('lint', 'compile'));
