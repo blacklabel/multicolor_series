@@ -3,7 +3,7 @@
 *
 * (c) 2012-2024 Black Label
 *
-* License: Creative Commons Attribution (CC)
+* License: MIT
 */
 (function (factory) {
 	if (typeof module === 'object' && module.exports) {

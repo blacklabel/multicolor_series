@@ -16,7 +16,7 @@ const gulp = require('gulp'),
 	rename = require('gulp-rename'),
 	tsProject = gulpTypescript.createProject("tsconfig.json");
 
-let files = ['./dist/multicolor-series.js', 'js/demo.js'],
+let files = ['./dist/multicolor-series.js', 'demo.js'],
 	decorator,
 	version;
 
@@ -26,7 +26,7 @@ decorator = [
 	'*',
 	'* (c) 2012-2024 Black Label',
 	'*',
-	'* License: Creative Commons Attribution (CC)',
+	'* License: MIT',
 	'*/',
 	''
 ];
@@ -92,8 +92,12 @@ gulp.task("compile", () => {
 			callback();
 	  	}))
 		.pipe(gulp.dest('dist'))
+		.pipe(sourcemaps.init())
 		.pipe(babel({
-			presets: ['@babel/preset-env', { "targets": "defaults" }]
+			presets: ['@babel/preset-env'],
+			overrides: [{
+				presets: [["@babel/preset-env", { targets: "defaults" }]]
+		  	}]
 		}))
 		.pipe(closureCompiler({
 			compilation_level: 'SIMPLE',
@@ -103,9 +107,9 @@ gulp.task("compile", () => {
 			output_wrapper: '(function(){\n%output%\n}).call(this)',
 			js_output_file: 'multicolor-series.min.js',
 			externs: 'compileExterns.js'
-			}))
+		}))
 		.pipe(sourcemaps.write('/'))
-		.pipe(gulp.dest('./dist/'));
+		.pipe(gulp.dest('dist'))
 });
 
 gulp.task('lint', function () {
@@ -141,7 +145,7 @@ gulp.task('get-version', function (done) {
 
 gulp.task('release-commit', function (done) {
 	const message = 'Release version ' + version;
-	gulp.src(['package.json', 'manifest.json', 'js/*'])
+	gulp.src(['package.json', 'manifest.json', 'dist/*'])
 		.pipe(git.add())
 		.pipe(git.commit(message, {emitData: true}))
 		.on('data', function (data) {
