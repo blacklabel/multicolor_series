@@ -1,3 +1,13 @@
+Highcharts.setOptions({
+  chart: {
+    style: {
+      fontFamily: "Montserrat, sans-serif"
+    }
+  }
+});
+
+
+const linearGradient = { x1: 0, x2: 1, y1: 0, y2: 0 };
 Highcharts.chart("showcase-demo", {
   chart: {
     spacing: [30, 30, 20, 30],
@@ -38,6 +48,9 @@ Highcharts.chart("showcase-demo", {
       },
     },
   },
+  tooltip: {
+    outside: true
+  },
   yAxis: [
     {
       title: {
@@ -68,80 +81,80 @@ Highcharts.chart("showcase-demo", {
         {
           y: 20,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#2D2357"],
-              [1, "#3C346C"],
+              [0, "#191632"],
+              [1, "#1D1736"],
             ],
           },
         },
         {
           y: 30,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#3C346C"],
-              [1, "#521B65"],
+              [0, "#1D1736"],
+              [1, "#281940"],
             ],
           },
         },
         {
           y: 50,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#521B65"],
-              [1, "#721F87"],
+              [0, "#281940"],
+              [1, "#331B4C"],
             ],
           },
         },
         {
           y: 40,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#721F87"],
-              [1, "#AE1785"],
+              [0, "#331B4C"],
+              [1, "#3F1F59"],
             ],
           },
         },
         {
           y: 30,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#AE1785"],
-              [1, "#962A6F"],
+              [0, "#3F1F59"],
+              [1, "#4B2165"],
             ],
           },
         },
         {
           y: 40,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#962A6F"],
-              [1, "#0F0B22"],
+              [0, "#4B2165"],
+              [1, "#562470"],
             ],
           },
         },
         {
           y: 50,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#0F0B22"],
-              [1, "#1B1534"],
+              [0, "#562470"],
+              [1, "#64287D"],
             ],
           },
         },
         {
           y: 40,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#1B1534"],
-              [1, "#2D2357"],
+              [0, "#64287D"],
+              [1, "#692982"],
             ],
           },
         },
@@ -154,80 +167,80 @@ Highcharts.chart("showcase-demo", {
         {
           y: 20,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#2D2357"],
-              [1, "#3C346C"],
+              [0, "#191632"],
+              [1, "#1D1736"],
             ],
           },
         },
         {
           y: 30,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#3C346C"],
-              [1, "#521B65"],
+              [0, "#1D1736"],
+              [1, "#281940"],
             ],
           },
         },
         {
           y: 50,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#521B65"],
-              [1, "#721F87"],
+              [0, "#281940"],
+              [1, "#331B4C"],
             ],
           },
         },
         {
           y: 40,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#721F87"],
-              [1, "#AE1785"],
+              [0, "#331B4C"],
+              [1, "#3F1F59"],
             ],
           },
         },
         {
           y: 30,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#AE1785"],
-              [1, "#962A6F"],
+              [0, "#3F1F59"],
+              [1, "#4B2165"],
             ],
           },
         },
         {
           y: 40,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#962A6F"],
-              [1, "#0F0B22"],
+              [0, "#4B2165"],
+              [1, "#562470"],
             ],
           },
         },
         {
           y: 50,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#0F0B22"],
-              [1, "#1B1534"],
+              [0, "#562470"],
+              [1, "#64287D"],
             ],
           },
         },
         {
           y: 40,
           segmentColor: {
-            linearGradient: { x1: 0, x2: 1, y1: 0, y2: 0 },
+            linearGradient,
             stops: [
-              [0, "#1B1534"],
-              [1, "#2D2357"],
+              [0, "#64287D"],
+              [1, "#692982"],
             ],
           },
         },
@@ -309,7 +322,7 @@ Highcharts.chart("coloredline", {
           y: 9,
           segmentColor: "#feb56a"
         },
-      ],      
+      ],
     },
   ],
 });
@@ -386,7 +399,7 @@ Highcharts.chart("coloredarea", {
           y: 15,
           segmentColor: "#feb56a"
         },
-      ],      
+      ],
     },
   ],
 });
