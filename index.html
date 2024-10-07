@@ -82,10 +82,10 @@
           <a href="#demos">Demos</a>
         </li>
         <li>
-          <a href="#changelog">Changelog</a>
+          <a href="#tests">Tests</a>
         </li>
         <li>
-          <a href="#faq">FAQ</a>
+          <a href="#changelog">Changelog</a>
         </li>
         <li>
           <a href="#license">License</a>
@@ -115,7 +115,7 @@
     </section>
     <section>
       <h2 id="installation">Installation</h2>
-      <h3>NPM:</h3>
+      <h3>NPM</h3>
       <p>
         Get the package from NPM in your app:
       <pre><code class="language-javascript">npm install highcharts-multicolor-series</code></pre>
@@ -126,9 +126,7 @@
       </p>
       <h3>CDN</h3>
       <p>
-        Like any other Highcharts module (e.g. exporting), add <code class="language-html">&lt;script&gt;</code>
-        tag pointing to
-        <code class="language-html">multicolor_series.js</code> below Highcharts script tag:
+        Add a <code class="language-html">&lt;script&gt;</code> tag below the Highcharts script tag:
       </p>
       <pre><code class="language-javascript">&lt;script src=&quot;https://cdn.jsdelivr.net/npm/highcharts-multicolor-series&quot;&gt;&lt;/script&gt;</code></pre>
     </section>
@@ -205,7 +203,7 @@ const App = () => {
           {
             y: 70,
             segmentColor: "orange"
-          },
+          }
         ]
       }
     ]
@@ -255,25 +253,10 @@ export default App;
       <div id="coloredline" class="chart"></div>
       <div id="coloredarea" class="chart"></div>
     </section>
-  </section>
     <section>
-      <h2 id="faq">FAQ</h2>
-      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit facilis id totam quaerat expedita
-        labore quibusdam voluptatibus laudantium tempora. Voluptas neque velit asperiores quasi tenetur culpa dicta ea?
-        Error, quasi?</p>
-      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam quos unde et numquam quisquam dicta nam
-        voluptatibus. Omnis dolore dolorem pariatur autem quas! Laborum quod esse modi corporis quis ea.</p>
-      <p>Deserunt ex corporis facere non ut natus sit, ipsa soluta. Doloremque consectetur illo fuga repellat est
-        voluptate ab? Blanditiis sequi sint eos amet soluta nulla et illo voluptatibus libero sunt!</p>
-      <p>Numquam perferendis laborum porro commodi, similique qui ullam excepturi, laudantium in accusamus possimus
-        quisquam placeat omnis eum. Debitis esse similique facilis laboriosam rem ipsam, ad distinctio. Praesentium
-        tempora nemo eveniet!</p>
-      <p>Dignissimos ea reiciendis quibusdam sint provident doloribus nostrum, ducimus dolores unde at deleniti
-        temporibus sunt cumque fuga facilis. Laborum consectetur neque voluptatem vel iste deserunt minima obcaecati
-        aspernatur quibusdam excepturi!</p>
-      <p>Dolorum quam eaque tempore est ullam consequatur accusamus aliquam illum repellendus, corporis veniam ea
-        blanditiis cumque architecto delectus temporibus incidunt assumenda! Enim expedita laboriosam repellendus? Eius
-        illo iusto quae corrupti.</p>
+      <h2 id="tests">Tests</h2>
+      <p>This package contains tests for the proper elements rendering. To run tests, type:</p>
+      <pre><code class="language-javascript">npm run test</code></pre>
     </section>
     <section>
       <h2 id="changelog">Changelog</h2>

@@ -1,43 +1,40 @@
 {
-        "name": "Multicolor series",
-        "version": "2.4.1",
-        "title": "Multicolor",
-        "author": {
-                "name": "Black Label",
-                "url": "https://www.blacklabel.net/"
-        },
-        "licenses": [
-                {
-                        "type": "Creative Commons Attribution (CC)",
-                        "url": "https://github.com/blacklabel/multicolor_series/blob/master/license.txt"
-                }
-        ],
-        "dependencies": {
-                "highcharts": ">9.2.0"
-        },
-        "demo": [
-                "https://jsfiddle.net/BlackLabel/av87r7uo/",
-                "https://jsfiddle.net/BlackLabel/tg58gc6x/"
-        ],
-        "description": "Plugin that allows define different color for each part of path between points.",
-        "keywords": [
-                "series",
-                "multicolor",
-                "highcharts-addon"
-        ],
-        "maintainers": [
+  "name": "Multicolor series",
+  "version": "3.0.0",
+  "title": "Multicolor",
+  "author": {
+    "name": "Black Label",
+    "url": "https://www.blacklabel.net/"
+  },
+  "licenses": [
+    {
+      "type": "MIT License",
+      "url": "https://github.com/blacklabel/multicolor_series/blob/master/license.txt"
+    }
+  ],
+  "dependencies": {
+    "highcharts": ">11.3.0"
+  },
+  "demo": [
+    "https://jsfiddle.net/BlackLabel/ou4L32cn/",
+    "https://codesandbox.io/p/sandbox/highcharts-multicolor-series-forked-6m6dd9?file=%2Fsrc%2FApp.tsx&workspaceId=e204a32a-9996-4c96-b99d-9fe3d6fc96d0"
+  ],
+  "description": "Plugin that allows define different color for each part of path between points.",
+  "keywords": ["series", "multicolor", "highcharts-addon"],
+  "maintainers": [
     {
       "name": "Sebastian Bochan",
       "email": "sebastian.bochan@blacklabel.net",
       "url": "https://www.blacklabel.net"
-    },{
+    },
+    {
       "name": "Paweł Fus",
       "email": "pawel.fus@blacklabel.net",
       "url": "https://www.blacklabel.net"
     }
   ],
-        "homepage": "http://blacklabel.github.io/multicolor_series/",
-        "docs": "https://github.com/blacklabel/multicolor_series/",
-        "bugs": "https://github.com/blacklabel/multicolor_series/issues",
-        "download": "https://github.com/blacklabel/multicolor_series/archive/master.zip"
+  "homepage": "http://blacklabel.github.io/multicolor_series/",
+  "docs": "https://github.com/blacklabel/multicolor_series/",
+  "bugs": "https://github.com/blacklabel/multicolor_series/issues",
+  "download": "https://github.com/blacklabel/multicolor_series/archive/master.zip"
 }
