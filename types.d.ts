@@ -13,7 +13,7 @@ type SeriesColoredPoint<T> = T & {
 
 type SeriesColoredSegment<T> = {
     color: string;
-    points: SeriesColoredPoint<T>[];
+    points: Array<SeriesColoredPoint<T>>;
 };
 
 type SeriesColoredSegmentPath = SVGPath.Segment | string | number | undefined;

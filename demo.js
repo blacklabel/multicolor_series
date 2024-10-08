@@ -6,8 +6,8 @@ Highcharts.setOptions({
   }
 });
 
-
 const linearGradient = { x1: 0, x2: 1, y1: 0, y2: 0 };
+
 Highcharts.chart("showcase-demo", {
   chart: {
     spacing: [30, 30, 20, 30],
