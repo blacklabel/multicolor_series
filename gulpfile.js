@@ -16,7 +16,7 @@ const gulp = require('gulp'),
 	rename = require('gulp-rename'),
 	tsProject = gulpTypescript.createProject("tsconfig.json");
 
-let files = ['./dist/multicolor-series.js', 'demo.js'],
+let files = ['./dist/multicolor-series.js', './samples/demo.js'],
 	decorator,
 	version;
 
