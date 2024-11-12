@@ -1,23 +1,23 @@
 Highcharts.setOptions({
     chart: {
         style: {
-            fontFamily: "Montserrat, sans-serif"
+            fontFamily: 'Montserrat, sans-serif'
         }
     }
 });
 
 const linearGradient = { x1: 0, x2: 1, y1: 0, y2: 0 };
 
-Highcharts.chart("showcase-demo", {
+Highcharts.chart('showcase-demo', {
     chart: {
         spacing: [30, 30, 20, 30]
     },
     title: {
-        text: "Multicolor Series"
+        text: 'Multicolor Series'
     },
     subtitle: {
         useHTML: true,
-        align: "right",
+        align: 'right',
         floating: true,
         x: 5,
         y: 5,
@@ -54,37 +54,37 @@ Highcharts.chart("showcase-demo", {
     yAxis: [
         {
             title: {
-                text: ""
+                text: ''
             },
             labels: {
                 enabled: false
             },
-            height: "50%",
-            top: "0%"
+            height: '50%',
+            top: '0%'
         },
         {
             title: {
-                text: ""
+                text: ''
             },
             labels: {
                 enabled: false
             },
-            height: "50%",
-            top: "50%"
+            height: '50%',
+            top: '50%'
         }
     ],
     series: [
         {
-            type: "coloredline",
-            name: "Line series",
+            type: 'coloredline',
+            name: 'Line series',
             data: [
                 {
                     y: 20,
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#191632"],
-                            [1, "#1D1736"]
+                            [0, '#191632'],
+                            [1, '#1D1736']
                         ]
                     }
                 },
@@ -93,8 +93,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#1D1736"],
-                            [1, "#281940"]
+                            [0, '#1D1736'],
+                            [1, '#281940']
                         ]
                     }
                 },
@@ -103,8 +103,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#281940"],
-                            [1, "#331B4C"]
+                            [0, '#281940'],
+                            [1, '#331B4C']
                         ]
                     }
                 },
@@ -113,8 +113,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#331B4C"],
-                            [1, "#3F1F59"]
+                            [0, '#331B4C'],
+                            [1, '#3F1F59']
                         ]
                     }
                 },
@@ -123,8 +123,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#3F1F59"],
-                            [1, "#4B2165"]
+                            [0, '#3F1F59'],
+                            [1, '#4B2165']
                         ]
                     }
                 },
@@ -133,8 +133,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#4B2165"],
-                            [1, "#562470"]
+                            [0, '#4B2165'],
+                            [1, '#562470']
                         ]
                     }
                 },
@@ -143,8 +143,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#562470"],
-                            [1, "#64287D"]
+                            [0, '#562470'],
+                            [1, '#64287D']
                         ]
                     }
                 },
@@ -153,24 +153,24 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#64287D"],
-                            [1, "#692982"]
+                            [0, '#64287D'],
+                            [1, '#692982']
                         ]
                     }
                 }
             ]
         },
         {
-            type: "coloredarea",
-            name: "Area series",
+            type: 'coloredarea',
+            name: 'Area series',
             data: [
                 {
                     y: 20,
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#191632"],
-                            [1, "#1D1736"]
+                            [0, '#191632'],
+                            [1, '#1D1736']
                         ]
                     }
                 },
@@ -179,8 +179,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#1D1736"],
-                            [1, "#281940"]
+                            [0, '#1D1736'],
+                            [1, '#281940']
                         ]
                     }
                 },
@@ -189,8 +189,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#281940"],
-                            [1, "#331B4C"]
+                            [0, '#281940'],
+                            [1, '#331B4C']
                         ]
                     }
                 },
@@ -199,8 +199,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#331B4C"],
-                            [1, "#3F1F59"]
+                            [0, '#331B4C'],
+                            [1, '#3F1F59']
                         ]
                     }
                 },
@@ -209,8 +209,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#3F1F59"],
-                            [1, "#4B2165"]
+                            [0, '#3F1F59'],
+                            [1, '#4B2165']
                         ]
                     }
                 },
@@ -219,8 +219,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#4B2165"],
-                            [1, "#562470"]
+                            [0, '#4B2165'],
+                            [1, '#562470']
                         ]
                     }
                 },
@@ -229,8 +229,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#562470"],
-                            [1, "#64287D"]
+                            [0, '#562470'],
+                            [1, '#64287D']
                         ]
                     }
                 },
@@ -239,8 +239,8 @@ Highcharts.chart("showcase-demo", {
                     segmentColor: {
                         linearGradient,
                         stops: [
-                            [0, "#64287D"],
-                            [1, "#692982"]
+                            [0, '#64287D'],
+                            [1, '#692982']
                         ]
                     }
                 }
@@ -250,13 +250,13 @@ Highcharts.chart("showcase-demo", {
     ]
 });
 
-Highcharts.chart("coloredline", {
+Highcharts.chart('coloredline', {
     title: {
-        text: "Colored line series"
+        text: 'Colored line series'
     },
     subtitle: {
         useHTML: true,
-        align: "right",
+        align: 'right',
         floating: true,
         x: 5,
         y: 5,
@@ -283,57 +283,57 @@ Highcharts.chart("coloredline", {
     },
     series: [
         {
-            type: "coloredline",
-            name: "Line series",
+            type: 'coloredline',
+            name: 'Line series',
             data: [
                 {
                     y: 12,
-                    segmentColor: "#2caffe"
+                    segmentColor: '#2caffe'
                 },
                 {
                     y: 15,
-                    segmentColor: "#544fc5"
+                    segmentColor: '#544fc5'
                 },
                 {
                     y: 18,
-                    segmentColor: "#00e272"
+                    segmentColor: '#00e272'
                 },
                 {
                     y: 23,
-                    segmentColor: "#fe6a35"
+                    segmentColor: '#fe6a35'
                 },
                 {
                     y: 29,
-                    segmentColor: "#6b8abc"
+                    segmentColor: '#6b8abc'
                 },
                 {
                     y: 24,
-                    segmentColor: "#d568fb"
+                    segmentColor: '#d568fb'
                 },
                 {
                     y: 11,
-                    segmentColor: "#2ee0ca"
+                    segmentColor: '#2ee0ca'
                 },
                 {
                     y: 8,
-                    segmentColor: "#fa4b42"
+                    segmentColor: '#fa4b42'
                 },
                 {
                     y: 9,
-                    segmentColor: "#feb56a"
+                    segmentColor: '#feb56a'
                 }
             ]
         }
     ]
 });
 
-Highcharts.chart("coloredarea", {
+Highcharts.chart('coloredarea', {
     title: {
-        text: "Colored area series"
+        text: 'Colored area series'
     },
     subtitle: {
         useHTML: true,
-        align: "right",
+        align: 'right',
         floating: true,
         x: 5,
         y: 5,
@@ -360,44 +360,44 @@ Highcharts.chart("coloredarea", {
     },
     series: [
         {
-            type: "coloredarea",
-            name: "Area series",
+            type: 'coloredarea',
+            name: 'Area series',
             data: [
                 {
                     y: 10,
-                    segmentColor: "#2caffe"
+                    segmentColor: '#2caffe'
                 },
                 {
                     y: 13,
-                    segmentColor: "#544fc5"
+                    segmentColor: '#544fc5'
                 },
                 {
                     y: 19,
-                    segmentColor: "#00e272"
+                    segmentColor: '#00e272'
                 },
                 {
                     y: 22,
-                    segmentColor: "#fe6a35"
+                    segmentColor: '#fe6a35'
                 },
                 {
                     y: 20,
-                    segmentColor: "#6b8abc"
+                    segmentColor: '#6b8abc'
                 },
                 {
                     y: 18,
-                    segmentColor: "#d568fb"
+                    segmentColor: '#d568fb'
                 },
                 {
                     y: 17,
-                    segmentColor: "#2ee0ca"
+                    segmentColor: '#2ee0ca'
                 },
                 {
                     y: 14,
-                    segmentColor: "#fa4b42"
+                    segmentColor: '#fa4b42'
                 },
                 {
                     y: 15,
-                    segmentColor: "#feb56a"
+                    segmentColor: '#feb56a'
                 }
             ]
         }
