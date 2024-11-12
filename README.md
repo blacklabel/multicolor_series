@@ -1,6 +1,8 @@
 # Multicolor series - Highcharts module
 
-Go to project page to see this module in action: [http://blacklabel.github.io/multicolor_series/](http://blacklabel.github.io/multicolor_series/).
+Plugin developed by [Black Label](https://blacklabel.net/highcharts).
+
+Go to project page to see this module in action: [https://blacklabel.github.io/multicolor_series/](https://blacklabel.github.io/multicolor_series/).
 
 ## General prerequisites
 
@@ -23,11 +25,10 @@ If Highcharts is not already installed, get the package with Highcharts:
 npm install highcharts highcharts-multicolor-series
 ```
 
-
 ### CDN
 Add a `script` tag below the Highcharts script tag:
-```
-<script src=https://cdn.jsdelivr.net/npm/highcharts-multicolor-series></script>
+```HTML
+<script src="https://cdn.jsdelivr.net/npm/highcharts-multicolor-series"></script>
 ```
 
 ## Usage and demos
@@ -35,7 +36,7 @@ Add a `script` tag below the Highcharts script tag:
 ### Basic usage example:
 The Live example is available [here](https://jsfiddle.net/BlackLabel/ou4L32cn/).
 
-```
+```JS
 Highcharts.chart('container', {
   series: [{
     type: 'coloredline',
@@ -62,7 +63,7 @@ Highcharts.chart('container', {
 ### Basic usage example with Typescript (React):
 The Live example is available [here](https://codesandbox.io/p/sandbox/highcharts-multicolor-series-forked-6m6dd9?file=%2Fsrc%2FApp.tsx&workspaceId=e204a32a-9996-4c96-b99d-9fe3d6fc96d0).
 
-```
+```tsx
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
@@ -73,7 +74,7 @@ MulticolorSeries(Highcharts);
 // The package allows you to import both `Highcharts.SeriesMulticolorLineOptions` and
 // `Highcharts.SeriesMulticolorAreaOptions` interfaces, accordingly to the series.
 // Interfaces extend the default series options.
-        
+
 const App = () => {
   // Type the chart options.
   const options: Highcharts.Options = {
@@ -130,6 +131,10 @@ export default App;
 ## Changelog
 
 The changelog is available [here](https://github.com/blacklabel/multicolor_series/blob/master/CHANGELOG.md).
+
+## Development
+
+To ensure best compatibility, it is recommended to use `pnpm` as a package manager.
 
 ## Tests
 
