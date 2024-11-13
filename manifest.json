@@ -19,7 +19,7 @@
     "https://jsfiddle.net/BlackLabel/ou4L32cn/",
     "https://codesandbox.io/p/sandbox/highcharts-multicolor-series-forked-6m6dd9?file=%2Fsrc%2FApp.tsx&workspaceId=e204a32a-9996-4c96-b99d-9fe3d6fc96d0"
   ],
-  "description": "Plugin that allows define different color for each part of path between points.",
+  "description": "A Highcharts plugin that allows defining different colors for each part of the path between points.",
   "keywords": ["series", "multicolor", "highcharts-addon"],
   "maintainers": [
     {
