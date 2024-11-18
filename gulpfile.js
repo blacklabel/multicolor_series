@@ -103,7 +103,7 @@ gulp.task("compile", () => {
 			compilation_level: 'SIMPLE',
 			warning_level: 'DEFAULT', // VERBOSE
 			language_in: 'ECMASCRIPT6_STRICT',
-			language_out: 'ECMASCRIPT5_STRICT',
+			language_out: 'ECMASCRIPT6_STRICT',
 			output_wrapper: '(function(){\n%output%\n}).call(this)',
 			js_output_file: 'multicolor-series.min.js',
 			externs: 'compileExterns.js'
