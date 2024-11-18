@@ -1,97 +1,266 @@
-@import 'https://code.highcharts.com/css/highcharts.css';
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
-/* content wrapper */
-#main-content { max-width:900px; margin:0px auto; font-size: 1.3em; } 
-#main-content ul li { margin-bottom:10px; }
-
-/* Highcharts */
-
-.highcharts-title { width: calc(100% - 30px)!important; }
-
-.highcharts-background { fill: #f7f7f7; stroke: #e8eaeb; stroke-width: 5;}
-.highcharts-navigator-mask-outside { fill-opacity: 0; }
-.highcharts-plot-line { stroke-width: 10px; stroke: #a4c08e; }
-.highcharts-plot-band { fill: #FCFFC5; fill-opacity: 1; }
-
-/* Custom */
-
-.btn { float: left; background-color: #d4d4d4; border: none; color: #000; cursor: pointer; }
-
-#flash { color: #000000; background-color: rgb(90, 200, 90); display: none; height: 30px; width: calc(100% + 10px); }
-#report { padding: 7px 0px 7px 10px; }
-
-.chart-title { background-color: #3d3d3d; color: #fff; float: left; font-size: 0.756em; padding: 10px; width: calc(100% - 1px); }
-.chart-subtitle { line-height: 1.7em; font-size: 0.8em; padding-right: 10px; color: rgba(255, 0, 0, 0.8); float: right; }
-
-.chart-href, .chart-href a, .chart-href a:hover { float: right; color: red; text-decoration: none }
-
-h1, h2, h3, h4, h5, h6, p, blockquote { margin: 0; padding: 0; }
-
-body { background-color: #fff; color: #737373; font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif; font-size: 0.6em; margin: 10px 13px 10px 13px; line-height: 1.2em; }
-table { margin: 10px 0 15px 0; border-collapse: collapse; }
-td, th { border: 1px solid #ddd; padding: 3px 10px; }
-th {  padding: 5px 10px; }
-a {  color: #0069d6; }
-a:hover { color: #0050a3; text-decoration: none; }
-a img { border: none; }
-p { margin-bottom: 9px; }
-h1, h2, h3, h4, h5, h6 { color: #404040; line-height: 36px; }
-h1 { margin-bottom: 18px; font-size: 30px; }
-h2 { font-size: 24px; }
-h3 { font-size: 18px; }
-h4 { font-size: 16px; }
-h5 {font-size: 14px; }
-h6 { font-size: 13px; }
-hr { margin: 0 0 19px;  border: 0;  border-bottom: 1px solid #ccc; }
-
-blockquote {padding: 13px 13px 21px 15px;margin-bottom: 18px;font-family: georgia, serif;font-style: italic; }
-blockquote:before {content: "\201C";font-size: 40px;margin-left: -10px;font-family: georgia, serif;color: #eee; }
-blockquote p {font-size: 14px;font-weight: 300;line-height: 18px;margin-bottom: 0;font-style: italic; }
-code, pre {font-family: Monaco, Andale Mono, Courier New, monospace; }
-code {background-color: #fee9cc;color: rgba(0, 0, 0, 0.75);padding: 1px 3px;font-size: 12px;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px; }
-pre {display: block;padding: 14px;margin: 0 0 18px;line-height: 16px;font-size: 11px;border: 1px solid #d9d9d9;white-space: pre-wrap;word-wrap: break-word; }
-pre code {background-color: #fff;color: #737373;font-size: 11px;padding: 0; }
-sup {font-size: 0.83em;vertical-align: super;line-height: 0; }
-
-* {-webkit-print-color-adjust: exact; }
-
-@media screen and (min-width: 914px) {
-  body {  width: 100%;  margin: 10px auto;} 
+:root {
+  --main-color: #157af2;
+  --second-color: #5ba2f6;
+  --light-color: #157af226;
 }
 
-@media print {
-  body,code,pre code,h1,h2,h3,h4,h5,h6 {  color: black;}table,pre {  page-break-inside: avoid;} 
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
-#chart, #chart-advanced, #chart-3d {height: 500px;width: 100%;position: relative; }
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
 
+body {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-/* Annotations UI */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+}
 
-.form {margin-right: 10px;width: 160px;height: 330px;padding: 0px;background-color: #e8eaeb;padding: 5px;float: left;font-size: 1.4em; }
-.form .form-header {font-size: 1em;padding: 10px;background: #3d3d3d;color: #fff;line-height: 1.45em; }
-.form > p {padding: 5px 10px;margin: 0px; }
-.form > p:nth-child(2n) { background: #f7f7f7; }
-.form label {width: 140px;float: left;margin-top: 5px;padding-bottom: 3px; }
-.form input {width: 140px; }
-.form input[type="radio"] {width: auto;margin-left: 55px;margin-bottom: 3px; }
-.form .short {width: 60px;float: right;margin: 2px 0px 0px 0px; }
+header {
+  background-color: #1b1534;
+  color: white;
+  position: relative;
+  background: linear-gradient(91deg, #1b1534 39.41%, #3f1956 99.35%);
+  overflow: hidden;
+}
 
-.highcharts-indicators { fill: none; }
-#chart-advanced .highcharts-yaxis .highcharts-axis-line { stroke-width: 2px; }
-#chart-advanced .highcharts-plot-line { stroke-width: 1px; stroke: orange; }
+header .logo {
+  height: 64px;
+}
 
+header .columns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 48px 0;
+  gap: 32px;
+}
 
-/* ==== 3d ==== */
+header .details {
+  max-width: 454px;
+}
 
-#chart-3d .highcharts-background { fill: #000;}
-#chart-3d .highcharts-series.highcharts-series-0 path { stroke-width: 0; }
-#chart-3d .highcharts-grid-line { stroke-width: 1px; stroke: #d8d8d8;}
-#chart-3d .chart-title { width: calc(100% + 4px); }
+header .chart {
+  flex: 1;
+}
 
-/* custom gradients */
-#chart-3d .moon { fill-opacity: 1; fill: url(#gradient-2); stroke-width:0; }
-#chart-3d .sun { fill-opacity: 1; fill: url(#gradient-1); stroke-width:0; }
-#chart-3d .planet { fill-opacity: 1; fill: url(#gradient-0); stroke-width:0; }
-#chart-3d .magneticFieldPink { fill-opacity: 1; fill: url(#magneticFieldPink); stroke-width:0; }
-#chart-3d .magneticFieldBlue { fill-opacity: 1; fill: url(#magneticFieldBlue); stroke-width:0; }
+header h1 {
+  font-size: 42px;
+  line-height: 48px;
+  font-weight: 500;
+}
+
+header p {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+nav {
+  background-color: var(--second-color);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  overflow-x: auto;
+}
+
+nav ul {
+  height: 60px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+}
+
+nav ul li a {
+  color: white;
+  height: 100%;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+
+nav ul li a:hover {
+  background-color: var(--main-color);
+}
+
+main.container {
+  padding: 1px 16px 48px 16px;
+}
+
+section {
+  margin: 32px 0;
+}
+
+h2 {
+  padding-top: 60px;
+  margin: -60px 0 8px 0;
+}
+
+h3 {
+  margin: 16px 0 8px 0;
+}
+
+p {
+  margin: 8px 0;
+}
+
+pre {
+  margin: 10px 0 16px 0;
+}
+
+ul {
+  margin: 8px 0;
+}
+
+code {
+  border-radius: 4px;
+  line-height: 18px;
+}
+
+pre {
+  position: relative;
+}
+
+.prerequisites-list li {
+  margin-top: 4px;
+}
+
+pre .hljs-copy {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #282c34;
+  color: white;
+  border-radius: 4px;
+  border: none;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  font-weight: 100;
+}
+
+pre .hljs-copy path {
+  transition: all ease-in-out 0.2s;
+}
+
+pre .hljs-copy:hover path {
+  stroke: var(--second-color);
+}
+
+pre .hljs-copy + code.hljs {
+  padding-right: 72px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  border-radius: 4px;
+  color: #abb2bf;
+  background: #282c34;
+  width: 100%;
+  min-width: 710px;
+  overflow: hidden;
+}
+
+table,
+table th,
+table td {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  text-align: left;
+  padding: 12px;
+}
+
+table code.hljs {
+  background-color: #6e768166;
+  color: white;
+}
+
+table tbody tr:nth-of-type(odd) {
+  background-color: #373b42;
+}
+
+footer {
+  background-color: #1b1534;
+  color: white;
+  padding: 24px 0;
+}
+
+footer .links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+}
+
+footer .links a {
+  text-decoration: none;
+}
+
+footer .logo {
+  height: 48px;
+}
+
+footer .social {
+  display: flex;
+  gap: 16px;
+}
+
+footer .social-link {
+  height: 32px;
+}
+
+footer .social-img {
+  height: 100%;
+}
+
+.hljs-copy {
+  float: right;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1279px) {
+  .container {
+    padding: 0 2.5rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  footer .links {
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+
+/* Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .container {
+    max-width: 1100px;
+  }
+}
