@@ -1,5 +1,5 @@
 /**
-* Multicolor Series v3.0.0 (2024-11-18)
+----
 *
 * (c) 2012-2024 Black Label
 *
@@ -12,26 +12,6 @@
 		factory(Highcharts);
 	}
 }(function (Highcharts) {
-	const _modules = Highcharts ? Highcharts._modules : {},
-		_registerModule = (obj, path, args, fn) => {
-			if (!obj.hasOwnProperty(path)) {
-				obj[path] = fn.apply(null, args);
-
-				if (typeof CustomEvent === 'function') {
-					window.dispatchEvent(new CustomEvent(
-						'HighchartsModuleLoaded',
-						{ detail: { path: path, module: obj[path] } }
-					));
-				}
-			}
-		}
-
-		_registerModule(
-			_modules,
-			'Extensions/MulticolorSeries.js',
-			[_modules['Core/Series/SeriesRegistry.js'],_modules['Core/Utilities.js'],_modules['Core/Series/Series.js'],_modules['Series/Line/LineSeries.js']],
-			(SeriesRegistry,Utilities,Series,LineSeries) => {
-				
 
 
 
@@ -40,7 +20,7 @@
  *  Helpers
  *
  */
-const { isArray, pick } = Utilities;
+const { isArray, pick, SeriesRegistry, Series } = Highcharts;
 const containsStringNumberNumberSequence = (sequenceValue) => {
     let isSequenceFound = false;
     for (let index = 0; index < sequenceValue.length; index++) {
@@ -72,7 +52,7 @@ const isSVGPathSegment = (value) => containsStringNumberNumberSequence(value);
  * @augments Highcharts.seriesTypes.LineSeries
  *
  */
-class ColoredlineSeries extends LineSeries {
+class ColoredlineSeries extends SeriesRegistry.seriesTypes.line {
     /**
      *
      *  Constructor
@@ -556,6 +536,4 @@ class ColoredareaSeries extends ColoredlineSeries {
 SeriesRegistry.registerSeriesType('coloredarea', ColoredareaSeries);
 
 
-			}
-		)
 }));
