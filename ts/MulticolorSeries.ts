@@ -1,7 +1,6 @@
 import SeriesRegistry from 'highcharts-github/ts/Core/Series/SeriesRegistry';
 import Utilities from 'highcharts-github/ts/Core/Utilities';
 import Series from 'highcharts-github/ts/Core/Series/Series';
-import LineSeries from 'highcharts-github/ts/Series/Line/LineSeries';
 import type LinePoint from 'highcharts-github/ts/Series/Line/LinePoint';
 import type AreaPoint from 'highcharts-github/ts/Series/Area/AreaPoint';
 import type PointerEvent from 'highcharts-github/ts/Core/PointerEvent';
@@ -89,7 +88,7 @@ type SeriesColoredlineSegment = SeriesColoredSegment<SeriesColoredlinePoint>;
  *
  */
 
-class ColoredlineSeries extends LineSeries {
+class ColoredlineSeries extends SeriesRegistry.seriesTypes.line {
 
     /**
      *
