@@ -67,7 +67,7 @@ gulp.task("compile", () => {
 		factory(Highcharts);
 	}
 }(function (Highcharts) {
-	${fileContent}
+${fileContent}
 }));`;
 		  		file.contents = Buffer.from(wrappedFileContent, 'utf8');
 			}
