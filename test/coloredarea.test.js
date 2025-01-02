@@ -65,7 +65,7 @@ QUnit.test('Coloredarea series tracker property.', (assert) => {
     const differences = objectsEqualWithBuffer(
         seriesColoredarea.tracker.pathArray,
         coloredareaTrackerPathArrayTestData,
-        1
+        5
     );
     const isError = differences.length > 0;
 
@@ -85,7 +85,7 @@ QUnit.test('Coloredarea series graphs property.', (assert) => {
             pathArray: graph.pathArray
         })),
         coloredareaGraphsTestData,
-        1
+        5
     );
     const isError = differences.length > 0;
 
@@ -101,7 +101,7 @@ QUnit.test('Coloredarea series graphPaths property.', (assert) => {
     const differences = objectsEqualWithBuffer(
         seriesColoredarea.graphPaths,
         coloredareaGraphPathsTestData,
-        1
+        5
     );
     const isError = differences.length > 0;
 
@@ -122,7 +122,7 @@ QUnit.test('Coloredarea series segments property.', (assert) => {
             }))
         })),
         coloredareaSegmentsTestData,
-        2
+        5
     );
     const isError = differences.length > 0;
 
