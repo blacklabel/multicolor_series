@@ -44,7 +44,8 @@ gulp.task("compile", () => {
 					removedPaths = [],
 					importPathReg = /import (.+?) from ["'](.+?)["'];/g,
 					formattedPathReg = /^highcharts-github\/ts\//,
-					exportReg = /\bexport\s*{[^}]*};?/g;
+					exportReg = /\bexport\s*{[^}]*};?/g,
+					utilsPathReg = /^.*Utilities.*$/m;
 
 				fileContent = fileContent.replace(importPathReg, (_match, specifier, path) => {
 					removedSpecifiers.push(specifier);
@@ -52,6 +53,10 @@ gulp.task("compile", () => {
 			   		return '';
 				});
 
+				fileContent = fileContent.replace(
+					utilsPathReg,
+					'const { isArray, pick, SeriesRegistry, Series } = Highcharts;'
+				);
 				fileContent = fileContent.replace(exportReg, '');
 
 		  		const wrappedFileContent = decorator.join('\n') +
@@ -62,28 +67,7 @@ gulp.task("compile", () => {
 		factory(Highcharts);
 	}
 }(function (Highcharts) {
-	const _modules = Highcharts ? Highcharts._modules : {},
-		_registerModule = (obj, path, args, fn) => {
-			if (!obj.hasOwnProperty(path)) {
-				obj[path] = fn.apply(null, args);
-
-				if (typeof CustomEvent === 'function') {
-					window.dispatchEvent(new CustomEvent(
-						'HighchartsModuleLoaded',
-						{ detail: { path: path, module: obj[path] } }
-					));
-				}
-			}
-		}
-
-		_registerModule(
-			_modules,
-			'Extensions/MulticolorSeries.js',
-			[${removedPaths.map((path) => `_modules[${`'${path}'`}]`)}],
-			(${removedSpecifiers.map((specifier) => specifier)}) => {
-				${fileContent}
-			}
-		)
+${fileContent}
 }));`;
 		  		file.contents = Buffer.from(wrappedFileContent, 'utf8');
 			}
