@@ -1,7 +1,7 @@
 /**
-----
+* Multicolor Series v3.1.0 (2025-01-07)
 *
-* (c) 2012-2024 Black Label
+* (c) 2012-2025 Black Label
 *
 * License: MIT
 */

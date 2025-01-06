@@ -24,7 +24,7 @@ decorator = [
 	'/**',
 	'----',
 	'*',
-	'* (c) 2012-2024 Black Label',
+	'* (c) 2012-2025 Black Label',
 	'*',
 	'* License: MIT',
 	'*/',
