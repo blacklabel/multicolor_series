@@ -6,6 +6,7 @@ Go to project page to see this module in action: [https://blacklabel.github.io/m
 
 ## General prerequisites
 
+- For version **3.1.0**: Highcharts **v12.0.0+**
 - For version **3.0.0**: Highcharts **v11.3.0+**
 - For version **2.4.0 - 3.0.0**: Highcharts **v10.0.0 - v11.2.0**
 - For version **2.3.0**: Highcharts **v9.2.0 - v9.3.3**
