@@ -128,7 +128,7 @@ gulp.task('get-version', function (done) {
 });
 
 gulp.task('release-commit', function (done) {
-	const message = 'Release version ' + version;
+	const message = 'Release version 3.1.0';
 	gulp.src(['package.json', 'manifest.json', 'dist/*'])
 		.pipe(git.add())
 		.pipe(git.commit(message, {emitData: true}))
@@ -235,15 +235,15 @@ gulp.task('release',
 		'bump-files',
 		'get-version',
 		'add-decorator',
-		'release-commit',
+		// 'release-commit',
 
-		'checkout-gh-pages',
-		'merge-with-master',
-		'checkout-master',
+		// 'checkout-gh-pages',
+		// 'merge-with-master',
+		// 'checkout-master',
 
-		'push-gh-pages',
-		'push-master',
-		'push-tags'
+		// 'push-gh-pages',
+		// 'push-master',
+		// 'push-tags'
 
 		//'npm-publish'
 	)
