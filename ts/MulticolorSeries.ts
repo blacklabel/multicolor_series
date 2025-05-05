@@ -743,7 +743,8 @@ class ColoredareaSeries extends ColoredlineSeries {
      */
 
     public init(chart: Chart, options: DeepPartial<SeriesTypeOptions>): void {
-        options.threshold = options.threshold || null;
+        // Removed to prevent overwriting `threshold: 0` with `null` (#51)
+        // options.threshold = options.threshold || null;
         Series.prototype.init.call(this, chart, options);
     }
 
@@ -783,13 +784,23 @@ class ColoredareaSeries extends ColoredlineSeries {
     public getSegmentPath(
         segment: SeriesColoredareaPoint[]
     ): SeriesColoredSegmentPath[] {
-        const segmentPath = super.getSegmentPath.call(this, segment), // Call base method
-            areaSegmentPath = [...segmentPath], // Work on a copy for the area path
+        const series = this,
+            areaSegmentPath = [],
             options = this.options,
-            segLength = segmentPath.length,
-            translatedThreshold =
-                this.yAxis.getThreshold(options.threshold ?? 0); // #2181
+            originalThreshold = this.options.threshold;
 
+        // Set threshold to yAxis.min if null, with fallback to 0 (#51)
+        if (options.threshold === null) {
+            series.options.threshold = this.yAxis.min ?? 0;
+        }
+
+        const translatedThreshold =
+            this.yAxis.getThreshold(options.threshold ?? 0); // #2181
+        const segmentPath = super.getSegmentPath.call(this, segment); // Call base method
+
+        areaSegmentPath.push(...segmentPath);
+
+        const segLength = segmentPath.length;
         let yBottom;
 
         if (segLength === 3) { // For animation from 1 to two points
@@ -810,6 +821,9 @@ class ColoredareaSeries extends ColoredlineSeries {
         } else { // Follow zero line back
             this.closeSegment(areaSegmentPath, segment, translatedThreshold);
         }
+
+        // Restore original threshold to prevent side effects (#51)
+        series.options.threshold = originalThreshold;
 
         return areaSegmentPath;
     }
