@@ -133,3 +133,50 @@ QUnit.test('Coloredarea series segments property.', (assert) => {
         }`
     );
 });
+
+// Issue #51
+QUnit.test('Coloredarea series with null threshold and negative point', (assert) => {
+    let chart = Highcharts.chart('area-chart-alt-container', {
+        series: [
+            {
+                type: 'coloredarea',
+                threshold: null,
+                data: [
+                    {
+                      y: 70,
+                      segmentColor: "blue",
+                    },
+                    {
+                      y: -20,
+                      segmentColor: "green",
+                    },
+                    {
+                      y: 40,
+                      segmentColor: "yellow",
+                    },
+                    {
+                      y: 50,
+                      segmentColor: "red",
+                    },
+                    {
+                      y: 10,
+                      segmentColor: "pink",
+                    },
+                  ],
+            }
+        ]
+    });
+
+    const graphs = chart.series[0].graphs;
+    const expectedBottom = graphs[0].getBBox().y + graphs[0].getBBox().height;
+    
+    graphs.forEach((graph, i) => {
+        const bottom = graph.getBBox().y + graph.getBBox().height;
+
+        assert.strictEqual(
+            bottom,
+            expectedBottom,
+            `Graph at index ${i} has bottom ${bottom}, expected ${expectedBottom}`
+        );
+    });
+});
