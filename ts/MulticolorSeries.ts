@@ -283,9 +283,7 @@ class ColoredlineSeries extends SeriesRegistry.seriesTypes.line {
         const series = this,
             options = series.options,
             trackByArea = options.trackByArea,
-            trackerPath =
-                trackByArea ? series.areaPaths :
-                    this.getPath(series.graphPaths),
+            trackerPath = this.getPath(series.graphPaths),
             chart = series.chart,
             pointer = chart.pointer,
             renderer = chart.renderer,
