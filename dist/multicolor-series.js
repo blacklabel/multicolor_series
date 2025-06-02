@@ -1,5 +1,5 @@
 /**
-* Multicolor Series v3.1.0 (2025-01-07)
+* Multicolor Series v3.1.1 (2025-06-02)
 *
 * (c) 2012-2025 Black Label
 *
@@ -172,8 +172,7 @@ class ColoredlineSeries extends SeriesRegistry.seriesTypes.line {
     }
     drawTracker() {
         var _a, _b, _c;
-        const series = this, options = series.options, trackByArea = options.trackByArea, trackerPath = trackByArea ? series.areaPaths :
-            this.getPath(series.graphPaths), chart = series.chart, pointer = chart.pointer, renderer = chart.renderer, snap = (_b = (_a = chart.options.tooltip) === null || _a === void 0 ? void 0 : _a.snap) !== null && _b !== void 0 ? _b : 0, tracker = series.tracker, cursor = options.cursor, css = cursor && { cursor }, trackerFill = 'rgba(192,192,192,0.002)';
+        const series = this, options = series.options, trackByArea = options.trackByArea, trackerPath = this.getPath(series.graphPaths), chart = series.chart, pointer = chart.pointer, renderer = chart.renderer, snap = (_b = (_a = chart.options.tooltip) === null || _a === void 0 ? void 0 : _a.snap) !== null && _b !== void 0 ? _b : 0, tracker = series.tracker, cursor = options.cursor, css = cursor && { cursor }, trackerFill = 'rgba(192,192,192,0.002)';
         const onMouseOver = () => {
             if (chart.hoverSeries !== series) {
                 series.onMouseOver();
@@ -462,7 +461,8 @@ class ColoredareaSeries extends ColoredlineSeries {
      *
      */
     init(chart, options) {
-        options.threshold = options.threshold || null;
+        // Removed to prevent overwriting `threshold: 0` with `null` (#51)
+        // options.threshold = options.threshold || null;
         Series.prototype.init.call(this, chart, options);
     }
     closeSegment(path, segment, translatedThreshold) {
@@ -483,10 +483,16 @@ class ColoredareaSeries extends ColoredlineSeries {
         }
     }
     getSegmentPath(segment) {
-        var _a;
-        const segmentPath = super.getSegmentPath.call(this, segment), // Call base method
-        areaSegmentPath = [...segmentPath], // Work on a copy for the area path
-        options = this.options, segLength = segmentPath.length, translatedThreshold = this.yAxis.getThreshold((_a = options.threshold) !== null && _a !== void 0 ? _a : 0); // #2181
+        var _a, _b;
+        const series = this, areaSegmentPath = [], options = this.options, originalThreshold = this.options.threshold;
+        // Set threshold to yAxis.min if null, with fallback to 0 (#51)
+        if (options.threshold === null) {
+            series.options.threshold = (_a = this.yAxis.min) !== null && _a !== void 0 ? _a : 0;
+        }
+        const translatedThreshold = this.yAxis.getThreshold((_b = options.threshold) !== null && _b !== void 0 ? _b : 0); // #2181
+        const segmentPath = super.getSegmentPath.call(this, segment); // Call base method
+        areaSegmentPath.push(...segmentPath);
+        const segLength = segmentPath.length;
         let yBottom;
         if (segLength === 3) { // For animation from 1 to two points
             areaSegmentPath.push('L', segmentPath[1], segmentPath[2]);
@@ -504,6 +510,8 @@ class ColoredareaSeries extends ColoredlineSeries {
         else { // Follow zero line back
             this.closeSegment(areaSegmentPath, segment, translatedThreshold);
         }
+        // Restore original threshold to prevent side effects (#51)
+        series.options.threshold = originalThreshold;
         return areaSegmentPath;
     }
     setSeriesGraphPathsAndSinglePoints() {

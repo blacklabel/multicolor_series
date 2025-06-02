@@ -128,7 +128,7 @@ gulp.task('get-version', function (done) {
 });
 
 gulp.task('release-commit', function (done) {
-	const message = 'Release version 3.1.0';
+	const message = 'Release version 3.1.1';
 	gulp.src(['package.json', 'manifest.json', 'dist/*'])
 		.pipe(git.add())
 		.pipe(git.commit(message, {emitData: true}))
