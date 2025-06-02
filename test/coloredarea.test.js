@@ -169,7 +169,7 @@ QUnit.test('Coloredarea series with null threshold and negative point', (assert)
 
     const graphs = chart.series[0].graphs;
     const expectedBottom = graphs[0].getBBox().y + graphs[0].getBBox().height;
-    
+
     graphs.forEach((graph, i) => {
         const bottom = graph.getBBox().y + graph.getBBox().height;
 
@@ -179,4 +179,56 @@ QUnit.test('Coloredarea series with null threshold and negative point', (assert)
             `Graph at index ${i} has bottom ${bottom}, expected ${expectedBottom}`
         );
     });
+});
+
+QUnit.test('Coloredarea series with trackByArea', (assert) => {
+  let clicked = false,
+    chart = Highcharts.chart('area-chart-alt-container', {
+      series: [{
+        type: 'coloredarea',
+        trackByArea: true,
+        events: {
+          click: function () {
+            clicked = true;
+          }
+        },
+        kdNow: true,
+        data: [{
+          y: 200,
+          segmentColor: 'rgba(255,0,0,0.5)'
+        }, {
+          y: 210,
+          segmentColor: 'rgba(120, 120, 250, 0.9)'
+        }, {
+          y: 210,
+          segmentColor: 'rgba(255,0,0,0.5)'
+        }, {
+          y: 180,
+          segmentColor: 'rgba(120, 120, 250, 0.9)'
+        }, {
+          y: 180,
+          segmentColor: 'red'
+        }]
+      }]
+    });
+
+  chart.pointer.onContainerMouseMove({
+    type: 'mousemove',
+    pageX: chart.plotLeft + 50,
+    pageY: chart.plotTop + 150,
+    target: chart.series[0].tracker.element,
+  });
+
+  chart.pointer.onContainerClick({
+    type: 'click',
+    pageX: chart.plotLeft + 50,
+    pageY: chart.plotTop + 150,
+    target: chart.series[0].options.trackByArea ? chart.series[0].tracker.element : chart.chartBackground.element,
+  })
+
+  assert.equal(
+    clicked,
+    true,
+    'Click event should fire on coloredarea series.'
+  )
 });
